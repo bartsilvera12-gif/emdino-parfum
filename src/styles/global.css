@@ -1,0 +1,150 @@
+/* ============================================================
+   EMDINO PERFUMERÍA — sistema visual
+   Negro profundo · marfil cálido · amarillo del logo (acento)
+   Display: Bodoni Moda (Didone, como el logo) · UI: Hanken Grotesk
+   ============================================================ */
+
+:root {
+  --ink: #0c0c0b;
+  --ink-2: #15150f;
+  --ink-3: #1f1f17;
+  --paper: #f7f4ec;
+  --paper-2: #efe9da;
+  --card: #fbf9f3;
+  --line: #e4ddcd;
+  --line-2: #d6cdb8;
+  --line-dark: #262620;
+  --muted: #6e6c61;
+  --muted-2: #918e80;
+
+  /* amarillo del logo, para fondos oscuros */
+  --yellow: #ecec12;
+  --yellow-soft: #f6f6a6;
+  /* citrino profundo, legible sobre marfil */
+  --gold: oklch(0.56 0.13 103);
+  --gold-deep: oklch(0.46 0.11 100);
+
+  --serif: "Bodoni Moda", "Didot", Georgia, serif;
+  --sans: "Hanken Grotesk", "Helvetica Neue", system-ui, sans-serif;
+
+  --shadow-soft: 0 2px 4px rgba(12,12,11,0.03), 0 18px 40px -24px rgba(12,12,11,0.18);
+  --shadow-lift: 0 8px 18px -8px rgba(12,12,11,0.12), 0 40px 80px -40px rgba(12,12,11,0.3);
+  --shadow-pop: 0 30px 80px -30px rgba(8,8,7,0.5);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15.5px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { max-width: 100%; display: block; }
+h1, h2, h3, h4 { margin: 0; font-weight: 400; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+.wrap { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+
+/* ---------- tipografía ---------- */
+.display {
+  font-family: var(--serif);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  font-optical-sizing: auto;
+  text-wrap: balance;
+}
+.display.italic { font-style: italic; }
+
+.eyebrow {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+.eyebrow.on-dark { color: var(--yellow); }
+.eyebrow .tick { display: inline-block; width: 14px; height: 1px; background: currentColor; vertical-align: middle; margin-right: 10px; }
+
+/* ---------- botones ---------- */
+.btn {
+  --bg: var(--ink); --fg: #fff; --bd: var(--ink);
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  background: var(--bg); color: var(--fg); border: 1px solid var(--bd);
+  font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 15px 30px; border-radius: 2px; position: relative; overflow: hidden;
+  transition: color .35s var(--ease), border-color .35s var(--ease), transform .12s ease;
+}
+.btn::before {
+  content: ""; position: absolute; inset: 0; background: var(--bg);
+  transform: translateY(101%); transition: transform .42s var(--ease); z-index: 0;
+}
+.btn > * { position: relative; z-index: 1; }
+.btn:active { transform: translateY(1px); }
+
+.btn.solid { --bg: var(--ink); --fg: #fff; --bd: var(--ink); }
+.btn.solid::before { background: var(--ink-3); }
+.btn.solid:hover { border-color: var(--ink-3); }
+
+.btn.yellow { --bg: var(--yellow); --fg: var(--ink); --bd: var(--yellow); }
+.btn.yellow::before { background: #fbfb55; }
+.btn.yellow:hover { color: var(--ink); border-color: #fbfb55; }
+
+.btn.outline-dark { --bg: transparent; --fg: var(--ink); --bd: var(--ink); }
+.btn.outline-dark::before { background: var(--ink); }
+.btn.outline-dark:hover { --fg: #fff; }
+
+.btn.outline-light { --bg: transparent; --fg: #fff; --bd: rgba(255,255,255,0.3); }
+.btn.outline-light::before { background: var(--yellow); }
+.btn.outline-light:hover { color: var(--ink); border-color: var(--yellow); }
+
+.btn.sm { padding: 11px 18px; font-size: 11px; letter-spacing: 0.1em; }
+.btn[disabled] { opacity: 0.4; cursor: not-allowed; }
+.btn.full { width: 100%; }
+
+/* ---------- inputs ---------- */
+.field { display: flex; flex-direction: column; gap: 7px; }
+.field label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.field input, .field textarea {
+  font-family: var(--sans); font-size: 15px; color: var(--ink);
+  background: #fff; border: 1px solid var(--line-2); border-radius: 2px;
+  padding: 13px 15px; width: 100%; outline: none;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+.field input:focus, .field textarea:focus { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(12,12,11,0.06); }
+.field input.invalid, .field textarea.invalid { border-color: #b6492f; }
+.field .err { font-size: 12px; color: #a8442c; }
+
+/* ---------- secciones ---------- */
+.section { padding: clamp(72px, 9vw, 132px) 0; }
+.section-head { max-width: 640px; }
+.section-head h2 { font-size: clamp(38px, 5.5vw, 64px); margin: 18px 0 0; }
+.section-head p { color: var(--muted); font-size: 16.5px; margin: 18px 0 0; max-width: 40em; }
+
+/* ---------- reveal ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+  .stagger > * { opacity: 0; transform: translateY(22px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  .stagger.in > * { opacity: 1; transform: none; }
+  .stagger.in > *:nth-child(2) { transition-delay: .08s; }
+  .stagger.in > *:nth-child(3) { transition-delay: .16s; }
+  .stagger.in > *:nth-child(4) { transition-delay: .24s; }
+  .stagger.in > *:nth-child(5) { transition-delay: .32s; }
+}
+
+.thin-scroll::-webkit-scrollbar { width: 6px; }
+.thin-scroll::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 3px; }
+::selection { background: var(--yellow); color: var(--ink); }
