@@ -106,6 +106,7 @@ function CartDrawer({ open, items, onClose, onQty, onRemove, onCheckout }) {
 const EMPTY_FORM = {
   nombre: "",
   telefono: "",
+  documento: "",
   ciudad: "",
   direccion: "",
   entrega: "retiro",
@@ -126,6 +127,7 @@ function CheckoutModal({ open, items, onClose }) {
     const e = {};
     if (!form.nombre.trim()) e.nombre = "Ingresá tu nombre y apellido";
     if (!form.telefono.trim()) e.telefono = "Ingresá tu teléfono";
+    if (!form.documento.trim()) e.documento = "Ingresá tu cédula o RUC para la factura";
     if (form.entrega === "envio") {
       if (!form.ciudad.trim()) e.ciudad = "Para envíos necesitamos tu ciudad";
       if (!form.direccion.trim()) e.direccion = "Indicá dirección o referencia";
@@ -168,6 +170,12 @@ function CheckoutModal({ open, items, onClose }) {
               <input id="f-tel" className={errors.telefono ? "invalid" : ""} value={form.telefono} onChange={set("telefono")} placeholder="Ej: 0972 000 000" inputMode="tel" />
               {errors.telefono && <span className="err">{errors.telefono}</span>}
             </div>
+          </div>
+
+          <div className="field">
+            <label htmlFor="f-doc">Cédula o RUC *</label>
+            <input id="f-doc" className={errors.documento ? "invalid" : ""} value={form.documento} onChange={set("documento")} placeholder="Ej: 1.234.567 o 80012345-6" inputMode="text" />
+            {errors.documento && <span className="err">{errors.documento}</span>}
           </div>
 
           <div className="field">

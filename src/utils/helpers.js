@@ -43,6 +43,7 @@ function waOrderMessage(form, items, total) {
   lines.push("");
   lines.push("Cliente: " + form.nombre);
   lines.push("Teléfono: " + form.telefono);
+  if (form.documento) lines.push("Cédula/RUC: " + form.documento);
   if (form.ciudad) lines.push("Ciudad: " + form.ciudad);
   lines.push("Entrega: " + (form.entrega === "envio" ? "Envío" : "Retiro en Encarnación"));
   if (form.direccion) lines.push("Dirección/Referencia: " + form.direccion);
