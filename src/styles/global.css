@@ -106,13 +106,15 @@ button { font-family: inherit; cursor: pointer; }
 .btn.yellow::before { background: var(--gold-soft); }
 .btn.yellow:hover { color: var(--ink); border-color: var(--gold); }
 
-.btn.outline-dark { --bg: transparent; --fg: var(--ink); --bd: var(--line-2); }
-.btn.outline-dark::before { background: var(--ink); }
-.btn.outline-dark:hover { color: #fff; border-color: var(--ink); transition: color .25s var(--ease) .18s, border-color .35s var(--ease), transform .12s ease; }
+.btn.outline-dark { --bg: transparent; --fg: var(--ink); --bd: var(--line-2);
+  transition: background .25s ease, color .25s ease, border-color .25s ease, transform .12s ease; }
+.btn.outline-dark::before { display: none; } /* sin slide para que el texto siempre sea legible */
+.btn.outline-dark:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
 
-.btn.outline-light { --bg: transparent; --fg: #fff; --bd: rgba(255,255,255,0.32); }
-.btn.outline-light::before { background: var(--champagne); }
-.btn.outline-light:hover { color: var(--ink); border-color: var(--champagne); transition: color .25s var(--ease) .18s, border-color .35s var(--ease), transform .12s ease; }
+.btn.outline-light { --bg: transparent; --fg: #fff; --bd: rgba(255,255,255,0.32);
+  transition: background .25s ease, color .25s ease, border-color .25s ease, transform .12s ease; }
+.btn.outline-light::before { display: none; }
+.btn.outline-light:hover { background: var(--champagne); color: var(--ink); border-color: var(--champagne); }
 
 .btn.sm { padding: 11px 18px; font-size: 11px; letter-spacing: 0.1em; }
 .btn[disabled] { opacity: 0.4; cursor: not-allowed; }
