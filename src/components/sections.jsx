@@ -34,10 +34,6 @@ function ShippingSection() {
 function Footer() {
   return (
     <footer className="footer" id="contacto" data-screen-label="Footer">
-      <div className="wrap footer-top reveal">
-        <p className="footer-phrase display">Decants originales para<br />descubrir tu próxima <span className="y italic">fragancia</span>.</p>
-        <a href={SU.waLink("Hola, quiero hacer una consulta a Emdino Perfumería.")} target="_blank" rel="noopener" className="btn yellow">Escribinos por WhatsApp</a>
-      </div>
       <div className="wrap footer-grid">
         <div className="footer-brand">
           <img src="assets/logo-dark.png" alt="Emdino Perfumería" className="footer-logo" />
