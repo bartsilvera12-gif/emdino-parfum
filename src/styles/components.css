@@ -135,7 +135,7 @@
 .ship-card-d { margin: 0; color: var(--muted); font-size: 13.5px; font-weight: 300; }
 
 /* ---------- FOOTER ---------- */
-.footer { background: var(--paper-2); color: var(--ink); border-top: 1px solid var(--line); padding: clamp(56px, 8vw, 96px) 0 0; }
+.footer { background: var(--paper-2); color: var(--ink); border-top: 1px solid var(--line); padding: clamp(28px, 3.5vw, 48px) 0 0; }
 .footer-top { display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; padding-bottom: 48px; border-bottom: 1px solid var(--line); }
 .footer-phrase { font-size: clamp(28px, 3.6vw, 46px); color: var(--ink); }
 .footer-phrase .y { color: var(--gold-deep); font-style: italic; }

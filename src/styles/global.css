@@ -144,9 +144,9 @@ button { font-family: inherit; cursor: pointer; }
   0%, 100% { filter: drop-shadow(0 0 1px rgba(184,148,79,0.2)); }
   50% { filter: drop-shadow(0 0 5px rgba(184,148,79,0.45)); }
 }
-/* rombo central girando con suavidad */
-.sd-gem { transform-box: fill-box; transform-origin: center; animation: sdSpin 14s linear infinite; }
-@keyframes sdSpin { to { transform: rotate(360deg); } }
+/* cetro central con pulso sutil de brillo */
+.sd-gem { transform-box: fill-box; transform-origin: center; animation: sdShine 3.6s ease-in-out infinite; }
+@keyframes sdShine { 0%, 100% { opacity: .75; } 50% { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) {
   .sd-ornament, .sd-gem { animation: none; }
 }
