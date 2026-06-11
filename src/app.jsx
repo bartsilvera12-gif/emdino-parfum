@@ -18,27 +18,27 @@ function SectionDivider() {
   return (
     <div className="section-divider" role="separator" aria-hidden="true">
       <span className="sd-line"></span>
-      <svg className="sd-ornament" viewBox="0 0 320 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* curvas elegantes a cada lado (volutas tipo flourish) */}
-        <path d="M20 18 C 60 18, 90 22, 120 18 C 130 16.5, 138 15, 145 14"
-              stroke="currentColor" strokeWidth="1" strokeLinecap="round" fill="none" />
-        <path d="M300 18 C 260 18, 230 22, 200 18 C 190 16.5, 182 15, 175 14"
-              stroke="currentColor" strokeWidth="1" strokeLinecap="round" fill="none" />
-        {/* pequeños puntos en los extremos de las volutas */}
-        <circle cx="16" cy="18" r="1.2" fill="currentColor" />
-        <circle cx="304" cy="18" r="1.2" fill="currentColor" />
-        {/* base curva tipo cáliz que sostiene el cetro */}
-        <path d="M135 18 C 142 22, 178 22, 185 18"
-              stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" fill="none" />
-        {/* pétalos del cetro central */}
+      <svg className="sd-ornament" viewBox="0 0 280 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* puntos extremos */}
+        <circle cx="16" cy="14" r="1.6" fill="currentColor" />
+        <circle cx="264" cy="14" r="1.6" fill="currentColor" />
+        {/* tallos finos con holgura */}
+        <path d="M28 14 H92" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.8" />
+        <path d="M252 14 H188" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.8" />
+        {/* hojas separadas de la flor */}
+        <path d="M100 14 C 108 7.5, 116 7.5, 122 14 C 116 20.5, 108 20.5, 100 14 Z" stroke="currentColor" strokeWidth="1" />
+        <path d="M180 14 C 172 7.5, 164 7.5, 158 14 C 164 20.5, 172 20.5, 180 14 Z" stroke="currentColor" strokeWidth="1" />
+        {/* flor central que gira lento (rosetón de 6 pétalos) */}
         <g className="sd-gem">
-          <path d="M160 5 L160 16"
-                stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
-          <path d="M160 7 C 156 9, 154 13, 153 16 C 156 15, 159 13, 160 10 Z"
-                fill="currentColor" stroke="currentColor" strokeWidth="0.6" />
-          <path d="M160 7 C 164 9, 166 13, 167 16 C 164 15, 161 13, 160 10 Z"
-                fill="currentColor" stroke="currentColor" strokeWidth="0.6" />
-          <circle cx="160" cy="4" r="1.5" fill="currentColor" />
+          <g stroke="currentColor" strokeWidth="0.9" fill="currentColor" fillOpacity="0.12">
+            <path d="M140 14 C 137.3 10.8, 137.3 7.5, 140 5.5 C 142.7 7.5, 142.7 10.8, 140 14 Z" transform="rotate(0 140 14)" />
+            <path d="M140 14 C 137.3 10.8, 137.3 7.5, 140 5.5 C 142.7 7.5, 142.7 10.8, 140 14 Z" transform="rotate(60 140 14)" />
+            <path d="M140 14 C 137.3 10.8, 137.3 7.5, 140 5.5 C 142.7 7.5, 142.7 10.8, 140 14 Z" transform="rotate(120 140 14)" />
+            <path d="M140 14 C 137.3 10.8, 137.3 7.5, 140 5.5 C 142.7 7.5, 142.7 10.8, 140 14 Z" transform="rotate(180 140 14)" />
+            <path d="M140 14 C 137.3 10.8, 137.3 7.5, 140 5.5 C 142.7 7.5, 142.7 10.8, 140 14 Z" transform="rotate(240 140 14)" />
+            <path d="M140 14 C 137.3 10.8, 137.3 7.5, 140 5.5 C 142.7 7.5, 142.7 10.8, 140 14 Z" transform="rotate(300 140 14)" />
+          </g>
+          <circle cx="140" cy="14" r="1.7" fill="currentColor" />
         </g>
       </svg>
       <span className="sd-line"></span>
