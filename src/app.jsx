@@ -48,9 +48,18 @@ function SectionDivider() {
 
 function getRoute() {
   const h = (window.location.hash || "").replace(/^#/, "");
-  if (h === "fragancias") return "catalog";
-  if (h === "combos") return "combos";
+  const [base] = h.split("?");
+  if (base === "fragancias") return "catalog";
+  if (base === "combos") return "combos";
   return "home";
+}
+
+function getHashParam(key) {
+  const h = (window.location.hash || "").replace(/^#/, "");
+  const qIdx = h.indexOf("?");
+  if (qIdx === -1) return null;
+  const params = new URLSearchParams(h.slice(qIdx + 1));
+  return params.get(key);
 }
 
 function App() {
@@ -62,8 +71,21 @@ function App() {
   const [detail, setDetail] = useStateApp(null);
 
   useEffectApp(() => {
-    const onHash = () => { setRoute(getRoute()); window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" }); };
+    const openFromHash = () => {
+      const pid = getHashParam("p");
+      if (pid) {
+        const p = window.EMDINO_DATA && window.EMDINO_DATA.PRODUCTS_BY_ID[pid];
+        if (p) setDetail(p);
+      }
+    };
+    const onHash = () => {
+      setRoute(getRoute());
+      window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+      openFromHash();
+    };
     window.addEventListener("hashchange", onHash);
+    // abrir modal si la URL inicial ya trae ?p=<id>
+    openFromHash();
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
 
@@ -224,7 +246,17 @@ function App() {
         items={cart}
         onClose={() => setCheckoutOpen(false)}
       />
-      <ProductModal product={detail} onClose={() => setDetail(null)} onAdd={addProduct} />
+      <ProductModal
+        product={detail}
+        onClose={() => {
+          setDetail(null);
+          if (window.location.hash.indexOf("?p=") !== -1) {
+            const [base] = window.location.hash.split("?");
+            history.replaceState(null, "", base);
+          }
+        }}
+        onAdd={addProduct}
+      />
       <Toast toast={toast} />
     </React.Fragment>
   );

@@ -36,10 +36,11 @@ function puInitials(marca) {
 }
 
 function PuCard({ item, index }) {
+  const href = item.image ? "#fragancias?p=" + item.id : "#fragancias";
   return (
     <a
       className="pu-card"
-      href="#fragancias"
+      href={href}
       style={{ "--i": index }}
       aria-label={item.marca + " " + item.name}
     >
