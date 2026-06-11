@@ -200,8 +200,8 @@
 .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(272px, 1fr)); gap: 24px; }
 .pcard { background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease); }
 .pcard:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -34px rgba(138,106,47,0.42); border-color: var(--gold-soft); }
-.pcard-media { position: relative; aspect-ratio: 4 / 5; background:
-    url("../../assets/card-frame.jpg") center/cover no-repeat, var(--ivory);
+.pcard-media { position: relative; aspect-ratio: 4 / 5;
+  background: var(--ivory) url("../../assets/card-frame.jpg") center / 100% 100% no-repeat;
   display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .pcard-media::after { content: ""; position: absolute; left: 20%; right: 20%; bottom: 18%; height: 12px; border-radius: 50%;
   background: radial-gradient(closest-side, rgba(60,46,20,0.22), transparent 72%); filter: blur(5px); }
