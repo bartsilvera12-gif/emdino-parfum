@@ -139,8 +139,12 @@ function ProductModal({ product, onClose, onAdd }) {
           <div className="pmodal-foot">
             <div className="pmodal-price"><span className="pmodal-price-k">{size}</span><span className="pmodal-price-v">{catFmt(product.precios[size])}</span></div>
             <div className="pmodal-acts">
-              <button className={"btn yellow add-btn" + (added ? " added" : "")} onClick={handleAdd}>{added ? "Agregado \u2713" : "Agregar al carrito \u00b7 " + size}</button>
-              <a className="btn outline-dark" href={catWa(waProductMessage(full, size))} target="_blank" rel="noopener">Consultar por WhatsApp</a>
+              <button className={"btn yellow add-btn pmodal-add" + (added ? " added" : "")} onClick={handleAdd}>{added ? "Agregado \u2713" : "Agregar al carrito \u00b7 " + size}</button>
+              <a className="pmodal-wa" href={catWa(waProductMessage(full, size))} target="_blank" rel="noopener" aria-label="Consultar por WhatsApp" title="Consultar por WhatsApp">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 .5a11.5 11.5 0 0 0-9.9 17.3L.5 23.5l5.9-1.5A11.5 11.5 0 1 0 12 .5Zm0 21a9.5 9.5 0 0 1-4.9-1.3l-.4-.2-3.5.9.9-3.4-.2-.4A9.5 9.5 0 1 1 12 21.5Zm5.4-7.1c-.3-.1-1.7-.8-2-.9s-.5-.1-.7.2-.8.9-.9 1.1c-.2.2-.3.2-.6.1a8 8 0 0 1-2.3-1.4 8.7 8.7 0 0 1-1.6-2c-.2-.3 0-.5.1-.6l.4-.4.3-.4c.1-.2 0-.3 0-.5l-.9-2c-.2-.5-.4-.5-.6-.5h-.6c-.2 0-.5.1-.8.4a3.4 3.4 0 0 0-1 2.4 5.7 5.7 0 0 0 1.2 3 12.9 12.9 0 0 0 5 4.4 17 17 0 0 0 1.7.6 4 4 0 0 0 1.8.1 3 3 0 0 0 2-1.4 2.4 2.4 0 0 0 .2-1.4c-.1-.1-.3-.2-.6-.3Z"/>
+                </svg>
+              </a>
             </div>
           </div>
         </div>
