@@ -458,8 +458,8 @@
 .pmodal-root { position: fixed; inset: 0; z-index: 95; display: flex; align-items: center; justify-content: center; padding: 24px; pointer-events: none; }
 .pmodal-root.open { pointer-events: auto; }
 .pmodal-root.open .overlay { opacity: 1; }
-.pmodal { position: relative; width: 900px; max-width: 100%; max-height: 90vh; overflow: hidden auto;
-  background: var(--paper); border-radius: 12px; display: grid; grid-template-columns: 1.05fr 1fr;
+.pmodal { position: relative; width: 1080px; max-width: 100%; max-height: 90vh; overflow: hidden auto;
+  background: var(--paper); border-radius: 12px; display: grid; grid-template-columns: 1fr 1.05fr;
   box-shadow: var(--shadow-pop); border: 1px solid var(--line-2);
   opacity: 0; transform: translateY(12px) scale(0.985);
   animation: pmodalIn .4s var(--ease) forwards; scrollbar-width: none; }
