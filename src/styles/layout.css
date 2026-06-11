@@ -205,7 +205,8 @@
   display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .pcard-media::after { content: ""; position: absolute; left: 20%; right: 20%; bottom: 18%; height: 12px; border-radius: 50%;
   background: radial-gradient(closest-side, rgba(60,46,20,0.22), transparent 72%); filter: blur(5px); }
-.pcard-img { width: 100%; height: 100%; object-fit: contain; padding: 14% 19% 20%; mix-blend-mode: multiply; transition: transform .55s var(--ease); }
+.pcard-img { width: 100%; height: 100%; object-fit: contain; padding: 14% 19% 20%; transition: transform .55s var(--ease); }
+.pcard-img.is-jpg { mix-blend-mode: multiply; }
 .pcard:hover .pcard-img { transform: scale(1.07) translateY(-4px); }
 .ph { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
 .ph-mono { font-family: var(--serif); font-size: 60px; color: rgba(138,106,47,0.22); }

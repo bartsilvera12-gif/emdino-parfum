@@ -35,7 +35,14 @@ function ProductCard({ product, onAdd, onOpen }) {
         onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onOpen(product); } }}
       >
         {product.imagen
-          ? <img className="pcard-img" src={product.imagen} alt={product.marca + " " + product.nombre} loading="lazy" />
+          ? <img
+              className="pcard-img"
+              src={"assets/perfumes-cut/" + product.id + ".png"}
+              alt={product.marca + " " + product.nombre}
+              loading="lazy"
+              data-fallback={product.imagen}
+              onError={(e) => { if (!e.target.dataset.didFallback) { e.target.dataset.didFallback = "1"; e.target.classList.add("is-jpg"); e.target.src = e.target.dataset.fallback; } }}
+            />
           : <Placeholder marca={product.marca} />}
         <span className="pcard-cat">{CAT_LABELS[product.categoria]}</span>
         <span className="pcard-zoom" aria-hidden="true">
@@ -99,7 +106,12 @@ function ProductModal({ product, onClose, onAdd }) {
         <button className="x-btn pmodal-x" onClick={onClose} aria-label="Cerrar">&#10005;</button>
         <div className="pmodal-media">
           {product.imagen
-            ? <img src={product.imagen} alt={full} />
+            ? <img
+                src={"assets/perfumes-cut/" + product.id + ".png"}
+                alt={full}
+                data-fallback={product.imagen}
+                onError={(e) => { if (!e.target.dataset.didFallback) { e.target.dataset.didFallback = "1"; e.target.classList.add("is-jpg"); e.target.src = e.target.dataset.fallback; } }}
+              />
             : <div className="ph"><span className="ph-mono">{product.marca.split(/\s+/).map((w) => w[0]).slice(0, 2).join("")}</span><span className="ph-note">foto pr&#243;ximamente</span></div>}
         </div>
         <div className="pmodal-info">
