@@ -3,7 +3,7 @@ const { useState: useHeroState } = React;
 
 const SHELF_ROWS = [
   ["versace-eros", "jpg-le-male-elixir", "ysl-y-edp"],
-  ["armani-swy-intensely", "rasasi-hawas-ice", "pr-invictus-victory-elixir"],
+  ["tf-ombre-leather", "rasasi-hawas-ice", "pr-invictus-victory-elixir"],
   ["jpg-le-beau-edt", "lattafa-khamrah", "versace-eros-flame"],
 ];
 const shelfCut = (id) => "assets/perfumes-cut/" + id + ".png";
