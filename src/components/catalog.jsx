@@ -127,7 +127,7 @@ function ProductModal({ product, onClose, onAdd }) {
           <div className="pmodal-foot">
             <div className="pmodal-price"><span className="pmodal-price-k">{size}</span><span className="pmodal-price-v">{catFmt(product.precios[size])}</span></div>
             <div className="pmodal-acts">
-              <button className={"btn yellow add-btn" + (added ? " added" : "")} onClick={handleAdd}>{added ? "Agregado \u2713" : "Agregar " + size}</button>
+              <button className={"btn yellow add-btn" + (added ? " added" : "")} onClick={handleAdd}>{added ? "Agregado \u2713" : "Agregar al carrito \u00b7 " + size}</button>
               <a className="btn outline-dark" href={catWa(waProductMessage(full, size))} target="_blank" rel="noopener">Consultar por WhatsApp</a>
             </div>
           </div>

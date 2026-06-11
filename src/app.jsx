@@ -48,7 +48,9 @@ function SectionDivider() {
 
 function getRoute() {
   const h = (window.location.hash || "").replace(/^#/, "");
-  return h === "fragancias" ? "catalog" : "home";
+  if (h === "fragancias") return "catalog";
+  if (h === "combos") return "combos";
+  return "home";
 }
 
 function App() {
@@ -190,6 +192,8 @@ function App() {
       <main>
         {route === "catalog" ? (
           <ProductCatalog onAdd={addProduct} />
+        ) : route === "combos" ? (
+          <ComboPage onAdd={addCombo} />
         ) : (
           <React.Fragment>
             <Hero />

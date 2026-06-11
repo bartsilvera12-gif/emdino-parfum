@@ -498,8 +498,8 @@
 .pmodal-price { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
 .pmodal-price-k { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted-2); }
 .pmodal-price-v { font-family: var(--serif); font-size: 26px; font-weight: 600; color: var(--ink); }
-.pmodal-acts { display: flex; gap: 10px; flex-wrap: wrap; }
-.pmodal-acts .btn { flex: 1 1 auto; }
+.pmodal-acts { display: flex; flex-direction: column; gap: 10px; }
+.pmodal-acts .btn { width: 100%; }
 
 @media (max-width: 720px) {
   .pmodal { grid-template-columns: 1fr; max-height: 92vh; }

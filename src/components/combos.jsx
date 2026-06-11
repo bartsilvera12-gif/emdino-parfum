@@ -83,10 +83,15 @@ function ComboCard({ combo, onAdd }) {
   );
 }
 
+const HOME_COMBOS_LIMIT = 8; // combos en la grilla del inicio (sin contar el destacado)
+
 function ComboSection({ onAdd }) {
   const all = window.EMDINO_COMBOS;
+  const rest = all.slice(1);
+  const preview = rest.slice(0, HOME_COMBOS_LIMIT);
+  const hasMore = rest.length > HOME_COMBOS_LIMIT;
   return (
-    <section className="section combos" id="combos" data-screen-label="Combos">
+    <section className="section combos" id="combos-preview" data-screen-label="Combos">
       <div className="wrap">
         <div className="section-head reveal combos-head">
           <p className="eyebrow"><span className="tick"></span>Sets seleccionados</p>
@@ -94,10 +99,31 @@ function ComboSection({ onAdd }) {
           <p>Tríos de decants curados para combinar entre sí. Más fragancias, mejor precio, listos para regalar.</p>
         </div>
         <FeaturedCombo combo={all[0]} onAdd={onAdd} />
+        <div className="combo-grid">{preview.map((c) => <ComboCard key={c.id} combo={c} onAdd={onAdd} />)}</div>
+        <div className="more-row">
+          <a className="btn outline-dark" href="#combos">Ver todos los combos{hasMore ? " (" + rest.length + ")" : ""}</a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ComboPage({ onAdd }) {
+  const all = window.EMDINO_COMBOS;
+  return (
+    <section className="section combos" id="combos" data-screen-label="Todos los combos">
+      <div className="wrap">
+        <header className="catalog-page-head">
+          <p className="eyebrow"><span className="tick"></span>Sets seleccionados</p>
+          <h1 className="display catalog-page-title">Todos los combos</h1>
+          <p className="catalog-page-intro">Tríos de decants curados para combinar entre sí. Más fragancias, mejor precio, listos para regalar.</p>
+          <span className="catalog-rule" aria-hidden="true"></span>
+        </header>
+        <FeaturedCombo combo={all[0]} onAdd={onAdd} />
         <div className="combo-grid">{all.slice(1).map((c) => <ComboCard key={c.id} combo={c} onAdd={onAdd} />)}</div>
       </div>
     </section>
   );
 }
 
-window.ComboSection = ComboSection;
+Object.assign(window, { ComboSection, ComboPage });
