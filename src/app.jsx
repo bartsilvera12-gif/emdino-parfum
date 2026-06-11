@@ -28,10 +28,17 @@ function SectionDivider() {
         {/* puntos finos */}
         <circle cx="10" cy="14" r="1.6" fill="currentColor" />
         <circle cx="210" cy="14" r="1.6" fill="currentColor" />
-        {/* rombo central que gira lento */}
+        {/* flor central que gira lento (rosetón de 6 pétalos) */}
         <g className="sd-gem">
-          <path d="M110 4 L118 14 L110 24 L102 14 Z" stroke="currentColor" strokeWidth="1.2" />
-          <path d="M110 9 L114.5 14 L110 19 L105.5 14 Z" fill="currentColor" />
+          <g stroke="currentColor" strokeWidth="0.9" fill="currentColor" fillOpacity="0.12">
+            <path d="M110 14 C 107.3 10.8, 107.3 7.5, 110 5.5 C 112.7 7.5, 112.7 10.8, 110 14 Z" transform="rotate(0 110 14)" />
+            <path d="M110 14 C 107.3 10.8, 107.3 7.5, 110 5.5 C 112.7 7.5, 112.7 10.8, 110 14 Z" transform="rotate(60 110 14)" />
+            <path d="M110 14 C 107.3 10.8, 107.3 7.5, 110 5.5 C 112.7 7.5, 112.7 10.8, 110 14 Z" transform="rotate(120 110 14)" />
+            <path d="M110 14 C 107.3 10.8, 107.3 7.5, 110 5.5 C 112.7 7.5, 112.7 10.8, 110 14 Z" transform="rotate(180 110 14)" />
+            <path d="M110 14 C 107.3 10.8, 107.3 7.5, 110 5.5 C 112.7 7.5, 112.7 10.8, 110 14 Z" transform="rotate(240 110 14)" />
+            <path d="M110 14 C 107.3 10.8, 107.3 7.5, 110 5.5 C 112.7 7.5, 112.7 10.8, 110 14 Z" transform="rotate(300 110 14)" />
+          </g>
+          <circle cx="110" cy="14" r="1.7" fill="currentColor" />
         </g>
       </svg>
       <span className="sd-line"></span>

@@ -3,6 +3,28 @@ const { useState: useStateCart } = React;
 
 const U = window.EMDINO_UTILS;
 
+function cartItemImage(it) {
+  if (it.type === "combo") {
+    const combo = (window.EMDINO_COMBOS || []).find((c) => c.id === it.id);
+    if (combo && combo.items && combo.items[0]) return "assets/perfumes-cut/" + combo.items[0] + ".png";
+    return null;
+  }
+  const p = window.EMDINO_DATA && window.EMDINO_DATA.PRODUCTS_BY_ID[it.id];
+  return p ? p.imagen : null;
+}
+
+function CartThumb({ it }) {
+  const src = cartItemImage(it);
+  const initials = (it.name || "").split(/\s+/).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
+  return (
+    <div className={"cart-item-thumb" + (it.type === "combo" ? " is-combo" : "")} aria-hidden="true">
+      {src
+        ? <img src={src} alt="" loading="lazy" />
+        : <span className="cart-thumb-mono">{initials}</span>}
+    </div>
+  );
+}
+
 function QtyControl({ qty, onChange }) {
   return (
     <div className="qty" role="group" aria-label="Cantidad">
@@ -37,6 +59,7 @@ function CartDrawer({ open, items, onClose, onQty, onRemove, onCheckout }) {
             <div className="drawer-items thin-scroll">
               {items.map((it) => (
                 <div className="cart-item" key={it.key}>
+                  <CartThumb it={it} />
                   <div className="cart-item-info">
                     <p className="cart-item-name">{it.name}</p>
                     <p className="cart-item-detail">
