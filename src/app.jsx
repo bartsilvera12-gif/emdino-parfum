@@ -80,8 +80,30 @@ function App() {
       }
     };
     const onHash = () => {
-      setRoute(getRoute());
-      window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+      const newRoute = getRoute();
+      setRoute(newRoute);
+      const h = (window.location.hash || "").replace(/^#/, "");
+      const [base] = h.split("?");
+      // Si el hash apunta a un anchor del home (envios, contacto, inicio, etc.)
+      // y no a una ruta o producto, hacemos scroll al elemento después del render.
+      const isAnchor = base && newRoute === "home" && !getHashParam("p");
+      if (isAnchor) {
+        // dos rAF + setTimeout para que React monte el home antes de buscar el elemento
+        const scrollAttempt = (tries) => {
+          const el = document.getElementById(base);
+          if (el) {
+            const targetY = el.getBoundingClientRect().top + window.scrollY - 12;
+            window.scrollTo({ top: targetY, behavior: "smooth" });
+            // Fallback inmediato (algunos browsers/headless ignoran smooth)
+            setTimeout(() => { if (Math.abs(window.scrollY - targetY) > 4) window.scrollTo(0, targetY); }, 700);
+          }
+          else if (tries > 0) setTimeout(() => scrollAttempt(tries - 1), 60);
+          else window.scrollTo({ top: 0 });
+        };
+        requestAnimationFrame(() => setTimeout(() => scrollAttempt(8), 30));
+      } else {
+        window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+      }
       openFromHash();
     };
     window.addEventListener("hashchange", onHash);
