@@ -520,16 +520,16 @@
 .cmodal { grid-template-columns: 1.1fr 1fr; }
 .cmodal-media { position: relative; display: block; padding: 0; min-height: 420px; aspect-ratio: 4 / 5;
   background: var(--ivory) url("../../assets/card-frame.jpg") center / 100% 100% no-repeat; }
-.cmodal-kicker { position: absolute; top: 8%; left: 0; right: 0; text-align: center; z-index: 3;
+.cmodal-kicker { position: absolute; top: 16%; left: 0; right: 0; text-align: center; z-index: 3;
   font-family: var(--serif); font-style: italic; font-size: 13px; color: var(--gold-deep); }
-.cmodal-name { position: absolute; top: 13%; left: 0; right: 0; text-align: center; z-index: 3;
-  font-family: var(--serif); font-size: clamp(20px, 2.2vw, 28px); font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; color: var(--ink); line-height: 1; margin: 0; }
-.cmodal-bottles { position: absolute; top: 28%; bottom: 18%; left: 0; right: 0;
-  display: flex; align-items: flex-end; justify-content: center; gap: 3%; padding: 0 16%; z-index: 2; }
-.cmodal-bottles .cb { height: 92%; max-width: 32%; }
+.cmodal-name { position: absolute; top: 21%; left: 0; right: 0; text-align: center; z-index: 3;
+  font-family: var(--serif); font-size: clamp(18px, 2vw, 26px); font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; color: var(--ink); line-height: 1; margin: 0; }
+.cmodal-bottles { position: absolute; top: 38%; bottom: 22%; left: 0; right: 0;
+  display: flex; align-items: flex-end; justify-content: center; gap: 3%; padding: 0 18%; z-index: 2; }
+.cmodal-bottles .cb { height: 90%; max-width: 30%; }
 .cmodal-bottles .cb-1 { height: 100%; transform: translateY(-3px); }
-.cmodal-media .combo-floor { bottom: 16%; left: 22%; right: 22%; width: auto; transform: none; }
-.cmodal-badge { left: 16%; bottom: 8%; }
+.cmodal-media .combo-floor { bottom: 20%; left: 24%; right: 24%; width: auto; transform: none; }
+.cmodal-badge { left: 18%; bottom: 14%; }
 
 .cmodal-list li { display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 9px 2px; border-bottom: 1px solid var(--line); font-size: 13.5px; color: var(--ink); }
