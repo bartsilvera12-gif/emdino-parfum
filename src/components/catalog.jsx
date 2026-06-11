@@ -137,11 +137,10 @@ function ProductModal({ product, onClose, onAdd }) {
   );
 }
 
-function ProductCatalog({ onAdd }) {
+function ProductCatalog({ onAdd, onOpenDetail }) {
   const [tab, setTab] = useCState("todas");
   const [query, setQuery] = useCState("");
   const [shown, setShown] = useCState(12);
-  const [detail, setDetail] = useCState(null);
 
   const filtered = useCMemo(() => {
     const q = norm(query.trim());
@@ -185,16 +184,15 @@ function ProductCatalog({ onAdd }) {
             <p>No encontramos “{query}”. Probá con otra marca o <a href={catWa("Hola, estoy buscando el decant de " + query + ". ¿Lo tienen disponible?")} target="_blank" rel="noopener">consultanos por WhatsApp</a>.</p>
           </div>
         ) : (
-          <div className="pgrid">{visible.map((p) => <ProductCard key={p.id} product={p} onAdd={onAdd} onOpen={setDetail} />)}</div>
+          <div className="pgrid">{visible.map((p) => <ProductCard key={p.id} product={p} onAdd={onAdd} onOpen={onOpenDetail} />)}</div>
         )}
 
         {shown < filtered.length && (
           <div className="more-row"><button className="btn outline-dark" onClick={() => setShown(shown + 12)}>Ver más ({filtered.length - shown})</button></div>
         )}
       </div>
-      <ProductModal product={detail} onClose={() => setDetail(null)} onAdd={onAdd} />
     </section>
   );
 }
 
-window.ProductCatalog = ProductCatalog;
+Object.assign(window, { ProductCatalog, ProductModal });

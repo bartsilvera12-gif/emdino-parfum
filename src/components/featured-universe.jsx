@@ -26,7 +26,9 @@ const PU_FEMENINO = [
 
 const PU_TABS = [
   { key: "masculino", label: "Fragancias Masculinas" },
-  { key: "femenino", label: "Fragancias Femeninas" },
+  // La línea femenina aún no está disponible. Para reactivarla, descomentá
+  // esta entrada (y cargá imágenes reales en PU_FEMENINO).
+  // { key: "femenino", label: "Fragancias Femeninas" },
 ];
 
 function puInitials(marca) {
@@ -95,19 +97,21 @@ function FeaturedUniverse() {
         <header className="pu-head">
           <p className="pu-eyebrow">La colección Emdino</p>
           <h2 className="pu-title">Productos destacados</h2>
-          <div className="pu-tabs" role="tablist" aria-label="Universo de fragancias">
-            {PU_TABS.map((t) => (
-              <button
-                key={t.key}
-                role="tab"
-                aria-selected={gender === t.key}
-                className={"pu-tab" + (gender === t.key ? " is-active" : "")}
-                onClick={() => setGender(t.key)}
-              >
-                {t.label}
-              </button>
-            ))}
-          </div>
+          {PU_TABS.length > 1 && (
+            <div className="pu-tabs" role="tablist" aria-label="Universo de fragancias">
+              {PU_TABS.map((t) => (
+                <button
+                  key={t.key}
+                  role="tab"
+                  aria-selected={gender === t.key}
+                  className={"pu-tab" + (gender === t.key ? " is-active" : "")}
+                  onClick={() => setGender(t.key)}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          )}
         </header>
 
         <div className="pu-gallery" key={gender}>

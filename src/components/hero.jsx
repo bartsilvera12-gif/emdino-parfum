@@ -8,7 +8,7 @@ const SHELF_ROWS = [
 ];
 const shelfCut = (id) => "assets/perfumes-cut/" + id + ".png";
 
-function PerfumeShelf() {
+function PerfumeShelf({ onOpenDetail }) {
   const { PRODUCTS_BY_ID } = window.EMDINO_DATA;
   const { formatGs } = window.EMDINO_UTILS;
   const flat = SHELF_ROWS.flat();
@@ -33,9 +33,8 @@ function PerfumeShelf() {
                     className={"shelf-bottle" + (id === activeId ? " is-active" : "")}
                     onMouseEnter={() => setActiveId(id)}
                     onFocus={() => setActiveId(id)}
-                    onClick={() => setActiveId(id)}
-                    aria-label={p.marca + " " + p.nombre}
-                    aria-pressed={id === activeId}
+                    onClick={() => { setActiveId(id); onOpenDetail && onOpenDetail(p); }}
+                    aria-label={"Ver detalle de " + p.marca + " " + p.nombre}
                   >
                     <img src={shelfCut(id)} alt="" loading="lazy" />
                     <span className="shelf-bottle-shadow" aria-hidden="true"></span>
@@ -59,7 +58,7 @@ function PerfumeShelf() {
   );
 }
 
-function Hero() {
+function Hero({ onOpenDetail }) {
   const { waLink } = EMDINO_UTILS;
   return (
     <section className="hero" id="inicio" data-screen-label="Hero">
@@ -91,7 +90,7 @@ function Hero() {
         </div>
 
         <div className="hero-right">
-          <PerfumeShelf />
+          <PerfumeShelf onOpenDetail={onOpenDetail} />
         </div>
       </div>
 

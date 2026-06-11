@@ -59,6 +59,7 @@ function App() {
   const [checkoutOpen, setCheckoutOpen] = useStateApp(false);
   const [toast, setToast] = useStateApp(null);
   const [route, setRoute] = useStateApp(getRoute);
+  const [detail, setDetail] = useStateApp(null);
 
   useEffectApp(() => {
     const onHash = () => { setRoute(getRoute()); window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" }); };
@@ -191,12 +192,12 @@ function App() {
       <Header cartCount={cartCount} onCartOpen={() => setCartOpen(true)} />
       <main>
         {route === "catalog" ? (
-          <ProductCatalog onAdd={addProduct} />
+          <ProductCatalog onAdd={addProduct} onOpenDetail={setDetail} />
         ) : route === "combos" ? (
           <ComboPage onAdd={addCombo} />
         ) : (
           <React.Fragment>
-            <Hero />
+            <Hero onOpenDetail={setDetail} />
             <BrandMarquee />
             <FeaturedUniverse />
             <SectionDivider />
@@ -223,6 +224,7 @@ function App() {
         items={cart}
         onClose={() => setCheckoutOpen(false)}
       />
+      <ProductModal product={detail} onClose={() => setDetail(null)} onAdd={addProduct} />
       <Toast toast={toast} />
     </React.Fragment>
   );
