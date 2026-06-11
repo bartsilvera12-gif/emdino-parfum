@@ -86,6 +86,97 @@
 
 .hero-right { display: flex; justify-content: center; align-items: center; }
 
+/* ===== Hero staging — composición fotográfica estilo travertino ===== */
+.hero-staging .hero-bg { background:
+  radial-gradient(120% 90% at 100% 0%, rgba(232,214,172,0.55), transparent 55%),
+  radial-gradient(80% 70% at 0% 100%, rgba(216,192,138,0.32), transparent 60%),
+  linear-gradient(180deg, #fbf3e3 0%, #f3eadb 55%, #ebdfc6 100%); }
+
+.hero-ornament { display: inline-flex; align-items: center; gap: 10px; color: var(--gold); margin: 22px 0 0; opacity: .85; }
+.hero-ornament .ho-line { width: 28px; height: 1px; background: currentColor; }
+
+.stage { position: relative; width: min(100%, 560px); aspect-ratio: 5 / 4; margin: 0;
+  display: block; isolation: isolate; }
+.stage-bg { position: absolute; inset: -4% -6% -10%; z-index: 0; border-radius: 18px;
+  background:
+    radial-gradient(120% 70% at 70% 18%, rgba(255,253,247,0.85), transparent 60%),
+    radial-gradient(80% 60% at 20% 75%, rgba(232,214,172,0.55), transparent 65%),
+    linear-gradient(170deg, #fbf2dd 0%, #f0e3c6 50%, #ddc89a 100%); }
+.stage-bg::after { content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background:
+    radial-gradient(180% 60% at 10% 0%, rgba(255,255,255,0.55), transparent 60%),
+    radial-gradient(60% 40% at 80% 100%, rgba(138,106,47,0.18), transparent 75%);
+  mix-blend-mode: soft-light; pointer-events: none; }
+.stage-shadow-soft { position: absolute; left: 6%; right: 6%; bottom: -4%;
+  height: 36px; background: radial-gradient(50% 100% at 50% 0%, rgba(40,28,10,0.35), transparent 70%);
+  filter: blur(14px); z-index: 0; }
+
+/* tres "escalones" tipo piedra travertina */
+.stage-podium { position: absolute; z-index: 1; border-radius: 6px;
+  background: linear-gradient(180deg, #e9d6ae 0%, #d2b97f 60%, #b8944f 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.55),
+    inset 0 -8px 16px rgba(120,84,28,0.22),
+    0 18px 30px -18px rgba(80,52,12,0.55); }
+.stage-podium::before { content: ""; position: absolute; left: 6%; right: 6%; top: 2px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent); }
+.stage-podium-back  { left: 52%; right: -2%; bottom: 18%; height: 18%; transform: skewY(-1.2deg); }
+.stage-podium-mid   { left: 38%; right: 18%; bottom: 8%; height: 16%; }
+.stage-podium-front { left: 6%;  right: 44%; bottom: 4%; height: 13%; }
+
+/* botellas */
+.stage-bottle { position: absolute; z-index: 3; padding: 0; border: none; background: transparent;
+  cursor: pointer; transition: transform .45s var(--ease), filter .45s var(--ease); }
+.stage-bottle img { width: 100%; height: 100%; object-fit: contain;
+  filter: drop-shadow(0 22px 18px rgba(40,24,4,0.42)) drop-shadow(0 4px 6px rgba(40,24,4,0.25)); }
+.stage-bottle:hover { transform: translateY(-3px); }
+.stage-bottle:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; border-radius: 6px; }
+
+.stage-hero  { left: 38%; right: 12%; bottom: 26%; top: 4%; }
+.stage-left  { left: 4%;  width: 30%; bottom: 16%; top: 28%; }
+.stage-right { right: 0;  width: 28%; bottom: 12%; top: 32%; }
+
+/* tres viales de decant al frente */
+.stage-vials { position: absolute; left: 18%; right: 40%; bottom: 14%; height: 46%;
+  z-index: 4; display: flex; align-items: flex-end; justify-content: center; gap: 6px;
+  pointer-events: none; }
+.stage-vial { position: relative; display: inline-flex; flex-direction: column; align-items: center;
+  filter: drop-shadow(0 14px 10px rgba(40,24,4,0.35)); }
+.stage-vial.v-1 { height: 82%; }
+.stage-vial.v-2 { height: 92%; }
+.stage-vial.v-3 { height: 78%; }
+.vial-cap { width: 14px; height: 26px; border-radius: 3px 3px 2px 2px;
+  background: linear-gradient(180deg, #2a2a25 0%, #0e0e0c 60%, #1a1a16 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.18); }
+.vial-collar { width: 12px; height: 4px; background: linear-gradient(180deg, #c8b48a, #8a6a2f);
+  border-radius: 1px; margin-top: -1px; }
+.vial-body { position: relative; width: 14px; flex: 1; margin-top: -1px;
+  border-radius: 2px 2px 7px 7px;
+  background: linear-gradient(180deg,
+    rgba(255,255,255,0.65) 0%,
+    rgba(255,253,247,0.55) 40%,
+    rgba(184,148,79,0.18) 100%);
+  border: 1px solid rgba(120,90,40,0.18);
+  box-shadow: inset 1px 0 0 rgba(255,255,255,0.6), inset -1px 0 0 rgba(120,90,40,0.12); }
+.vial-liquid { position: absolute; left: 1px; right: 1px; bottom: 1px; height: 30%;
+  background: linear-gradient(180deg, rgba(184,148,79,0.5), rgba(120,84,28,0.7));
+  border-radius: 0 0 6px 6px; }
+.vial-shine { position: absolute; left: 2px; top: 4px; width: 2px; height: 60%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0));
+  border-radius: 1px; }
+
+/* responsive staging */
+@media (max-width: 1000px) {
+  .stage { width: min(100%, 480px); }
+}
+@media (max-width: 760px) {
+  .stage { width: min(100%, 380px); margin: 0 auto; }
+  .vial-cap { width: 11px; height: 20px; }
+  .vial-collar { width: 9px; }
+  .vial-body { width: 11px; }
+  .hero-ornament { margin-top: 16px; }
+}
+
 /* ===== PerfumeShelf — vitrina boutique interactiva ===== */
 .shelf { position: relative; width: min(100%, 440px); margin: 0; }
 .shelf-aura { position: absolute; inset: -8% -6% 6%; pointer-events: none; z-index: 0;
