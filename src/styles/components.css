@@ -538,7 +538,7 @@
 .cmodal-bottles .cb { height: 90%; max-width: 30%; }
 .cmodal-bottles .cb-1 { height: 100%; transform: translateY(-3px); }
 .cmodal-media .combo-floor { bottom: 18%; left: 26%; right: 26%; width: auto; transform: none; }
-.cmodal-badge { left: 20%; bottom: 18%; }
+.cmodal-badge { left: 16%; bottom: 13%; }
 
 .cmodal-list li { display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 9px 2px; border-bottom: 1px solid var(--line); font-size: 13.5px; color: var(--ink); }
