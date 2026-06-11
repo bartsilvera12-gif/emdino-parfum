@@ -187,6 +187,8 @@ function App() {
           <React.Fragment>
             <Hero />
             <BrandMarquee />
+            <FeaturedUniverse />
+            <SectionDivider />
             <FeaturedFragrances onAdd={addProduct} />
             <SectionDivider />
             <ComboSection onAdd={addCombo} />
