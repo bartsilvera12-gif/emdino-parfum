@@ -518,18 +518,18 @@
 .combo-visual.is-clickable:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
 .cmodal { grid-template-columns: 1.1fr 1fr; }
-.cmodal-media { display: block; padding: 0; min-height: 360px;
-  background: radial-gradient(120% 90% at 50% 0%, var(--ivory), var(--paper-2) 78%); }
-.cmodal-kicker { position: absolute; top: 16px; left: 0; right: 0; text-align: center; z-index: 3;
+.cmodal-media { position: relative; display: block; padding: 0; min-height: 420px; aspect-ratio: 4 / 5;
+  background: url("../../assets/card-frame.jpg") center/cover no-repeat, var(--ivory); }
+.cmodal-kicker { position: absolute; top: 8%; left: 0; right: 0; text-align: center; z-index: 3;
   font-family: var(--serif); font-style: italic; font-size: 13px; color: var(--gold-deep); }
-.cmodal-name { position: absolute; top: 32px; left: 0; right: 0; text-align: center; z-index: 3;
-  font-family: var(--serif); font-size: clamp(22px, 2.4vw, 30px); font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; color: var(--ink); line-height: 1; margin: 0; }
-.cmodal-bottles { position: absolute; bottom: 7%; left: 0; right: 0; height: 72%;
-  display: flex; align-items: flex-end; justify-content: center; gap: 3%; padding: 0 6%; z-index: 2; }
-.cmodal-bottles .cb { height: 95%; max-width: 33%; }
+.cmodal-name { position: absolute; top: 13%; left: 0; right: 0; text-align: center; z-index: 3;
+  font-family: var(--serif); font-size: clamp(20px, 2.2vw, 28px); font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; color: var(--ink); line-height: 1; margin: 0; }
+.cmodal-bottles { position: absolute; top: 28%; bottom: 18%; left: 0; right: 0;
+  display: flex; align-items: flex-end; justify-content: center; gap: 3%; padding: 0 16%; z-index: 2; }
+.cmodal-bottles .cb { height: 92%; max-width: 32%; }
 .cmodal-bottles .cb-1 { height: 100%; transform: translateY(-3px); }
-.cmodal-media .combo-floor { bottom: 6%; }
-.cmodal-badge { left: 0; bottom: 22px; }
+.cmodal-media .combo-floor { bottom: 16%; left: 22%; right: 22%; width: auto; transform: none; }
+.cmodal-badge { left: 16%; bottom: 8%; }
 
 .cmodal-list li { display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 9px 2px; border-bottom: 1px solid var(--line); font-size: 13.5px; color: var(--ink); }
