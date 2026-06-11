@@ -18,27 +18,27 @@ function SectionDivider() {
   return (
     <div className="section-divider" role="separator" aria-hidden="true">
       <span className="sd-line"></span>
-      <svg className="sd-ornament" viewBox="0 0 220 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* tallos que entran al centro */}
-        <path d="M14 14 H78" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.8" />
-        <path d="M206 14 H142" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.8" />
-        {/* hojas / volutas a cada lado */}
-        <path d="M78 14 C 88 5, 100 5, 104 14 C 100 23, 88 23, 78 14 Z" stroke="currentColor" strokeWidth="1" />
-        <path d="M142 14 C 132 5, 120 5, 116 14 C 120 23, 132 23, 142 14 Z" stroke="currentColor" strokeWidth="1" />
-        {/* puntos finos */}
-        <circle cx="10" cy="14" r="1.6" fill="currentColor" />
-        <circle cx="210" cy="14" r="1.6" fill="currentColor" />
+      <svg className="sd-ornament" viewBox="0 0 280 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* puntos extremos */}
+        <circle cx="16" cy="14" r="1.6" fill="currentColor" />
+        <circle cx="264" cy="14" r="1.6" fill="currentColor" />
+        {/* tallos finos con holgura */}
+        <path d="M28 14 H92" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.8" />
+        <path d="M252 14 H188" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.8" />
+        {/* hojas separadas de la flor */}
+        <path d="M100 14 C 108 7.5, 116 7.5, 122 14 C 116 20.5, 108 20.5, 100 14 Z" stroke="currentColor" strokeWidth="1" />
+        <path d="M180 14 C 172 7.5, 164 7.5, 158 14 C 164 20.5, 172 20.5, 180 14 Z" stroke="currentColor" strokeWidth="1" />
         {/* flor central que gira lento (rosetón de 6 pétalos) */}
         <g className="sd-gem">
           <g stroke="currentColor" strokeWidth="0.9" fill="currentColor" fillOpacity="0.12">
-            <path d="M110 14 C 107.3 10.8, 107.3 7.5, 110 5.5 C 112.7 7.5, 112.7 10.8, 110 14 Z" transform="rotate(0 110 14)" />
-            <path d="M110 14 C 107.3 10.8, 107.3 7.5, 110 5.5 C 112.7 7.5, 112.7 10.8, 110 14 Z" transform="rotate(60 110 14)" />
-            <path d="M110 14 C 107.3 10.8, 107.3 7.5, 110 5.5 C 112.7 7.5, 112.7 10.8, 110 14 Z" transform="rotate(120 110 14)" />
-            <path d="M110 14 C 107.3 10.8, 107.3 7.5, 110 5.5 C 112.7 7.5, 112.7 10.8, 110 14 Z" transform="rotate(180 110 14)" />
-            <path d="M110 14 C 107.3 10.8, 107.3 7.5, 110 5.5 C 112.7 7.5, 112.7 10.8, 110 14 Z" transform="rotate(240 110 14)" />
-            <path d="M110 14 C 107.3 10.8, 107.3 7.5, 110 5.5 C 112.7 7.5, 112.7 10.8, 110 14 Z" transform="rotate(300 110 14)" />
+            <path d="M140 14 C 137.3 10.8, 137.3 7.5, 140 5.5 C 142.7 7.5, 142.7 10.8, 140 14 Z" transform="rotate(0 140 14)" />
+            <path d="M140 14 C 137.3 10.8, 137.3 7.5, 140 5.5 C 142.7 7.5, 142.7 10.8, 140 14 Z" transform="rotate(60 140 14)" />
+            <path d="M140 14 C 137.3 10.8, 137.3 7.5, 140 5.5 C 142.7 7.5, 142.7 10.8, 140 14 Z" transform="rotate(120 140 14)" />
+            <path d="M140 14 C 137.3 10.8, 137.3 7.5, 140 5.5 C 142.7 7.5, 142.7 10.8, 140 14 Z" transform="rotate(180 140 14)" />
+            <path d="M140 14 C 137.3 10.8, 137.3 7.5, 140 5.5 C 142.7 7.5, 142.7 10.8, 140 14 Z" transform="rotate(240 140 14)" />
+            <path d="M140 14 C 137.3 10.8, 137.3 7.5, 140 5.5 C 142.7 7.5, 142.7 10.8, 140 14 Z" transform="rotate(300 140 14)" />
           </g>
-          <circle cx="110" cy="14" r="1.7" fill="currentColor" />
+          <circle cx="140" cy="14" r="1.7" fill="currentColor" />
         </g>
       </svg>
       <span className="sd-line"></span>

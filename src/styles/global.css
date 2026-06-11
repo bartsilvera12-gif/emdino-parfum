@@ -138,7 +138,7 @@ button { font-family: inherit; cursor: pointer; }
   background: linear-gradient(90deg, transparent, rgba(184,148,79,0.30) 58%, var(--gold) 100%); }
 .sd-line:last-child {
   background: linear-gradient(90deg, var(--gold) 0%, rgba(184,148,79,0.30) 42%, transparent); }
-.sd-ornament { flex-shrink: 0; width: 210px; height: 26px; color: var(--gold);
+.sd-ornament { flex-shrink: 0; width: 256px; height: 26px; color: var(--gold);
   animation: sdGlow 5s ease-in-out infinite; }
 @keyframes sdGlow {
   0%, 100% { filter: drop-shadow(0 0 1px rgba(184,148,79,0.2)); }
@@ -152,8 +152,8 @@ button { font-family: inherit; cursor: pointer; }
 }
 @media (max-width: 760px) {
   .section-divider { padding: 0 18px; gap: 14px; }
-  .sd-line { max-width: 90px; }
-  .sd-ornament { width: 170px; }
+  .sd-line { max-width: 70px; }
+  .sd-ornament { width: 200px; }
 }
 
 /* ---------- secciones ---------- */
