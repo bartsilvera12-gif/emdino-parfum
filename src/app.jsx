@@ -225,9 +225,9 @@ function App() {
             <SectionDivider />
             <ComboSection onAdd={addCombo} />
             <SectionDivider />
-            <ShippingSection />
-            <SectionDivider />
             <HowItWorks />
+            <SectionDivider />
+            <ShippingSection />
           </React.Fragment>
         )}
       </main>
