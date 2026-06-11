@@ -220,7 +220,8 @@
 .featured-title em { font-style: italic; color: var(--yellow); display: inline-block; padding-bottom: 6px; }
 
 .featured-stage { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
-  align-items: stretch; max-width: 920px; margin: 0 auto; }
+  align-items: center; max-width: 920px; margin: 0 auto; }
+.featured-plate { align-self: center; }
 
 /* ---- Stage claro (vitrina boutique, tinte por categoría) ---- */
 .featured-plate { position: relative; aspect-ratio: 1 / 1; border-radius: 6px; overflow: hidden;

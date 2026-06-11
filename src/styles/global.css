@@ -134,31 +134,21 @@ button { font-family: inherit; cursor: pointer; }
 /* ---------- divisoria ornamental entre secciones ---------- */
 .section-divider { display: flex; align-items: center; justify-content: center; gap: 22px;
   width: min(100%, 1280px); margin: 0 auto; padding: 0 32px; }
-.sd-line { flex: 1; max-width: 300px; height: 1px; background-repeat: no-repeat;
-  background-image:
-    linear-gradient(90deg, transparent 0%, rgba(255,253,247,0.95) 8%, transparent 16%),
-    linear-gradient(90deg, transparent, rgba(184,148,79,0.30) 60%, var(--gold) 100%);
-  background-size: 220% 100%, 100% 100%;
-  background-position: -65% 0, 0 0;
-  animation: sdGlint 3.6s ease-in-out infinite; }
+.sd-line { flex: 1; max-width: 300px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(184,148,79,0.30) 58%, var(--gold) 100%); }
 .sd-line:last-child {
-  background-image:
-    linear-gradient(90deg, transparent 0%, rgba(255,253,247,0.95) 8%, transparent 16%),
-    linear-gradient(90deg, var(--gold) 0%, rgba(184,148,79,0.30) 40%, transparent);
-  background-position: 165% 0, 0 0;
-  animation: sdGlintR 3.6s ease-in-out infinite; }
-@keyframes sdGlint  { 0% { background-position: -65% 0, 0 0; } 55%, 100% { background-position: 165% 0, 0 0; } }
-@keyframes sdGlintR { 0% { background-position: 165% 0, 0 0; } 55%, 100% { background-position: -65% 0, 0 0; } }
+  background: linear-gradient(90deg, var(--gold) 0%, rgba(184,148,79,0.30) 42%, transparent); }
 .sd-ornament { flex-shrink: 0; width: 210px; height: 26px; color: var(--gold);
-  animation: sdBreathe 4.5s ease-in-out infinite; }
-@keyframes sdBreathe {
-  0%, 100% { filter: drop-shadow(0 0 1px rgba(184,148,79,0.25)); transform: scale(1); }
-  50% { filter: drop-shadow(0 0 6px rgba(184,148,79,0.6)); transform: scale(1.025); }
+  animation: sdGlow 5s ease-in-out infinite; }
+@keyframes sdGlow {
+  0%, 100% { filter: drop-shadow(0 0 1px rgba(184,148,79,0.2)); }
+  50% { filter: drop-shadow(0 0 5px rgba(184,148,79,0.45)); }
 }
-.sd-gem-core { animation: sdShimmer 2.4s ease-in-out infinite; }
-@keyframes sdShimmer { 0%, 100% { opacity: .7; } 50% { opacity: 1; } }
+/* rombo central girando con suavidad */
+.sd-gem { transform-box: fill-box; transform-origin: center; animation: sdSpin 14s linear infinite; }
+@keyframes sdSpin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) {
-  .sd-line, .sd-line:last-child, .sd-ornament, .sd-gem-core { animation: none; }
+  .sd-ornament, .sd-gem { animation: none; }
 }
 @media (max-width: 760px) {
   .section-divider { padding: 0 18px; gap: 14px; }

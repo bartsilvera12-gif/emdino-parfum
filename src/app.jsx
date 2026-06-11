@@ -28,9 +28,11 @@ function SectionDivider() {
         {/* puntos finos */}
         <circle cx="10" cy="14" r="1.6" fill="currentColor" />
         <circle cx="210" cy="14" r="1.6" fill="currentColor" />
-        {/* rombo central */}
-        <path d="M110 4 L118 14 L110 24 L102 14 Z" stroke="currentColor" strokeWidth="1.2" />
-        <path className="sd-gem-core" d="M110 9 L114.5 14 L110 19 L105.5 14 Z" fill="currentColor" />
+        {/* rombo central que gira lento */}
+        <g className="sd-gem">
+          <path d="M110 4 L118 14 L110 24 L102 14 Z" stroke="currentColor" strokeWidth="1.2" />
+          <path d="M110 9 L114.5 14 L110 19 L105.5 14 Z" fill="currentColor" />
+        </g>
       </svg>
       <span className="sd-line"></span>
     </div>
