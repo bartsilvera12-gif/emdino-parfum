@@ -56,7 +56,7 @@ function Footer() {
         </div>
       </div>
       <div className="wrap footer-base">
-        <span>© {new Date().getFullYear()} Emdino Perfumería</span>
+        <span>Desarrollado por <a href="https://neura.com.py" target="_blank" rel="noopener" className="footer-credit">Neura</a></span>
         <span>Decants 100% originales · Encarnación, PY</span>
       </div>
     </footer>

@@ -145,6 +145,8 @@
 .footer-link { color: var(--muted); font-size: 14.5px; width: fit-content; transition: color .18s ease; }
 .footer-link:hover { color: var(--gold-deep); }
 .footer-base { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 22px 0 28px; border-top: 1px solid var(--line); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted-2); }
+.footer-credit { color: var(--gold-deep); font-weight: 600; border-bottom: 1px solid transparent; transition: border-color .25s ease; }
+.footer-credit:hover { border-color: var(--gold); }
 
 /* ---------- FLOTANTE + TOAST ---------- */
 .wa-float { position: fixed; right: 24px; bottom: 24px; z-index: 70; width: 58px; height: 58px; border-radius: 50%; background: var(--gold); color: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 12px 30px -8px rgba(138,106,47,0.55); transition: transform .2s var(--ease), box-shadow .2s ease; }
