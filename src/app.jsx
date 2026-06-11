@@ -196,8 +196,6 @@ function App() {
             <BrandMarquee />
             <FeaturedUniverse />
             <SectionDivider />
-            <FeaturedFragrances onAdd={addProduct} />
-            <SectionDivider />
             <ComboSection onAdd={addCombo} />
             <SectionDivider />
             <ShippingSection />

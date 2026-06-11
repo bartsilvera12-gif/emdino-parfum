@@ -96,11 +96,11 @@ function ProductModal({ product, onClose, onAdd }) {
     <div className="pmodal-root open" data-screen-label="Detalle de producto">
       <div className="overlay" onClick={onClose}></div>
       <div className="pmodal" role="dialog" aria-modal="true" aria-label={full}>
-        <button className="x-btn pmodal-x" onClick={onClose} aria-label="Cerrar">\u2715</button>
+        <button className="x-btn pmodal-x" onClick={onClose} aria-label="Cerrar">&#10005;</button>
         <div className="pmodal-media">
           {product.imagen
             ? <img src={product.imagen} alt={full} />
-            : <div className="ph"><span className="ph-mono">{product.marca.split(/\s+/).map((w) => w[0]).slice(0, 2).join("")}</span><span className="ph-note">foto pr\u00f3ximamente</span></div>}
+            : <div className="ph"><span className="ph-mono">{product.marca.split(/\s+/).map((w) => w[0]).slice(0, 2).join("")}</span><span className="ph-note">foto pr&#243;ximamente</span></div>}
         </div>
         <div className="pmodal-info">
           <span className="pmodal-cat">{CAT_LABELS[product.categoria]}</span>
@@ -109,8 +109,8 @@ function ProductModal({ product, onClose, onAdd }) {
           <p className="pmodal-desc">{CAT_DESC[product.categoria]}</p>
           <span className="pmodal-rule" aria-hidden="true"></span>
 
-          <span className="pmodal-k">Presentaci\u00f3n</span>
-          <div className="pmodal-sizes" role="group" aria-label="Presentaci\u00f3n">
+          <span className="pmodal-k">Presentaci&#243;n</span>
+          <div className="pmodal-sizes" role="group" aria-label="Presentaci&#243;n">
             {CAT_SIZES.map((s) => (
               <button key={s} className={"size-chip" + (size === s ? " active" : "")} onClick={() => setSize(s)}>{s}</button>
             ))}
