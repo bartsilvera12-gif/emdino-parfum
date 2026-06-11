@@ -69,6 +69,7 @@ function App() {
   const [toast, setToast] = useStateApp(null);
   const [route, setRoute] = useStateApp(getRoute);
   const [detail, setDetail] = useStateApp(null);
+  const [comboDetail, setComboDetail] = useStateApp(null);
 
   useEffectApp(() => {
     const openFromHash = () => {
@@ -216,14 +217,14 @@ function App() {
         {route === "catalog" ? (
           <ProductCatalog onAdd={addProduct} onOpenDetail={setDetail} />
         ) : route === "combos" ? (
-          <ComboPage onAdd={addCombo} />
+          <ComboPage onAdd={addCombo} onOpenCombo={setComboDetail} />
         ) : (
           <React.Fragment>
             <Hero onOpenDetail={setDetail} />
             <BrandMarquee />
             <FeaturedUniverse />
             <SectionDivider />
-            <ComboSection onAdd={addCombo} />
+            <ComboSection onAdd={addCombo} onOpenCombo={setComboDetail} />
             <SectionDivider />
             <HowItWorks />
             <SectionDivider />
@@ -256,6 +257,11 @@ function App() {
           }
         }}
         onAdd={addProduct}
+      />
+      <ComboModal
+        combo={comboDetail}
+        onClose={() => setComboDetail(null)}
+        onAdd={addCombo}
       />
       <Toast toast={toast} />
     </React.Fragment>
