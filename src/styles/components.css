@@ -445,3 +445,68 @@
   .pu-img, .pu-overlay, .pu-name, .pu-name-line { transition: none; }
   .pu-card:hover .pu-shine { animation: none; }
 }
+
+/* ============================================================
+   MODAL DE DETALLE DE PRODUCTO (catálogo)
+   ============================================================ */
+.pcard-media { cursor: pointer; }
+.pcard-zoom { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8);
+  width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  background: rgba(255,253,247,0.92); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  border: 1px solid var(--line-2); color: var(--gold-deep);
+  opacity: 0; transition: opacity .3s var(--ease), transform .3s var(--ease); pointer-events: none; z-index: 2; }
+.pcard:hover .pcard-zoom { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+.pmodal-root { position: fixed; inset: 0; z-index: 95; display: flex; align-items: center; justify-content: center; padding: 24px; pointer-events: none; }
+.pmodal-root.open { pointer-events: auto; }
+.pmodal-root.open .overlay { opacity: 1; }
+.pmodal { position: relative; width: 900px; max-width: 100%; max-height: 90vh; overflow: hidden auto;
+  background: var(--paper); border-radius: 12px; display: grid; grid-template-columns: 1.05fr 1fr;
+  box-shadow: var(--shadow-pop); border: 1px solid var(--line-2);
+  opacity: 0; transform: translateY(12px) scale(0.985);
+  animation: pmodalIn .4s var(--ease) forwards; scrollbar-width: none; }
+.pmodal::-webkit-scrollbar { display: none; }
+@keyframes pmodalIn { to { opacity: 1; transform: none; } }
+.pmodal-x { position: absolute; top: 16px; right: 16px; z-index: 3; background: rgba(255,253,247,0.9); }
+
+.pmodal-media { position: relative; display: flex; align-items: center; justify-content: center; min-height: 320px;
+  background: radial-gradient(120% 80% at 50% 10%, var(--ivory), var(--paper-2) 82%); }
+.pmodal-media::after { content: ""; position: absolute; left: 16%; right: 16%; bottom: 9%; height: 20px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(60,46,20,0.22), transparent 72%); filter: blur(6px); }
+.pmodal-media img { position: relative; max-width: 64%; max-height: 80%; object-fit: contain;
+  filter: drop-shadow(0 22px 26px rgba(60,46,20,0.22)); mix-blend-mode: multiply; }
+.pmodal-media .ph { position: static; }
+
+.pmodal-info { padding: clamp(26px, 3vw, 40px); display: flex; flex-direction: column; }
+.pmodal-cat { font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-deep);
+  border: 1px solid var(--line-2); border-radius: 999px; padding: 5px 11px; align-self: flex-start; }
+.pmodal-brand { margin: 18px 0 6px; font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted-2); }
+.pmodal-name { font-family: var(--serif); font-style: italic; font-size: clamp(28px, 3.2vw, 40px); line-height: 1.08; margin: 0; color: var(--ink); }
+.pmodal-desc { margin: 16px 0 0; font-size: 14px; color: var(--muted); line-height: 1.6; max-width: 32em; }
+.pmodal-rule { display: block; width: 56px; height: 1px; background: var(--gold); opacity: .8; margin: 22px 0; }
+.pmodal-k { font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted-2); margin-bottom: 9px; }
+.pmodal-sizes { display: flex; gap: 7px; flex-wrap: wrap; }
+.pmodal-sizes .size-chip { flex: 0 0 auto; min-width: 56px; }
+
+.pmodal-prices { list-style: none; margin: 22px 0 0; padding: 0; border-top: 1px solid var(--line); }
+.pmodal-prices li { display: flex; justify-content: space-between; padding: 10px 2px; font-size: 13.5px; color: var(--muted); border-bottom: 1px solid var(--line); transition: color .2s ease; }
+.pmodal-prices li span:last-child { font-family: var(--serif); color: var(--ink); }
+.pmodal-prices li.is-active { color: var(--ink); }
+.pmodal-prices li.is-active span:last-child { color: var(--gold-deep); font-weight: 600; }
+
+.pmodal-foot { margin-top: auto; padding-top: 22px; }
+.pmodal-price { display: flex; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+.pmodal-price-k { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted-2); }
+.pmodal-price-v { font-family: var(--serif); font-size: 26px; font-weight: 600; color: var(--ink); }
+.pmodal-acts { display: flex; gap: 10px; flex-wrap: wrap; }
+.pmodal-acts .btn { flex: 1 1 auto; }
+
+@media (max-width: 720px) {
+  .pmodal { grid-template-columns: 1fr; max-height: 92vh; }
+  .pmodal-media { min-height: 260px; }
+  .pmodal-media img { max-height: 240px; max-width: 60%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pmodal { animation: none; opacity: 1; transform: none; }
+  .pcard-zoom { transition: opacity .2s linear; }
+}

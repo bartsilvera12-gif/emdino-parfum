@@ -1,5 +1,5 @@
 // EMDINO — Catálogo masculino: categorías, buscador, cards con foto real
-const { useState: useCState, useMemo: useCMemo } = React;
+const { useState: useCState, useMemo: useCMemo, useEffect: useCEffect } = React;
 
 const CAT_LABELS = window.EMDINO_DATA.CATEGORY_LABELS;
 const CAT_DESC = window.EMDINO_DATA.CATEGORY_DESC;
@@ -17,7 +17,7 @@ function Placeholder({ marca }) {
   );
 }
 
-function ProductCard({ product, onAdd }) {
+function ProductCard({ product, onAdd, onOpen }) {
   const [size, setSize] = useCState("5ml");
   const [added, setAdded] = useCState(false);
   const price = product.precios[size];
@@ -26,12 +26,22 @@ function ProductCard({ product, onAdd }) {
 
   return (
     <article className="pcard">
-      <div className="pcard-media">
+      <div
+        className="pcard-media"
+        role="button"
+        tabIndex={0}
+        aria-label={"Ver detalle de " + product.marca + " " + product.nombre}
+        onClick={() => onOpen(product)}
+        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onOpen(product); } }}
+      >
         {product.imagen
           ? <img className="pcard-img" src={product.imagen} alt={product.marca + " " + product.nombre} loading="lazy" />
           : <Placeholder marca={product.marca} />}
         <span className="pcard-cat">{CAT_LABELS[product.categoria]}</span>
-        <a className="pcard-wa" href={catWa(waProductMessage(product.marca + " " + product.nombre, size))} target="_blank" rel="noopener" aria-label="Consultar por WhatsApp" title="Consultar por WhatsApp">
+        <span className="pcard-zoom" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="11" cy="11" r="7"></circle><path d="M11 8v6M8 11h6M20 20l-4-4"></path></svg>
+        </span>
+        <a className="pcard-wa" href={catWa(waProductMessage(product.marca + " " + product.nombre, size))} target="_blank" rel="noopener" aria-label="Consultar por WhatsApp" title="Consultar por WhatsApp" onClick={(e) => e.stopPropagation()}>
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9c-1.6 0-3.1-.42-4.4-1.15L3 21l1.2-4.45A8.96 8.96 0 0 1 3 12a9 9 0 0 1 9-9Z"></path></svg>
         </a>
       </div>
@@ -65,10 +75,73 @@ const TABS = [
 
 const norm = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
+function ProductModal({ product, onClose, onAdd }) {
+  const [size, setSize] = useCState("5ml");
+  const [added, setAdded] = useCState(false);
+
+  useCEffect(() => {
+    if (!product) return undefined;
+    setSize("5ml");
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => { document.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
+  }, [product]);
+
+  if (!product) return null;
+  const full = product.marca + " " + product.nombre;
+  const handleAdd = () => { onAdd(product, size); setAdded(true); setTimeout(() => setAdded(false), 1100); };
+
+  return (
+    <div className="pmodal-root open" data-screen-label="Detalle de producto">
+      <div className="overlay" onClick={onClose}></div>
+      <div className="pmodal" role="dialog" aria-modal="true" aria-label={full}>
+        <button className="x-btn pmodal-x" onClick={onClose} aria-label="Cerrar">\u2715</button>
+        <div className="pmodal-media">
+          {product.imagen
+            ? <img src={product.imagen} alt={full} />
+            : <div className="ph"><span className="ph-mono">{product.marca.split(/\s+/).map((w) => w[0]).slice(0, 2).join("")}</span><span className="ph-note">foto pr\u00f3ximamente</span></div>}
+        </div>
+        <div className="pmodal-info">
+          <span className="pmodal-cat">{CAT_LABELS[product.categoria]}</span>
+          <p className="pmodal-brand">{product.marca}</p>
+          <h3 className="pmodal-name display">{product.nombre}</h3>
+          <p className="pmodal-desc">{CAT_DESC[product.categoria]}</p>
+          <span className="pmodal-rule" aria-hidden="true"></span>
+
+          <span className="pmodal-k">Presentaci\u00f3n</span>
+          <div className="pmodal-sizes" role="group" aria-label="Presentaci\u00f3n">
+            {CAT_SIZES.map((s) => (
+              <button key={s} className={"size-chip" + (size === s ? " active" : "")} onClick={() => setSize(s)}>{s}</button>
+            ))}
+          </div>
+
+          <ul className="pmodal-prices">
+            {CAT_SIZES.map((s) => (
+              <li key={s} className={size === s ? "is-active" : ""}>
+                <span>{s}</span><span>{catFmt(product.precios[s])}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="pmodal-foot">
+            <div className="pmodal-price"><span className="pmodal-price-k">{size}</span><span className="pmodal-price-v">{catFmt(product.precios[size])}</span></div>
+            <div className="pmodal-acts">
+              <button className={"btn yellow add-btn" + (added ? " added" : "")} onClick={handleAdd}>{added ? "Agregado \u2713" : "Agregar " + size}</button>
+              <a className="btn outline-dark" href={catWa(waProductMessage(full, size))} target="_blank" rel="noopener">Consultar por WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ProductCatalog({ onAdd }) {
   const [tab, setTab] = useCState("todas");
   const [query, setQuery] = useCState("");
   const [shown, setShown] = useCState(12);
+  const [detail, setDetail] = useCState(null);
 
   const filtered = useCMemo(() => {
     const q = norm(query.trim());
@@ -112,13 +185,14 @@ function ProductCatalog({ onAdd }) {
             <p>No encontramos “{query}”. Probá con otra marca o <a href={catWa("Hola, estoy buscando el decant de " + query + ". ¿Lo tienen disponible?")} target="_blank" rel="noopener">consultanos por WhatsApp</a>.</p>
           </div>
         ) : (
-          <div className="pgrid">{visible.map((p) => <ProductCard key={p.id} product={p} onAdd={onAdd} />)}</div>
+          <div className="pgrid">{visible.map((p) => <ProductCard key={p.id} product={p} onAdd={onAdd} onOpen={setDetail} />)}</div>
         )}
 
         {shown < filtered.length && (
           <div className="more-row"><button className="btn outline-dark" onClick={() => setShown(shown + 12)}>Ver más ({filtered.length - shown})</button></div>
         )}
       </div>
+      <ProductModal product={detail} onClose={() => setDetail(null)} onAdd={onAdd} />
     </section>
   );
 }
