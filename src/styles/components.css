@@ -503,10 +503,10 @@
 .pmodal-acts .pmodal-add { flex: 1 1 auto; padding-left: 18px; padding-right: 18px; }
 .pmodal-wa { flex-shrink: 0; width: 48px; height: 48px; border-radius: 50%;
   display: inline-flex; align-items: center; justify-content: center;
-  background: #25D366; color: #fff; border: 1px solid #25D366;
-  box-shadow: 0 6px 14px -6px rgba(37,211,102,0.55);
+  background: var(--gold); color: #fff; border: 1px solid var(--gold);
+  box-shadow: 0 6px 14px -6px rgba(184,148,79,0.6);
   transition: transform .2s var(--ease), background .25s ease, box-shadow .25s ease; }
-.pmodal-wa:hover { background: #1ebe5b; transform: translateY(-1px) scale(1.04); box-shadow: 0 10px 18px -6px rgba(37,211,102,0.65); }
+.pmodal-wa:hover { background: var(--gold-deep); border-color: var(--gold-deep); transform: translateY(-1px) scale(1.04); box-shadow: 0 10px 18px -6px rgba(138,106,47,0.7); }
 .pmodal-wa:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
 @media (max-width: 720px) {
@@ -529,16 +529,16 @@
 .cmodal { grid-template-columns: 1.1fr 1fr; }
 .cmodal-media { position: relative; display: block; padding: 0; min-height: 420px; aspect-ratio: 4 / 5;
   background: var(--ivory) url("../../assets/card-frame.jpg") center / 100% 100% no-repeat; }
-.cmodal-kicker { position: absolute; top: 16%; left: 0; right: 0; text-align: center; z-index: 3;
+.cmodal-kicker { position: absolute; top: 21%; left: 0; right: 0; text-align: center; z-index: 3;
   font-family: var(--serif); font-style: italic; font-size: 13px; color: var(--gold-deep); }
-.cmodal-name { position: absolute; top: 21%; left: 0; right: 0; text-align: center; z-index: 3;
-  font-family: var(--serif); font-size: clamp(18px, 2vw, 26px); font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; color: var(--ink); line-height: 1; margin: 0; }
-.cmodal-bottles { position: absolute; top: 38%; bottom: 22%; left: 0; right: 0;
-  display: flex; align-items: flex-end; justify-content: center; gap: 3%; padding: 0 18%; z-index: 2; }
+.cmodal-name { position: absolute; top: 26%; left: 0; right: 0; text-align: center; z-index: 3;
+  font-family: var(--serif); font-size: clamp(18px, 2vw, 24px); font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; color: var(--ink); line-height: 1; margin: 0; }
+.cmodal-bottles { position: absolute; top: 44%; bottom: 20%; left: 0; right: 0;
+  display: flex; align-items: flex-end; justify-content: center; gap: 3%; padding: 0 20%; z-index: 2; }
 .cmodal-bottles .cb { height: 90%; max-width: 30%; }
 .cmodal-bottles .cb-1 { height: 100%; transform: translateY(-3px); }
-.cmodal-media .combo-floor { bottom: 20%; left: 24%; right: 24%; width: auto; transform: none; }
-.cmodal-badge { left: 18%; bottom: 14%; }
+.cmodal-media .combo-floor { bottom: 18%; left: 26%; right: 26%; width: auto; transform: none; }
+.cmodal-badge { left: 20%; bottom: 18%; }
 
 .cmodal-list li { display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 9px 2px; border-bottom: 1px solid var(--line); font-size: 13.5px; color: var(--ink); }
