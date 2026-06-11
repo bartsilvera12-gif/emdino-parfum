@@ -5,6 +5,8 @@
 
 /* ---------- COMBOS (sets premium claros) ---------- */
 .combos { background: var(--paper); color: var(--ink); }
+/* Padding superior reducido solo en la página completa de combos (no en el home) */
+#combos.combos { padding-top: clamp(28px, 3vw, 44px); }
 .combos-head { margin-bottom: 36px; }
 .combos-head h2 { color: var(--ink); font-size: clamp(28px, 3.6vw, 42px); }
 .combos-head p { color: var(--muted); font-size: 14.5px; }
