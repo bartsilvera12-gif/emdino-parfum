@@ -201,10 +201,11 @@
 .pcard { background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease); }
 .pcard:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -34px rgba(138,106,47,0.42); border-color: var(--gold-soft); }
 .pcard-media { position: relative; aspect-ratio: 4 / 5; background:
-    radial-gradient(120% 80% at 50% 8%, #fffdf7, #f3ead9 78%); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.pcard-media::after { content: ""; position: absolute; left: 10%; right: 10%; bottom: 8%; height: 14px; border-radius: 50%;
+    url("../../assets/card-frame.jpg") center/cover no-repeat, var(--ivory);
+  display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.pcard-media::after { content: ""; position: absolute; left: 20%; right: 20%; bottom: 18%; height: 12px; border-radius: 50%;
   background: radial-gradient(closest-side, rgba(60,46,20,0.22), transparent 72%); filter: blur(5px); }
-.pcard-img { width: 100%; height: 100%; object-fit: contain; padding: 7% 11% 11%; mix-blend-mode: multiply; transition: transform .55s var(--ease); }
+.pcard-img { width: 100%; height: 100%; object-fit: contain; padding: 14% 19% 20%; mix-blend-mode: multiply; transition: transform .55s var(--ease); }
 .pcard:hover .pcard-img { transform: scale(1.07) translateY(-4px); }
 .ph { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
 .ph-mono { font-family: var(--serif); font-size: 60px; color: rgba(138,106,47,0.22); }
