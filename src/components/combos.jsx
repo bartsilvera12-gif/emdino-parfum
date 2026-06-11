@@ -5,25 +5,25 @@ const { formatGs: kFmt, waLink: kWa, waComboMessage } = window.EMDINO_UTILS;
 const pct = (c) => Math.round((1 - c.precioPromo / c.precioNormal) * 100);
 const cut = (id) => "assets/perfumes-cut/" + id + ".png";
 
-function ComboBottles({ items, big }) {
-  return (
-    <div className={"combo-bottles" + (big ? " big" : "")} aria-hidden="true">
-      {items.map((id, i) => (
-        <img key={id} className={"cb cb-" + i} src={cut(id)} alt="" loading="lazy" />
-      ))}
-      <span className="combo-floor"></span>
-    </div>
-  );
-}
-
 function ComboVisual({ combo, big }) {
   return (
     <div className={"combo-visual" + (big ? " big" : "")}>
       <div className="combo-visual-top">
-        <span className="combo-kicker">Combo decants</span>
+        <span className="combo-kicker">Set de decants</span>
         <p className="combo-name display">{combo.nombre}</p>
       </div>
-      <ComboBottles items={combo.items} big={big} />
+      <div className="combo-bottles" aria-hidden="true">
+        {combo.items.map((id, i) => (
+          <img
+            key={id}
+            className={"cb cb-" + i}
+            src={cut(id)}
+            alt=""
+            loading="lazy"
+          />
+        ))}
+        <span className="combo-floor"></span>
+      </div>
       <span className="combo-badge">{pct(combo)}% OFF</span>
     </div>
   );
@@ -89,9 +89,9 @@ function ComboSection({ onAdd }) {
     <section className="section combos" id="combos" data-screen-label="Combos">
       <div className="wrap">
         <div className="section-head reveal combos-head">
-          <p className="eyebrow on-dark"><span className="tick"></span>Promociones</p>
-          <h2 className="display">Combos</h2>
-          <p>Tríos de decants pensados para combinar. Más fragancias, mejor precio.</p>
+          <p className="eyebrow"><span className="tick"></span>Sets seleccionados</p>
+          <h2 className="display">Combos para regalar y descubrir</h2>
+          <p>Tríos de decants curados para combinar entre sí. Más fragancias, mejor precio, listos para regalar.</p>
         </div>
         <FeaturedCombo combo={all[0]} onAdd={onAdd} />
         <div className="combo-grid">{all.slice(1).map((c) => <ComboCard key={c.id} combo={c} onAdd={onAdd} />)}</div>

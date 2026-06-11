@@ -38,10 +38,14 @@ function ProductCard({ product, onAdd }) {
       <div className="pcard-body">
         <p className="pcard-brand">{product.marca}</p>
         <h3 className="pcard-name display">{product.nombre}</h3>
-        <div className="size-row" role="group" aria-label="Presentación">
-          {CAT_SIZES.map((s) => (
-            <button key={s} className={"size-chip" + (size === s ? " active" : "")} onClick={() => setSize(s)}>{s}</button>
-          ))}
+        <span className="pcard-divider" aria-hidden="true"></span>
+        <div className="pcard-sizes">
+          <span className="pcard-sizes-k">Presentación</span>
+          <div className="size-row" role="group" aria-label="Presentación">
+            {CAT_SIZES.map((s) => (
+              <button key={s} className={"size-chip" + (size === s ? " active" : "")} onClick={() => setSize(s)}>{s}</button>
+            ))}
+          </div>
         </div>
         <div className="pcard-foot">
           <div className="pcard-price"><span className="pcard-price-k">{size}</span><span className="pcard-price-v">{catFmt(price)}</span></div>
@@ -81,13 +85,12 @@ function ProductCatalog({ onAdd }) {
   return (
     <section className="section catalog" id="fragancias" data-screen-label="Catálogo masculino">
       <div className="wrap">
-        <div className="catalog-head reveal">
-          <div className="section-head">
-            <p className="eyebrow"><span className="tick"></span>Catálogo masculino</p>
-            <h2 className="display">La colección</h2>
-          </div>
-          <p className="catalog-intro">{tab === "todas" ? "Decants fraccionados de perfumes originales. Elegí la presentación que quieras probar." : CAT_DESC[tab]}</p>
-        </div>
+        <header className="catalog-page-head">
+          <p className="eyebrow"><span className="tick"></span>Catálogo masculino</p>
+          <h1 className="display catalog-page-title">La colección</h1>
+          <p className="catalog-page-intro">{tab === "todas" ? "Decants fraccionados de perfumes originales. Elegí la presentación que quieras probar." : CAT_DESC[tab]}</p>
+          <span className="catalog-rule" aria-hidden="true"></span>
+        </header>
 
         <div className="catalog-bar">
           <div className="tabs" role="tablist" aria-label="Categorías">
@@ -95,13 +98,13 @@ function ProductCatalog({ onAdd }) {
               <button key={t.key} role="tab" aria-selected={tab === t.key} className={"tab" + (tab === t.key ? " active" : "")} onClick={() => { setTab(t.key); setShown(12); }}>{t.label}</button>
             ))}
           </div>
-          <div className="search">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4.5 4.5"></path></svg>
+          <label className="search">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4.5 4.5"></path></svg>
             <input type="search" value={query} placeholder="Buscar fragancia, marca o categoría…" onChange={(e) => { setQuery(e.target.value); setShown(12); }} aria-label="Buscar fragancia" />
-          </div>
+          </label>
         </div>
 
-        <p className="catalog-count">{filtered.length} {filtered.length === 1 ? "fragancia" : "fragancias"}</p>
+        <p className="catalog-count"><span className="catalog-count-n">{filtered.length}</span> {filtered.length === 1 ? "fragancia" : "fragancias"}</p>
 
         {filtered.length === 0 ? (
           <div className="empty">

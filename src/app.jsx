@@ -14,11 +14,46 @@ function loadCart() {
   }
 }
 
+function SectionDivider() {
+  return (
+    <div className="section-divider" role="separator" aria-hidden="true">
+      <span className="sd-line"></span>
+      <svg className="sd-ornament" viewBox="0 0 220 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* tallos que entran al centro */}
+        <path d="M14 14 H78" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.8" />
+        <path d="M206 14 H142" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.8" />
+        {/* hojas / volutas a cada lado */}
+        <path d="M78 14 C 88 5, 100 5, 104 14 C 100 23, 88 23, 78 14 Z" stroke="currentColor" strokeWidth="1" />
+        <path d="M142 14 C 132 5, 120 5, 116 14 C 120 23, 132 23, 142 14 Z" stroke="currentColor" strokeWidth="1" />
+        {/* puntos finos */}
+        <circle cx="10" cy="14" r="1.6" fill="currentColor" />
+        <circle cx="210" cy="14" r="1.6" fill="currentColor" />
+        {/* rombo central */}
+        <path d="M110 4 L118 14 L110 24 L102 14 Z" stroke="currentColor" strokeWidth="1.2" />
+        <path className="sd-gem-core" d="M110 9 L114.5 14 L110 19 L105.5 14 Z" fill="currentColor" />
+      </svg>
+      <span className="sd-line"></span>
+    </div>
+  );
+}
+
+function getRoute() {
+  const h = (window.location.hash || "").replace(/^#/, "");
+  return h === "fragancias" ? "catalog" : "home";
+}
+
 function App() {
   const [cart, setCart] = useStateApp(loadCart);
   const [cartOpen, setCartOpen] = useStateApp(false);
   const [checkoutOpen, setCheckoutOpen] = useStateApp(false);
   const [toast, setToast] = useStateApp(null);
+  const [route, setRoute] = useStateApp(getRoute);
+
+  useEffectApp(() => {
+    const onHash = () => { setRoute(getRoute()); window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" }); };
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
 
   // persistir carrito
   useEffectApp(() => {
@@ -61,7 +96,7 @@ function App() {
       });
     }, 1400);
     return () => { io.disconnect(); clearTimeout(safety); };
-  }, []);
+  }, [route]);
 
   const showToast = (msg) => {
     setToast(msg);
@@ -144,12 +179,21 @@ function App() {
     <React.Fragment>
       <Header cartCount={cartCount} onCartOpen={() => setCartOpen(true)} />
       <main>
-        <Hero />
-        <BrandMarquee />
-        <HowItWorks />
-        <ProductCatalog onAdd={addProduct} />
-        <ComboSection onAdd={addCombo} />
-        <ShippingSection />
+        {route === "catalog" ? (
+          <ProductCatalog onAdd={addProduct} />
+        ) : (
+          <React.Fragment>
+            <Hero />
+            <BrandMarquee />
+            <FeaturedFragrances onAdd={addProduct} />
+            <SectionDivider />
+            <ComboSection onAdd={addCombo} />
+            <SectionDivider />
+            <ShippingSection />
+            <SectionDivider />
+            <HowItWorks />
+          </React.Fragment>
+        )}
       </main>
       <Footer />
       <WhatsAppFloatingButton />

@@ -6,7 +6,7 @@ function ShippingSection() {
     <section className="section shipping" id="envios" data-screen-label="Envíos">
       <div className="wrap shipping-grid">
         <div className="shipping-lead reveal">
-          <p className="eyebrow on-dark"><span className="tick"></span>Envíos</p>
+          <p className="eyebrow"><span className="tick"></span>Envíos</p>
           <h2 className="display">Te lo llevamos<br />donde estés.</h2>
         </div>
         <div className="shipping-cards stagger">
@@ -40,7 +40,7 @@ function Footer() {
       </div>
       <div className="wrap footer-grid">
         <div className="footer-brand">
-          <img src="assets/logo-trans.png" alt="Emdino Perfumería" className="footer-logo" />
+          <img src="assets/logo-dark.png" alt="Emdino Perfumería" className="footer-logo" />
           <p className="footer-loc">Encarnación, Paraguay</p>
         </div>
         <div className="footer-col">

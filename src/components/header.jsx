@@ -39,7 +39,7 @@ function Header({ cartCount, onCartOpen }) {
         </button>
 
         <a href="#inicio" className="logo-link" aria-label="Emdino Perfumería — Inicio">
-          <img src="assets/logo-trans.png" alt="Emdino Perfumería" className="logo-img" />
+          <img src="assets/logo-dark.png" alt="Emdino Perfumería" className="logo-img" />
         </a>
 
         <nav className="main-nav" aria-label="Navegación principal">
