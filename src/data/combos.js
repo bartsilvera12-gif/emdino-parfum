@@ -1,14 +1,6 @@
-// ============================================================
-// EMDINO PERFUMERÍA — Combos promocionales
-// Composición propia para Emdino. Cada combo arma su visual con
-// las fotos reales de los frascos incluidos (assets/perfumes/).
-//
-// PRECIOS PROMO de Party / Mix / Fresh / Irresistible: referencia
-// web (mmfragrances.com, combos visibles al 09/06/2026).
-// Black / Intenso: precio promocional pendiente de confirmar.
-// ============================================================
+// Fallback de combos (cuando Supabase no responde).
 
-const combos = [
+export const EMDINO_COMBOS_FALLBACK = [
   {
     id: "combo-party",
     nombre: "Party",
@@ -59,7 +51,6 @@ const combos = [
     presentacion: "3 decants · 5 ml",
     precioNormal: 125000,
     precioPromo: 115000,
-    promoPendiente: true,
   },
   {
     id: "combo-intenso",
@@ -70,7 +61,6 @@ const combos = [
     presentacion: "3 decants · 5 ml",
     precioNormal: 187000,
     precioPromo: 175000,
-    promoPendiente: true,
   },
   {
     id: "combo-elite",
@@ -81,7 +71,6 @@ const combos = [
     presentacion: "3 decants · 5 ml",
     precioNormal: 183000,
     precioPromo: 172000,
-    promoPendiente: true,
   },
   {
     id: "combo-oud-royale",
@@ -92,7 +81,6 @@ const combos = [
     presentacion: "3 decants · 5 ml",
     precioNormal: 125000,
     precioPromo: 116000,
-    promoPendiente: true,
   },
   {
     id: "combo-vertigo",
@@ -103,8 +91,5 @@ const combos = [
     presentacion: "3 decants · 5 ml",
     precioNormal: 171000,
     precioPromo: 160000,
-    promoPendiente: true,
   },
 ];
-
-window.EMDINO_COMBOS = combos;

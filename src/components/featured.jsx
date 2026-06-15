@@ -1,5 +1,5 @@
 // EMDINO — Showcase editorial de fragancias destacadas
-const { useState: useFState, useEffect: useFEffect, useRef: useFRef } = React;
+import React, { useState as useFState, useEffect as useFEffect, useRef as useFRef } from "react";
 
 const FEATURED_IDS = [
   "versace-eros",
@@ -13,7 +13,7 @@ const FEATURED_IDS = [
 ];
 
 const ROTATE_MS = 6800;
-const cutPath = (id) => "assets/perfumes-cut/" + id + ".png";
+const cutPath = (id) => "/assets/perfumes-cut/" + id + ".png";
 function pad2(n) { return String(n).padStart(2, "0"); }
 
 function FeaturedFragrances({ onAdd }) {
@@ -149,4 +149,6 @@ function FeaturedFragrances({ onAdd }) {
   );
 }
 
-window.FeaturedFragrances = FeaturedFragrances;
+export default FeaturedFragrances;
+export { FeaturedFragrances };
+if (typeof window !== "undefined") window.FeaturedFragrances = FeaturedFragrances;

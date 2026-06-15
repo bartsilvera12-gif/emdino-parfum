@@ -1,12 +1,12 @@
 // EMDINO — Carrito (drawer lateral) + Checkout por WhatsApp
-const { useState: useStateCart } = React;
+import React, { useState as useStateCart } from "react";
 
-const U = window.EMDINO_UTILS;
+const U = new Proxy({}, { get: (_t, k) => (window.EMDINO_UTILS || {})[k] });
 
 function cartItemImage(it) {
   if (it.type === "combo") {
     const combo = (window.EMDINO_COMBOS || []).find((c) => c.id === it.id);
-    if (combo && combo.items && combo.items[0]) return "assets/perfumes-cut/" + combo.items[0] + ".png";
+    if (combo && combo.items && combo.items[0]) return "/assets/perfumes-cut/" + combo.items[0] + ".png";
     return null;
   }
   const p = window.EMDINO_DATA && window.EMDINO_DATA.PRODUCTS_BY_ID[it.id];
@@ -113,7 +113,7 @@ const EMPTY_FORM = {
   observacion: "",
 };
 
-function CheckoutModal({ open, items, onClose }) {
+function CheckoutModal({ open, items, onClose, onConfirm }) {
   const [form, setForm] = useStateCart(EMPTY_FORM);
   const [errors, setErrors] = useStateCart({});
   const total = items.reduce((s, it) => s + it.unitPrice * it.qty, 0);
@@ -140,8 +140,12 @@ function CheckoutModal({ open, items, onClose }) {
     const e = validate();
     setErrors(e);
     if (Object.keys(e).length > 0 || items.length === 0) return;
-    const msg = U.waOrderMessage(form, items, total);
-    window.open(U.waLink(msg), "_blank", "noopener");
+    if (typeof onConfirm === "function") {
+      onConfirm(form);
+    } else {
+      const msg = U.waOrderMessage(form, items, total);
+      window.open(U.waLink(msg), "_blank", "noopener");
+    }
   };
 
   if (!open) return null;
@@ -237,4 +241,5 @@ function CheckoutModal({ open, items, onClose }) {
   );
 }
 
-Object.assign(window, { CartDrawer, CheckoutModal });
+export { CartDrawer, CheckoutModal };
+if (typeof window !== "undefined") Object.assign(window, { CartDrawer, CheckoutModal });

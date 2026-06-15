@@ -1,11 +1,14 @@
 // EMDINO — Catálogo masculino: categorías, buscador, cards con foto real
-const { useState: useCState, useMemo: useCMemo, useEffect: useCEffect } = React;
+import React, { useState as useCState, useMemo as useCMemo, useEffect as useCEffect } from "react";
 
-const CAT_LABELS = window.EMDINO_DATA.CATEGORY_LABELS;
-const CAT_DESC = window.EMDINO_DATA.CATEGORY_DESC;
-const CAT_ALL = window.EMDINO_DATA.MASCULINO_ALL;
-const CAT_SIZES = window.EMDINO_DATA.SIZES;
-const { formatGs: catFmt, waLink: catWa, waProductMessage } = window.EMDINO_UTILS;
+// Proxies dinamicos: window.EMDINO_DATA y window.EMDINO_UTILS los setea PublicApp tras cargar Supabase.
+const CAT_LABELS = new Proxy({}, { get: (_t, k) => (window.EMDINO_DATA?.CATEGORY_LABELS || {})[k] });
+const CAT_DESC = new Proxy({}, { get: (_t, k) => (window.EMDINO_DATA?.CATEGORY_DESC || {})[k] });
+const getCatAll = () => window.EMDINO_DATA?.MASCULINO_ALL || [];
+const getCatSizes = () => window.EMDINO_DATA?.SIZES || ["3ml","5ml","10ml","30ml"];
+const catFmt = (n) => window.EMDINO_UTILS.formatGs(n);
+const catWa = (t) => window.EMDINO_UTILS.waLink(t);
+const waProductMessage = (n, ml) => window.EMDINO_UTILS.waProductMessage(n, ml);
 
 function Placeholder({ marca }) {
   const initials = marca.split(/\s+/).map((w) => w[0]).slice(0, 2).join("");
@@ -37,7 +40,7 @@ function ProductCard({ product, onAdd, onOpen }) {
         {product.imagen
           ? <img
               className="pcard-img"
-              src={"assets/perfumes-cut/" + product.id + ".png"}
+              src={"/assets/perfumes-cut/" + product.id + ".png"}
               alt={product.marca + " " + product.nombre}
               loading="lazy"
               data-fallback={product.imagen}
@@ -59,7 +62,7 @@ function ProductCard({ product, onAdd, onOpen }) {
         <div className="pcard-sizes">
           <span className="pcard-sizes-k">Presentación</span>
           <div className="size-row" role="group" aria-label="Presentación">
-            {CAT_SIZES.map((s) => (
+            {getCatSizes().map((s) => (
               <button key={s} className={"size-chip" + (size === s ? " active" : "")} onClick={() => setSize(s)}>{s}</button>
             ))}
           </div>
@@ -109,7 +112,7 @@ function ProductModal({ product, onClose, onAdd }) {
         <div className="pmodal-media">
           {product.imagen
             ? <img
-                src={"assets/perfumes-cut/" + product.id + ".png"}
+                src={"/assets/perfumes-cut/" + product.id + ".png"}
                 alt={full}
                 data-fallback={product.imagen}
                 onError={(e) => { if (!e.target.dataset.didFallback) { e.target.dataset.didFallback = "1"; e.target.classList.add("is-jpg"); e.target.src = e.target.dataset.fallback; } }}
@@ -124,7 +127,7 @@ function ProductModal({ product, onClose, onAdd }) {
           <div className="pmodal-block">
             <span className="pmodal-k">Tama&#241;o</span>
             <div className="pmodal-sizes" role="group" aria-label="Tama&#241;o">
-              {CAT_SIZES.map((s) => (
+              {getCatSizes().map((s) => (
                 <button key={s} className={"size-chip" + (size === s ? " active" : "")} onClick={() => setSize(s)}>{s}</button>
               ))}
             </div>
@@ -178,7 +181,7 @@ function ProductCatalog({ onAdd, onOpenDetail }) {
 
   const filtered = useCMemo(() => {
     const q = norm(query.trim());
-    return CAT_ALL.filter((p) => {
+    return getCatAll().filter((p) => {
       if (tab !== "todas" && p.categoria !== tab) return false;
       if (!q) return true;
       const hay = norm(p.nombre + " " + p.marca + " " + CAT_LABELS[p.categoria]);
@@ -229,4 +232,5 @@ function ProductCatalog({ onAdd, onOpenDetail }) {
   );
 }
 
-Object.assign(window, { ProductCatalog, ProductModal });
+export { ProductCatalog, ProductModal };
+if (typeof window !== "undefined") Object.assign(window, { ProductCatalog, ProductModal });

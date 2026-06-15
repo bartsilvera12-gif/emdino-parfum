@@ -1,4 +1,6 @@
 // EMDINO — Marquee de casas + banda "El formato decant"
+import React from "react";
+
 const HOUSES = [
   "Jean Paul Gaultier", "Xerjoff", "Parfums de Marly", "Giorgio Armani",
   "Lattafa", "Nishane", "Tom Ford", "Versace", "Valentino", "Afnan",
@@ -67,4 +69,5 @@ function HowItWorks() {
   );
 }
 
-Object.assign(window, { BrandMarquee, HowItWorks });
+export { BrandMarquee, HowItWorks };
+if (typeof window !== "undefined") Object.assign(window, { BrandMarquee, HowItWorks });

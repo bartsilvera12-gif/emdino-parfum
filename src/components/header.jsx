@@ -1,5 +1,5 @@
 // EMDINO — Header (negro, sticky, scroll-aware, logo real)
-const { useState: useHState, useEffect: useHEffect } = React;
+import React, { useState as useHState, useEffect as useHEffect } from "react";
 
 const NAV_LINKS = [
   { href: "#inicio", label: "Inicio" },
@@ -40,7 +40,7 @@ function Header({ cartCount, onCartOpen }) {
           </button>
 
           <a href="#inicio" className="logo-link" aria-label="Emdino Perfumería — Inicio">
-            <img src="assets/logo-dark.png" alt="Emdino Perfumería" className="logo-img" />
+            <img src="/assets/logo-dark.png" alt="Emdino Perfumería" className="logo-img" />
           </a>
 
           <nav className="main-nav" aria-label="Navegación principal">
@@ -70,11 +70,12 @@ function Header({ cartCount, onCartOpen }) {
         </nav>
         <div className="m-foot">
           <span>Encarnación · Paraguay</span>
-          <a href={EMDINO_UTILS.waLink("Hola, quiero más información sobre Emdino Perfumería.")} target="_blank" rel="noopener">WhatsApp {EMDINO_UTILS.WHATSAPP_DISPLAY}</a>
+          <a href={window.EMDINO_UTILS.waLink("Hola, quiero más información sobre Emdino Perfumería.")} target="_blank" rel="noopener">WhatsApp {window.EMDINO_UTILS.WHATSAPP_DISPLAY}</a>
         </div>
       </div>
     </React.Fragment>
   );
 }
 
-window.Header = Header;
+export default Header;
+if (typeof window !== "undefined") window.Header = Header;

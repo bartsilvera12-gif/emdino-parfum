@@ -1,9 +1,9 @@
 // EMDINO — "Productos destacados" por género (editorial oscuro estilo campaña)
 // Tabs Masculinas/Femeninas · cards grandes verticales · fade+slide al cambiar
 // género · hover con zoom/overlay · entrada al hacer scroll (IntersectionObserver).
-const { useState: usePuState, useEffect: usePuEffect, useRef: usePuRef } = React;
+import React, { useState as usePuState, useEffect as usePuEffect, useRef as usePuRef } from "react";
 
-const puCut = (id) => "assets/perfumes-cut/" + id + ".png";
+const puCut = (id) => "/assets/perfumes-cut/" + id + ".png";
 
 // Selección masculina: IDs reales del catálogo (imagen recortada sobre negro).
 const PU_MASCULINO = [
@@ -132,4 +132,5 @@ function FeaturedUniverse() {
   );
 }
 
-window.FeaturedUniverse = FeaturedUniverse;
+export default FeaturedUniverse;
+if (typeof window !== "undefined") window.FeaturedUniverse = FeaturedUniverse;

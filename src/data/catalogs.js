@@ -1,25 +1,19 @@
 // ============================================================
-// EMDINO PERFUMERÍA — Catálogos de decants
-// Estructura separada por género. En esta entrega solo se MUESTRA
-// el catálogo MASCULINO; el FEMENINO queda preparado (vacío) para
-// el futuro y NO se renderiza en la web.
-//
-// PRECIOS: reales, tomados del PDF "CATÁLOGO DECANTS MASCULINO emdino.pdf".
-// IMÁGENES: reales, extraídas del mismo PDF (frasco recortado sobre fondo
-// claro) en assets/perfumes/<id>.jpg.
+// EMDINO PERFUMERÍA — Fallback de catalogo (cuando Supabase no responde)
+// Mismos datos que el seed SQL para que la web no quede vacia si la
+// base se cae.
 // ============================================================
 
 const SIZES = ["3ml", "5ml", "10ml", "30ml"];
 
-// P(id, nombre, marca, categoria, [3ml,5ml,10ml,30ml], hasImage)
 function P(id, nombre, marca, categoria, precios, hasImage = true) {
   return {
     id,
     nombre,
     marca,
     genero: "masculino",
-    categoria, // "disenador" | "arabe" | "nicho"
-    imagen: hasImage ? "assets/perfumes/" + id + ".jpg" : null,
+    categoria,
+    imagen: hasImage ? "/assets/perfumes/" + id + ".jpg" : null,
     precios: { "3ml": precios[0], "5ml": precios[1], "10ml": precios[2], "30ml": precios[3] },
   };
 }
@@ -105,7 +99,6 @@ const catalogs = {
     },
   },
   femenino: {
-    // Preparado para el futuro. NO se muestra en la web todavía.
     categories: { disenador: [], arabe: [], nicho: [] },
   },
 };
@@ -126,15 +119,25 @@ const MASCULINO_ALL = Object.entries(catalogs.masculino.categories).flatMap(
   ([, items]) => items
 );
 
-// Índice por id para componer combos con imágenes reales
 const PRODUCTS_BY_ID = {};
 MASCULINO_ALL.forEach((p) => { PRODUCTS_BY_ID[p.id] = p; });
 
-window.EMDINO_DATA = {
+export const EMDINO_DATA_FALLBACK = {
   catalogs,
   CATEGORY_LABELS,
   CATEGORY_DESC,
   MASCULINO_ALL,
   PRODUCTS_BY_ID,
   SIZES,
+};
+
+export { EMDINO_COMBOS_FALLBACK } from "./combos.js";
+
+export const EMDINO_SETTINGS_FALLBACK = {
+  whatsapp_number: "595972562362",
+  whatsapp_display: "0972 562 362",
+  instagram_handle: "@emdinoo__",
+  instagram_url: "https://instagram.com/emdinoo__",
+  free_shipping_from: 300000,
+  show_female_catalog: false,
 };

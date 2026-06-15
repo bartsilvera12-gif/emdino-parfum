@@ -1,5 +1,6 @@
 // EMDINO — Hero editorial premium con fondo fotográfico estático
-const WA = window.EMDINO_UTILS;
+import React from "react";
+const WA = new Proxy({}, { get: (_t, prop) => (window.EMDINO_UTILS || {})[prop] });
 
 function Hero() {
   const waMsg = "Hola, quiero consultar por las fragancias de Emdino Perfumería.";
@@ -29,4 +30,5 @@ function Hero() {
   );
 }
 
-window.Hero = Hero;
+export default Hero;
+if (typeof window !== "undefined") window.Hero = Hero;

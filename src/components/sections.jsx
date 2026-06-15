@@ -1,5 +1,8 @@
 // EMDINO — Envíos, Footer, botón flotante WhatsApp, Toast
-const SU = window.EMDINO_UTILS;
+import React from "react";
+
+// Proxy dinamico a window.EMDINO_UTILS (que se setea con settings reales al boot).
+const SU = new Proxy({}, { get: (_t, prop) => (window.EMDINO_UTILS || {})[prop] });
 
 function ShippingSection() {
   return (
@@ -36,7 +39,7 @@ function Footer() {
     <footer className="footer" id="contacto" data-screen-label="Footer">
       <div className="wrap footer-grid">
         <div className="footer-brand">
-          <img src="assets/logo-dark.png" alt="Emdino Perfumería" className="footer-logo" />
+          <img src="/assets/logo-dark.png" alt="Emdino Perfumería" className="footer-logo" />
           <p className="footer-loc">Encarnación, Paraguay</p>
         </div>
         <div className="footer-col">
@@ -71,4 +74,5 @@ function Toast({ toast }) {
   return <div className={"toast" + (toast ? " show" : "")} role="status" aria-live="polite">{toast}</div>;
 }
 
-Object.assign(window, { ShippingSection, Footer, WhatsAppFloatingButton, Toast });
+export { ShippingSection, Footer, WhatsAppFloatingButton, Toast };
+if (typeof window !== "undefined") Object.assign(window, { ShippingSection, Footer, WhatsAppFloatingButton, Toast });

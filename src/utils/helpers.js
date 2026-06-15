@@ -1,43 +1,39 @@
 // ============================================================
 // EMDINO PERFUMERÍA — utilidades (WhatsApp + moneda)
+// Exporta tanto ES modules como window.EMDINO_UTILS para compat
+// con los componentes existentes que leen window globals.
 // ============================================================
 
-const WHATSAPP_NUMBER = "595972562362"; // visible: 0972 562 362
-const WHATSAPP_DISPLAY = "0972 562 362";
-const INSTAGRAM_HANDLE = "@emdinoo__";
-const INSTAGRAM_URL = "https://instagram.com/emdinoo__";
-const FREE_SHIPPING_FROM = 300000; // Gs.
+export const WHATSAPP_NUMBER_DEFAULT = "595972562362";
+export const WHATSAPP_DISPLAY_DEFAULT = "0972 562 362";
+export const INSTAGRAM_HANDLE_DEFAULT = "@emdinoo__";
+export const INSTAGRAM_URL_DEFAULT = "https://instagram.com/emdinoo__";
+export const FREE_SHIPPING_FROM_DEFAULT = 300000;
 
-// "Gs. 1.250.000"
-function formatGs(n) {
+export function formatGs(n) {
   if (n == null || isNaN(n)) return "—";
   return "Gs. " + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
-function waLink(text) {
+export function waLink(text, numberOverride) {
+  const number =
+    (typeof window !== "undefined" && window.EMDINO_UTILS && window.EMDINO_UTILS.WHATSAPP_NUMBER) ||
+    numberOverride ||
+    WHATSAPP_NUMBER_DEFAULT;
+  return "https://wa.me/" + number + "?text=" + encodeURIComponent(text);
+}
+
+export function waProductMessage(nombre, ml) {
   return (
-    "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text)
+    "Hola, quiero consultar por el decant de " + nombre + " en presentación de " + ml + "."
   );
 }
 
-// Mensaje para consultar un producto individual
-function waProductMessage(nombre, ml) {
-  return (
-    "Hola, quiero consultar por el decant de " +
-    nombre +
-    " en presentación de " +
-    ml +
-    "."
-  );
-}
-
-// Mensaje para consultar un combo
-function waComboMessage(nombreCombo) {
+export function waComboMessage(nombreCombo) {
   return "Hola, quiero consultar por el combo " + nombreCombo + ".";
 }
 
-// Mensaje de pedido completo (checkout)
-function waOrderMessage(form, items, total) {
+export function waOrderMessage(form, items, total) {
   const lines = [];
   lines.push("Hola, quiero realizar este pedido en Emdino Perfumería:");
   lines.push("");
@@ -80,15 +76,23 @@ function waOrderMessage(form, items, total) {
   return lines.join("\n");
 }
 
-window.EMDINO_UTILS = {
-  WHATSAPP_NUMBER,
-  WHATSAPP_DISPLAY,
-  INSTAGRAM_HANDLE,
-  INSTAGRAM_URL,
-  FREE_SHIPPING_FROM,
-  formatGs,
-  waLink,
-  waProductMessage,
-  waComboMessage,
-  waOrderMessage,
-};
+// Setea defaults en window. PublicApp lo sobreescribe con los settings cargados desde Supabase.
+export function installUtilsOnWindow(overrides = {}) {
+  if (typeof window === "undefined") return;
+  window.EMDINO_UTILS = {
+    WHATSAPP_NUMBER: overrides.whatsapp_number || WHATSAPP_NUMBER_DEFAULT,
+    WHATSAPP_DISPLAY: overrides.whatsapp_display || WHATSAPP_DISPLAY_DEFAULT,
+    INSTAGRAM_HANDLE: overrides.instagram_handle || INSTAGRAM_HANDLE_DEFAULT,
+    INSTAGRAM_URL: overrides.instagram_url || INSTAGRAM_URL_DEFAULT,
+    FREE_SHIPPING_FROM: overrides.free_shipping_from || FREE_SHIPPING_FROM_DEFAULT,
+    formatGs,
+    waLink,
+    waProductMessage,
+    waComboMessage,
+    waOrderMessage,
+  };
+}
+
+// Instalar defaults al importar para que cualquier componente que lea window.EMDINO_UTILS
+// antes del primer render obtenga al menos los defaults.
+installUtilsOnWindow();

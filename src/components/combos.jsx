@@ -1,9 +1,11 @@
 // EMDINO — Combos: visual compuesto con fotos reales de los frascos
-const { useState: useKState, useEffect: useKEffect } = React;
-const { formatGs: kFmt, waLink: kWa, waComboMessage } = window.EMDINO_UTILS;
+import React, { useState as useKState, useEffect as useKEffect } from "react";
+const kFmt = (n) => window.EMDINO_UTILS.formatGs(n);
+const kWa = (t) => window.EMDINO_UTILS.waLink(t);
+const waComboMessage = (n) => window.EMDINO_UTILS.waComboMessage(n);
 
 const pct = (c) => Math.round((1 - c.precioPromo / c.precioNormal) * 100);
-const cut = (id) => "assets/perfumes-cut/" + id + ".png";
+const cut = (id) => "/assets/perfumes-cut/" + id + ".png";
 
 function ComboVisual({ combo, big, onOpen }) {
   const interactive = !!onOpen;
@@ -208,4 +210,5 @@ function ComboModal({ combo, onClose, onAdd }) {
   );
 }
 
-Object.assign(window, { ComboSection, ComboPage, ComboModal });
+export { ComboSection, ComboPage, ComboModal };
+if (typeof window !== "undefined") Object.assign(window, { ComboSection, ComboPage, ComboModal });
