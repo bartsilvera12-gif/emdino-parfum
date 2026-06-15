@@ -5,22 +5,24 @@
 /* ---------- HEADER ---------- */
 .site-header {
   position: sticky; top: 0; z-index: 60;
-  background: rgba(255,255,255,0.92);
-  border-bottom: 1px solid var(--line);
-  transition: background .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease);
+  background: rgba(255,253,247,0.88);
+  -webkit-backdrop-filter: saturate(1.2) blur(10px);
+  backdrop-filter: saturate(1.2) blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: background .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease), backdrop-filter .4s var(--ease);
 }
 .site-header.scrolled {
-  background: rgba(255,253,247,0.82);
-  -webkit-backdrop-filter: saturate(1.25) blur(16px);
-  backdrop-filter: saturate(1.25) blur(16px);
-  border-bottom-color: var(--line-2);
-  box-shadow: 0 14px 40px -28px rgba(138,106,47,0.35);
+  background: rgba(255,253,247,0.78);
+  -webkit-backdrop-filter: saturate(1.4) blur(18px);
+  backdrop-filter: saturate(1.4) blur(18px);
+  border-bottom-color: rgba(138,106,47,0.18);
+  box-shadow: 0 10px 30px -22px rgba(138,106,47,0.28);
 }
-.header-inner { display: flex; align-items: center; gap: 28px; height: 108px; transition: height .4s var(--ease); }
-.site-header.scrolled .header-inner { height: 86px; }
+.header-inner { display: flex; align-items: center; gap: 28px; height: 96px; transition: height .4s var(--ease); }
+.site-header.scrolled .header-inner { height: 76px; }
 .logo-link { flex-shrink: 0; display: flex; padding: 4px 0; }
-.logo-img { height: 78px; width: auto; object-fit: contain; transition: height .4s var(--ease); }
-.site-header.scrolled .logo-img { height: 60px; }
+.logo-img { height: 70px; width: auto; object-fit: contain; transition: height .4s var(--ease); }
+.site-header.scrolled .logo-img { height: 54px; }
 
 .main-nav { display: flex; gap: 30px; margin-left: auto; }
 .nav-link { color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding: 6px 0; position: relative; overflow: hidden; }
