@@ -167,7 +167,10 @@
 .admin-table th { font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--admin-muted); font-weight: 600; }
 .admin-table td.num, .admin-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .admin-table td.warn { color: var(--admin-danger); font-weight: 600; }
-.admin-table td.actions { display: flex; gap: 4px; justify-content: flex-end; }
+.admin-table td { vertical-align: middle; }
+.admin-table td.actions { text-align: right; white-space: nowrap; }
+.admin-table td.actions > * { display: inline-flex; vertical-align: middle; }
+.admin-table td.actions > * + * { margin-left: 4px; }
 .admin-table tr:last-child td { border-bottom: none; }
 .admin-table tfoot td { border-top: 1px solid var(--admin-border-strong); padding-top: 12px; }
 .admin-table.small { font-size: 12.5px; }
