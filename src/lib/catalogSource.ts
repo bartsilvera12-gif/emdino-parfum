@@ -93,40 +93,54 @@ export async function loadCatalogFromSupabase(): Promise<CatalogBundle | null> {
     if (storeErr || !store) return null;
     const storeId = (store as any).id as string;
 
-    // 2) settings
-    const { data: settingsRows } = await emdino
-      .from("settings")
-      .select("key,value")
-      .eq("store_id", storeId);
+    // 2-3-4-5) Paralelizar settings + categorias + productos + combos
+    const [settingsRes, catRes, prodRes, comboRes] = await Promise.all([
+      withTimeout(
+        emdino.from("settings").select("key,value").eq("store_id", storeId),
+        6000, "settings"
+      ),
+      withTimeout(
+        emdino.from("perfume_categories")
+          .select("slug,name,description,sort_order,active")
+          .eq("store_id", storeId).eq("active", true)
+          .order("sort_order", { ascending: true }),
+        6000, "categories"
+      ),
+      withTimeout(
+        emdino.from("products")
+          .select(`
+            id, slug, name, brand, gender, main_image_url, featured, active, sort_order, category_id,
+            category:perfume_categories ( slug ),
+            product_variants ( label, price, active )
+          `)
+          .eq("store_id", storeId).eq("active", true)
+          .order("sort_order", { ascending: true }),
+        8000, "products"
+      ),
+      withTimeout(
+        emdino.from("combos")
+          .select(`
+            slug, name, tagline, presentation, normal_price, promo_price, featured, active, sort_order, image_url,
+            combo_items ( sort_order, product:products ( slug, brand, name ) )
+          `)
+          .eq("store_id", storeId).eq("active", true)
+          .order("sort_order", { ascending: true }),
+        6000, "combos"
+      ),
+    ]);
 
-    const settings = parseSettings(((settingsRows as any[]) || []).map((r) => ({ key: r.key, value: r.value })));
+    const settings = parseSettings(
+      (((settingsRes as any).data as any[]) || []).map((r: any) => ({ key: r.key, value: r.value }))
+    );
 
-    // 3) categorias activas
-    const { data: catRows, error: catErr } = await emdino
-      .from("perfume_categories")
-      .select("slug,name,description,sort_order,active")
-      .eq("store_id", storeId)
-      .eq("active", true)
-      .order("sort_order", { ascending: true });
-    if (catErr) return null;
-    const categories: CatalogCategory[] = ((catRows as any[]) || []).map((r) => ({
+    const categories: CatalogCategory[] = (((catRes as any).data as any[]) || []).map((r: any) => ({
       slug: r.slug,
       name: r.name,
       description: r.description,
       sort_order: r.sort_order,
     }));
 
-    // 4) productos + variantes activas + categoria
-    const { data: productRows, error: prodErr } = await withTimeout(emdino
-      .from("products")
-      .select(`
-        id, slug, name, brand, gender, main_image_url, featured, active, sort_order, category_id,
-        category:perfume_categories ( slug ),
-        product_variants ( label, price, active )
-      `)
-      .eq("store_id", storeId)
-      .eq("active", true)
-      .order("sort_order", { ascending: true }), 8000, "products");
+    const { data: productRows, error: prodErr } = prodRes as any;
     if (prodErr) return null;
 
     const products: CatalogProduct[] = ((productRows as any[]) || []).map((p) => {
@@ -150,16 +164,7 @@ export async function loadCatalogFromSupabase(): Promise<CatalogBundle | null> {
       };
     });
 
-    // 5) combos + items
-    const { data: comboRows, error: comboErr } = await emdino
-      .from("combos")
-      .select(`
-        slug, name, tagline, presentation, normal_price, promo_price, featured, active, sort_order, image_url,
-        combo_items ( sort_order, product:products ( slug, brand, name ) )
-      `)
-      .eq("store_id", storeId)
-      .eq("active", true)
-      .order("sort_order", { ascending: true });
+    const { data: comboRows, error: comboErr } = comboRes as any;
     if (comboErr) return null;
 
     const combos: CatalogCombo[] = ((comboRows as any[]) || []).map((c) => {
@@ -214,8 +219,45 @@ export function loadFallbackCatalog(): CatalogBundle {
   };
 }
 
+// ---- Cache en localStorage (10 min) -----------------------------------------
+const CACHE_KEY = "emdino_catalog_cache_v1";
+const CACHE_TTL_MS = 10 * 60 * 1000;
+
+interface CachedBundle { ts: number; bundle: CatalogBundle; }
+
+function readCache(): CatalogBundle | null {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as CachedBundle;
+    if (!parsed || !parsed.bundle) return null;
+    if (Date.now() - parsed.ts > CACHE_TTL_MS) return null;
+    return { ...parsed.bundle, source: "supabase" as const };
+  } catch { return null; }
+}
+
+function writeCache(bundle: CatalogBundle) {
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), bundle }));
+  } catch {}
+}
+
 export async function loadCatalog(): Promise<CatalogBundle> {
+  // 1) Si hay cache fresca, devolverla inmediatamente (no espera red)
+  const cached = readCache();
+  if (cached) {
+    // Refresh en background sin bloquear
+    loadCatalogFromSupabase().then((fresh) => {
+      if (fresh && fresh.products.length > 0) writeCache(fresh);
+    }).catch(() => {});
+    return cached;
+  }
+  // 2) Sin cache: ir a Supabase
   const remote = await loadCatalogFromSupabase();
-  if (remote && remote.products.length > 0) return remote;
+  if (remote && remote.products.length > 0) {
+    writeCache(remote);
+    return remote;
+  }
+  // 3) Supabase fallo o no devolvio data: fallback local
   return loadFallbackCatalog();
 }
