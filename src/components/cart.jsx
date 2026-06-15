@@ -127,7 +127,7 @@ function CheckoutModal({ open, items, onClose }) {
     const e = {};
     if (!form.nombre.trim()) e.nombre = "Ingresá tu nombre y apellido";
     if (!form.telefono.trim()) e.telefono = "Ingresá tu teléfono";
-    if (!form.documento.trim()) e.documento = "Ingresá tu cédula o RUC para la factura";
+    if (!form.documento.trim()) e.documento = "Ingresá tu cédula para la factura";
     if (form.entrega === "envio") {
       if (!form.ciudad.trim()) e.ciudad = "Para envíos necesitamos tu ciudad";
       if (!form.direccion.trim()) e.direccion = "Indicá dirección o referencia";
@@ -173,8 +173,8 @@ function CheckoutModal({ open, items, onClose }) {
           </div>
 
           <div className="field">
-            <label htmlFor="f-doc">Cédula o RUC *</label>
-            <input id="f-doc" className={errors.documento ? "invalid" : ""} value={form.documento} onChange={set("documento")} placeholder="Ej: 1.234.567 o 80012345-6" inputMode="text" />
+            <label htmlFor="f-doc">Cédula *</label>
+            <input id="f-doc" className={errors.documento ? "invalid" : ""} value={form.documento} onChange={set("documento")} placeholder="Ej: 1.234.567" inputMode="numeric" />
             {errors.documento && <span className="err">{errors.documento}</span>}
           </div>
 
