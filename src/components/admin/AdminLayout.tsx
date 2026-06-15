@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
-  LayoutDashboard, Package, Tags, Boxes, ShoppingBag, Users, Settings, LogOut, Menu, X,
+  LayoutDashboard, Package, Tags, Boxes, ShoppingBag, LogOut, Menu, X,
 } from "lucide-react";
 import { signOut, useAdminSession } from "../../lib/adminSession";
 
@@ -11,8 +11,6 @@ const links = [
   { to: "/admin/categorias", label: "Categorías", icon: Tags },
   { to: "/admin/combos", label: "Combos", icon: Boxes },
   { to: "/admin/pedidos", label: "Pedidos", icon: ShoppingBag },
-  { to: "/admin/clientes", label: "Clientes", icon: Users },
-  { to: "/admin/configuracion", label: "Configuración", icon: Settings },
 ];
 
 interface Props {
