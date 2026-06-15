@@ -12,7 +12,7 @@
 .combos-head p { color: var(--muted); font-size: 14.5px; }
 
 .combo-visual { position: relative; overflow: hidden; border-radius: 6px; background:
-  radial-gradient(120% 90% at 50% 0%, var(--ivory), var(--paper-2) 72%); border: 1px solid var(--line); min-height: 220px; }
+  radial-gradient(120% 90% at 50% 0%, var(--ivory), var(--paper-2) 72%); border: 1px solid var(--line); min-height: 260px; }
 .combo-visual::after { content: ""; position: absolute; inset: 0; background: radial-gradient(70% 55% at 50% 102%, rgba(184,148,79,0.16), transparent 72%); pointer-events: none; z-index: 1; }
 /* brillo que recorre la caja al pasar el mouse */
 .combo-visual::before { content: ""; position: absolute; top: -30%; left: -70%; width: 45%; height: 160%; z-index: 2; pointer-events: none;
@@ -21,10 +21,10 @@
   opacity: 0; transition: opacity .2s ease; }
 .combo-card:hover .combo-visual::before, .combo-feat:hover .combo-visual::before { animation: comboShine 1s ease-out; }
 @keyframes comboShine { 0% { left: -70%; opacity: 0; } 15% { opacity: 1; } 100% { left: 130%; opacity: 0; } }
-.combo-visual-top { position: absolute; top: 0; left: 0; right: 0; padding: 18px 20px 0; z-index: 3; text-align: center; }
-.combo-kicker { font-family: var(--serif); font-style: normal; font-size: 13px; color: var(--gold-deep); }
-.combo-name { font-size: clamp(22px, 2.4vw, 30px); font-weight: 600; text-transform: uppercase; letter-spacing: 0.01em; color: var(--ink); line-height: 1; margin-top: 2px; }
-.combo-bottles { position: absolute; bottom: 0; left: 0; right: 0; height: 70%; z-index: 2;
+.combo-visual-top { position: absolute; top: 0; left: 0; right: 0; padding: 16px 20px 0; z-index: 3; text-align: center; }
+.combo-kicker { font-family: var(--serif); font-style: normal; font-size: 12px; color: var(--gold-deep); line-height: 1.2; }
+.combo-name { font-size: clamp(20px, 2vw, 26px); font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; color: var(--ink); line-height: 1.05; margin: 4px 0 0; }
+.combo-bottles { position: absolute; bottom: 0; left: 0; right: 0; height: 58%; z-index: 2;
   display: flex; align-items: flex-end; justify-content: center; gap: 4%; padding: 0 8% 9%; }
 .cb { height: 90%; max-width: 30%; object-fit: contain; object-position: bottom;
   filter: drop-shadow(0 12px 14px rgba(60,46,20,0.30)); transition: transform .45s var(--ease); }
@@ -241,8 +241,8 @@
   .combo-feat-info { padding: 22px; }
   .combo-list li { font-size: 13px; }
   .price-promo.big { font-size: 24px; }
-  .combo-card .combo-visual { min-height: 200px; }
-  .combo-name { font-size: 24px; }
+  .combo-card .combo-visual { min-height: 240px; }
+  .combo-name { font-size: 22px; }
 
   /* Modal de producto en mobile */
   .pmodal { grid-template-columns: 1fr; max-height: 94vh; }
