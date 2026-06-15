@@ -74,15 +74,22 @@ function parseSettings(rows: { key: string; value: any }[]): CatalogSettings {
   };
 }
 
+async function withTimeout<T>(p: Promise<T>, ms: number, tag: string): Promise<T> {
+  return Promise.race([
+    p,
+    new Promise<T>((_, reject) => setTimeout(() => reject(new Error(`Timeout (${tag}) tras ${ms}ms`)), ms)),
+  ]);
+}
+
 export async function loadCatalogFromSupabase(): Promise<CatalogBundle | null> {
   if (!supabaseConfigured) return null;
   try {
     // 1) store
-    const { data: store, error: storeErr } = await emdino
-      .from("stores")
-      .select("id")
-      .eq("slug", STORE_SLUG)
-      .single();
+    const { data: store, error: storeErr } = await withTimeout(
+      emdino.from("stores").select("id").eq("slug", STORE_SLUG).single(),
+      6000,
+      "stores"
+    );
     if (storeErr || !store) return null;
     const storeId = (store as any).id as string;
 
@@ -110,7 +117,7 @@ export async function loadCatalogFromSupabase(): Promise<CatalogBundle | null> {
     }));
 
     // 4) productos + variantes activas + categoria
-    const { data: productRows, error: prodErr } = await emdino
+    const { data: productRows, error: prodErr } = await withTimeout(emdino
       .from("products")
       .select(`
         id, slug, name, brand, gender, main_image_url, featured, active, sort_order, category_id,
@@ -119,7 +126,7 @@ export async function loadCatalogFromSupabase(): Promise<CatalogBundle | null> {
       `)
       .eq("store_id", storeId)
       .eq("active", true)
-      .order("sort_order", { ascending: true });
+      .order("sort_order", { ascending: true }), 8000, "products");
     if (prodErr) return null;
 
     const products: CatalogProduct[] = ((productRows as any[]) || []).map((p) => {

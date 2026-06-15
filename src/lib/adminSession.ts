@@ -9,17 +9,29 @@ export interface AdminProfile {
   role: "admin" | "editor";
 }
 
+async function withTimeout<T>(p: Promise<T>, ms: number, tag: string): Promise<T> {
+  return Promise.race([
+    p,
+    new Promise<T>((_, reject) => setTimeout(() => reject(new Error(`Timeout (${tag})`)), ms)),
+  ]);
+}
+
 export async function getCurrentProfile(): Promise<AdminProfile | null> {
   if (!supabaseConfigured) return null;
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return null;
-  const { data, error } = await emdino
-    .from("profiles")
-    .select("id, store_id, email, role")
-    .eq("id", user.id)
-    .single();
-  if (error || !data) return null;
-  return data as AdminProfile;
+  try {
+    const { data: { user } } = await withTimeout(supabase.auth.getUser(), 6000, "auth.getUser");
+    if (!user) return null;
+    const { data, error } = await withTimeout(
+      emdino.from("profiles").select("id, store_id, email, role").eq("id", user.id).single(),
+      6000,
+      "profiles"
+    );
+    if (error || !data) return null;
+    return data as AdminProfile;
+  } catch (err) {
+    console.warn("[adminSession] getCurrentProfile error:", err);
+    return null;
+  }
 }
 
 export async function signOut() {
@@ -43,7 +55,7 @@ export function useAdminSession(): AdminSessionState {
         return;
       }
       try {
-        const profile = await getCurrentProfile();
+        const profile = await withTimeout(getCurrentProfile(), 8000, "getCurrentProfile");
         if (!alive) return;
         if (!profile) {
           setState({ loading: false, profile: null, error: null });
