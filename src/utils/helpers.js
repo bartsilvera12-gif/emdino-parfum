@@ -41,26 +41,40 @@ function waOrderMessage(form, items, total) {
   const lines = [];
   lines.push("Hola, quiero realizar este pedido en Emdino Perfumería:");
   lines.push("");
-  lines.push("Cliente: " + form.nombre);
-  lines.push("Teléfono: " + form.telefono);
-  if (form.documento) lines.push("Cédula/RUC: " + form.documento);
-  if (form.ciudad) lines.push("Ciudad: " + form.ciudad);
+  lines.push("DATOS DEL CLIENTE");
+  lines.push("Nombre: " + (form.nombre || "—"));
+  lines.push("Teléfono: " + (form.telefono || "—"));
+  lines.push("Cédula/RUC: " + (form.documento || "—"));
   lines.push("Entrega: " + (form.entrega === "envio" ? "Envío" : "Retiro en Encarnación"));
-  if (form.direccion) lines.push("Dirección/Referencia: " + form.direccion);
-  if (form.observacion) lines.push("Observación: " + form.observacion);
+  if (form.entrega === "envio") {
+    lines.push("Ciudad: " + (form.ciudad || "—"));
+    lines.push("Dirección/Referencia: " + (form.direccion || "—"));
+  }
+  if (form.observacion && form.observacion.trim()) {
+    lines.push("Observación: " + form.observacion.trim());
+  }
   lines.push("");
-  lines.push("Productos:");
+  lines.push("PEDIDO");
+  lines.push("");
   items.forEach((it, i) => {
-    const desc =
-      it.type === "combo"
-        ? it.name
-        : it.name + " - " + it.size;
-    lines.push(
-      (i + 1) + ". " + desc + " x " + it.qty + " - " + formatGs(it.unitPrice * it.qty)
-    );
+    const idx = i + 1;
+    const subtotal = it.unitPrice * it.qty;
+    if (it.type === "combo") {
+      lines.push(idx + ". " + it.name);
+      if (it.detail) lines.push("   Detalle: " + it.detail);
+      lines.push("   Cantidad: " + it.qty);
+      lines.push("   Precio unitario: " + formatGs(it.unitPrice));
+      lines.push("   Subtotal: " + formatGs(subtotal));
+    } else {
+      lines.push(idx + ". " + it.name);
+      lines.push("   Presentación: " + it.size);
+      lines.push("   Cantidad: " + it.qty);
+      lines.push("   Precio unitario: " + formatGs(it.unitPrice));
+      lines.push("   Subtotal: " + formatGs(subtotal));
+    }
+    lines.push("");
   });
-  lines.push("");
-  lines.push("Total: " + formatGs(total));
+  lines.push("TOTAL: " + formatGs(total));
   lines.push("");
   lines.push("Quedo atento/a para confirmar disponibilidad.");
   return lines.join("\n");
