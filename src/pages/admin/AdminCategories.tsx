@@ -29,23 +29,28 @@ export default function AdminCategories() {
   const load = async () => {
     if (!profile) return;
     setLoading(true);
-    const { data, error } = await emdino
-      .from("perfume_categories")
-      .select("id, store_id, name, slug, description, active, sort_order")
-      .eq("store_id", profile.store_id)
-      .order("sort_order", { ascending: true });
-    if (error) { setError(error.message); setLoading(false); return; }
-    const rows = (data as Category[]) || [];
-    // Conteo de productos por categoria
-    const counts: Record<string, number> = {};
-    for (const row of rows) {
-      const { count } = await emdino
+    // 2 queries en paralelo: categorias + ids de productos por categoria.
+    // Conteo lo hacemos en JS (1 sola lectura de products vs N selects con head=true).
+    const [{ data: catRows, error: catErr }, { data: prodRows, error: prodErr }] = await Promise.all([
+      emdino
+        .from("perfume_categories")
+        .select("id, store_id, name, slug, description, active, sort_order")
+        .eq("store_id", profile.store_id)
+        .order("sort_order", { ascending: true }),
+      emdino
         .from("products")
-        .select("id", { count: "exact", head: true })
-        .eq("category_id", row.id);
-      counts[row.id] = count || 0;
-    }
-    setItems(rows.map((r) => ({ ...r, products_count: counts[r.id] || 0 })));
+        .select("category_id")
+        .eq("store_id", profile.store_id),
+    ]);
+    if (catErr) { setError(catErr.message); setLoading(false); return; }
+    if (prodErr) { setError(prodErr.message); setLoading(false); return; }
+    const counts = new Map<string, number>();
+    ((prodRows as any[]) || []).forEach((p) => {
+      if (!p.category_id) return;
+      counts.set(p.category_id, (counts.get(p.category_id) || 0) + 1);
+    });
+    const rows = (catRows as Category[]) || [];
+    setItems(rows.map((r) => ({ ...r, products_count: counts.get(r.id) || 0 })));
     setLoading(false);
   };
 
