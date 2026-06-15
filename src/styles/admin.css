@@ -173,6 +173,16 @@
 .admin-table.small { font-size: 12.5px; }
 .admin-table.small td, .admin-table.small th { padding: 8px 10px; }
 
+.admin-product-cell { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.admin-product-thumb { position: relative; flex-shrink: 0; width: 44px; height: 52px; border-radius: 6px; overflow: hidden;
+  background: radial-gradient(120% 80% at 50% 10%, var(--admin-bg) 0%, var(--admin-bg-2) 80%);
+  border: 1px solid var(--admin-border);
+  display: flex; align-items: center; justify-content: center; }
+.admin-product-thumb img { width: 100%; height: 100%; object-fit: contain; padding: 4px; mix-blend-mode: multiply; }
+.admin-product-thumb-ph { display: flex; align-items: center; justify-content: center;
+  width: 100%; height: 100%; font-family: "Marcellus", serif; font-size: 14px;
+  color: rgba(138,106,47,0.55); letter-spacing: 0.04em; }
+
 .admin-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; letter-spacing: 0.04em;
   background: rgba(184,148,79,0.12); color: var(--admin-gold-deep); }
 .admin-pill.ok { background: rgba(92,138,58,0.15); color: var(--admin-ok); }

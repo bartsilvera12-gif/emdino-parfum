@@ -224,8 +224,30 @@ export default function AdminProducts() {
                 return (
                   <tr key={p.id}>
                     <td>
-                      <strong>{p.brand}</strong> {p.name}
-                      <div className="admin-muted xsmall">{p.slug}</div>
+                      <div className="admin-product-cell">
+                        <div className="admin-product-thumb" aria-hidden="true">
+                          {p.main_image_url ? (
+                            <img
+                              src={p.main_image_url}
+                              alt=""
+                              loading="lazy"
+                              onError={(e) => {
+                                const img = e.currentTarget;
+                                img.style.display = "none";
+                                const ph = img.nextElementSibling as HTMLElement | null;
+                                if (ph) ph.style.display = "flex";
+                              }}
+                            />
+                          ) : null}
+                          <span className="admin-product-thumb-ph" style={{ display: p.main_image_url ? "none" : "flex" }}>
+                            {p.brand.slice(0, 2).toUpperCase()}
+                          </span>
+                        </div>
+                        <div>
+                          <strong>{p.brand}</strong> {p.name}
+                          <div className="admin-muted xsmall">{p.slug}</div>
+                        </div>
+                      </div>
                     </td>
                     <td className="admin-muted">{cat?.name || "—"}</td>
                     <td className="admin-muted">{p.gender}</td>
