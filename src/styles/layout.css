@@ -59,9 +59,9 @@
 
 /* ---------- HERO foto estática (portada actual) ---------- */
 .hero-photo { position: relative; overflow: hidden; color: var(--ink);
-  min-height: clamp(560px, 78vh, 760px);
-  display: flex; flex-direction: column; justify-content: space-between;
-  padding: clamp(40px, 6vw, 80px) 0 clamp(28px, 3.5vw, 44px); }
+  min-height: clamp(480px, 70vh, 660px);
+  display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(48px, 6vw, 80px) 0; }
 .hero-photo-bg { position: absolute; inset: 0; z-index: 0;
   background-image: url("../../assets/hero-bg.png");
   background-size: cover; background-position: center right; background-repeat: no-repeat; }
@@ -111,13 +111,13 @@
 
 /* Mobile: foto como card arriba + copy sobre fondo limpio abajo */
 @media (max-width: 760px) {
-  .hero-photo { display: block; padding: 0; min-height: 0;
+  .hero-photo { display: block; padding: 0 0 32px; min-height: 0;
     background: linear-gradient(180deg, var(--ivory) 0%, var(--paper) 100%); }
   .hero-photo-bg { position: relative; inset: auto; height: 56vw; max-height: 320px; min-height: 240px;
     margin: 0; background-position: 62% center; background-size: cover;
     border-bottom: 1px solid var(--line); }
   .hero-photo-overlay { display: none; }
-  .hero-photo-grid { display: block; padding: 26px 0 8px; }
+  .hero-photo-grid { display: block; padding: 26px 0 4px; }
   .hero-photo-copy { max-width: none; padding: 0; }
   .hero-photo-copy .eyebrow { font-size: 10.5px; letter-spacing: 0.22em; }
   .hero-photo-title { font-size: clamp(28px, 8.4vw, 36px); margin-top: 14px; line-height: 1.1; }
