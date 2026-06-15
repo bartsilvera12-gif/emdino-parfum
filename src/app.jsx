@@ -164,13 +164,14 @@ function App() {
   const cartCount = cart.reduce((s, it) => s + it.qty, 0);
 
   // ---- acciones de carrito ----
-  const addProduct = (product, size) => {
+  const addProduct = (product, size, qty) => {
+    const addQty = Math.max(1, parseInt(qty, 10) || 1);
     const key = product.id + "::" + size;
     setCart((prev) => {
       const found = prev.find((it) => it.key === key);
       if (found) {
         return prev.map((it) =>
-          it.key === key ? { ...it, qty: it.qty + 1 } : it
+          it.key === key ? { ...it, qty: it.qty + addQty } : it
         );
       }
       return [
@@ -182,11 +183,11 @@ function App() {
           name: product.marca + " " + product.nombre,
           size,
           unitPrice: product.precios[size],
-          qty: 1,
+          qty: addQty,
         },
       ];
     });
-    showToast(product.nombre + " (" + size + ") agregado al carrito");
+    showToast(product.nombre + " (" + size + ") × " + addQty + " agregado al carrito");
   };
 
   const addCombo = (combo) => {

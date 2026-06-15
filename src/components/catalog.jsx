@@ -84,11 +84,13 @@ const norm = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCa
 
 function ProductModal({ product, onClose, onAdd }) {
   const [size, setSize] = useCState("5ml");
+  const [qty, setQty] = useCState(1);
   const [added, setAdded] = useCState(false);
 
   useCEffect(() => {
     if (!product) return undefined;
     setSize("5ml");
+    setQty(1);
     const onKey = (e) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
@@ -97,7 +99,7 @@ function ProductModal({ product, onClose, onAdd }) {
 
   if (!product) return null;
   const full = product.marca + " " + product.nombre;
-  const handleAdd = () => { onAdd(product, size); setAdded(true); setTimeout(() => setAdded(false), 1100); };
+  const handleAdd = () => { onAdd(product, size, qty); setAdded(true); setTimeout(() => setAdded(false), 1100); };
 
   return (
     <div className="pmodal-root open" data-screen-label="Detalle de producto">
@@ -118,34 +120,50 @@ function ProductModal({ product, onClose, onAdd }) {
           <span className="pmodal-cat">{CAT_LABELS[product.categoria]}</span>
           <p className="pmodal-brand">{product.marca}</p>
           <h3 className="pmodal-name display">{product.nombre}</h3>
-          <p className="pmodal-desc">{CAT_DESC[product.categoria]}</p>
-          <span className="pmodal-rule" aria-hidden="true"></span>
 
-          <span className="pmodal-k">Presentaci&#243;n</span>
-          <div className="pmodal-sizes" role="group" aria-label="Presentaci&#243;n">
-            {CAT_SIZES.map((s) => (
-              <button key={s} className={"size-chip" + (size === s ? " active" : "")} onClick={() => setSize(s)}>{s}</button>
-            ))}
+          <div className="pmodal-block">
+            <span className="pmodal-k">Tama&#241;o</span>
+            <div className="pmodal-sizes" role="group" aria-label="Tama&#241;o">
+              {CAT_SIZES.map((s) => (
+                <button key={s} className={"size-chip" + (size === s ? " active" : "")} onClick={() => setSize(s)}>{s}</button>
+              ))}
+            </div>
           </div>
 
-          <ul className="pmodal-prices">
-            {CAT_SIZES.map((s) => (
-              <li key={s} className={size === s ? "is-active" : ""}>
-                <span>{s}</span><span>{catFmt(product.precios[s])}</span>
-              </li>
-            ))}
+          <p className="pmodal-bigprice">{catFmt(product.precios[size])}</p>
+          <p className="pmodal-shipnote">Los gastos de env&#237;o se calculan al confirmar el pedido por WhatsApp.</p>
+
+          <div className="pmodal-block">
+            <span className="pmodal-k">Cantidad</span>
+            <div className="pmodal-qty" role="group" aria-label="Cantidad">
+              <button type="button" onClick={() => setQty(Math.max(1, qty - 1))} aria-label="Restar">&#8722;</button>
+              <span>{qty}</span>
+              <button type="button" onClick={() => setQty(qty + 1)} aria-label="Sumar">&#43;</button>
+            </div>
+          </div>
+
+          <ul className="pmodal-trust" aria-label="Beneficios">
+            <li>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg>
+              <span>Env&#237;os a todo Paraguay</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>
+              <span>Entrega en el d&#237;a seg&#250;n disponibilidad (m&#225;ximo 2 d&#237;as)</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>
+              <span>Perfumes 100&#37; originales</span>
+            </li>
           </ul>
 
-          <div className="pmodal-foot">
-            <div className="pmodal-price"><span className="pmodal-price-k">{size}</span><span className="pmodal-price-v">{catFmt(product.precios[size])}</span></div>
-            <div className="pmodal-acts">
-              <button className={"btn yellow add-btn pmodal-add" + (added ? " added" : "")} onClick={handleAdd}>{added ? "Agregado \u2713" : "Agregar al carrito \u00b7 " + size}</button>
-              <a className="pmodal-wa" href={catWa(waProductMessage(full, size))} target="_blank" rel="noopener" aria-label="Consultar por WhatsApp" title="Consultar por WhatsApp">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M12 .5a11.5 11.5 0 0 0-9.9 17.3L.5 23.5l5.9-1.5A11.5 11.5 0 1 0 12 .5Zm0 21a9.5 9.5 0 0 1-4.9-1.3l-.4-.2-3.5.9.9-3.4-.2-.4A9.5 9.5 0 1 1 12 21.5Zm5.4-7.1c-.3-.1-1.7-.8-2-.9s-.5-.1-.7.2-.8.9-.9 1.1c-.2.2-.3.2-.6.1a8 8 0 0 1-2.3-1.4 8.7 8.7 0 0 1-1.6-2c-.2-.3 0-.5.1-.6l.4-.4.3-.4c.1-.2 0-.3 0-.5l-.9-2c-.2-.5-.4-.5-.6-.5h-.6c-.2 0-.5.1-.8.4a3.4 3.4 0 0 0-1 2.4 5.7 5.7 0 0 0 1.2 3 12.9 12.9 0 0 0 5 4.4 17 17 0 0 0 1.7.6 4 4 0 0 0 1.8.1 3 3 0 0 0 2-1.4 2.4 2.4 0 0 0 .2-1.4c-.1-.1-.3-.2-.6-.3Z"/>
-                </svg>
-              </a>
-            </div>
+          <div className="pmodal-acts">
+            <button className={"btn yellow add-btn pmodal-add" + (added ? " added" : "")} onClick={handleAdd}>{added ? "Agregado \u2713" : "Agregar al carrito"}</button>
+            <a className="pmodal-wa" href={catWa(waProductMessage(full, size))} target="_blank" rel="noopener" aria-label="Consultar por WhatsApp" title="Consultar por WhatsApp">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 .5a11.5 11.5 0 0 0-9.9 17.3L.5 23.5l5.9-1.5A11.5 11.5 0 1 0 12 .5Zm0 21a9.5 9.5 0 0 1-4.9-1.3l-.4-.2-3.5.9.9-3.4-.2-.4A9.5 9.5 0 1 1 12 21.5Zm5.4-7.1c-.3-.1-1.7-.8-2-.9s-.5-.1-.7.2-.8.9-.9 1.1c-.2.2-.3.2-.6.1a8 8 0 0 1-2.3-1.4 8.7 8.7 0 0 1-1.6-2c-.2-.3 0-.5.1-.6l.4-.4.3-.4c.1-.2 0-.3 0-.5l-.9-2c-.2-.5-.4-.5-.6-.5h-.6c-.2 0-.5.1-.8.4a3.4 3.4 0 0 0-1 2.4 5.7 5.7 0 0 0 1.2 3 12.9 12.9 0 0 0 5 4.4 17 17 0 0 0 1.7.6 4 4 0 0 0 1.8.1 3 3 0 0 0 2-1.4 2.4 2.4 0 0 0 .2-1.4c-.1-.1-.3-.2-.6-.3Z"/>
+              </svg>
+            </a>
           </div>
         </div>
       </div>
