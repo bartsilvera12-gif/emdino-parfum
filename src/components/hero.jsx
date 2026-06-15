@@ -28,12 +28,24 @@ function Hero() {
       <div className="wrap">
         <ul className="hero-photo-stats" aria-label="Datos rápidos">
           <li className="hps">
-            <span className="hps-n">Todo el país</span>
-            <span className="hps-l">envíos a Paraguay</span>
+            <span className="hps-k">Catálogo</span>
+            <span className="hps-n"><span className="hps-plus">+</span>68</span>
+            <span className="hps-l">Fragancias masculinas</span>
           </li>
           <li className="hps">
+            <span className="hps-k">Presentaciones</span>
+            <span className="hps-n hps-ml">3 · 5 · 10 · 30<span className="hps-unit">ml</span></span>
+            <span className="hps-l">Decants premium</span>
+          </li>
+          <li className="hps">
+            <span className="hps-k">Envíos</span>
+            <span className="hps-n">Todo el país</span>
+            <span className="hps-l">Paraguay completo</span>
+          </li>
+          <li className="hps">
+            <span className="hps-k">Retiro</span>
             <span className="hps-n">Encarnación</span>
-            <span className="hps-l">retiro en tienda</span>
+            <span className="hps-l">Itapúa · Paraguay</span>
           </li>
         </ul>
       </div>
