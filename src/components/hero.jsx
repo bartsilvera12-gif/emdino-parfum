@@ -28,14 +28,6 @@ function Hero() {
       <div className="wrap">
         <ul className="hero-photo-stats" aria-label="Datos rápidos">
           <li className="hps">
-            <span className="hps-n">+68</span>
-            <span className="hps-l">fragancias masculinas</span>
-          </li>
-          <li className="hps">
-            <span className="hps-n">3·5·10·30</span>
-            <span className="hps-l">presentaciones en ml</span>
-          </li>
-          <li className="hps">
             <span className="hps-n">Todo el país</span>
             <span className="hps-l">envíos a Paraguay</span>
           </li>
