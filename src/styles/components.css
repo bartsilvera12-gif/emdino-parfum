@@ -590,8 +590,7 @@
 .pmodal-media img { position: relative; max-width: 70%; max-height: 80%; width: auto; height: auto; object-fit: contain;
   filter: drop-shadow(0 20px 24px rgba(60,46,20,0.22));
   image-rendering: -webkit-optimize-contrast;
-  image-rendering: auto;
-  mix-blend-mode: multiply; }
+  image-rendering: auto; }
 .pmodal-media img.is-jpg { mix-blend-mode: multiply; }
 .pmodal-media .ph { position: static; }
 
