@@ -60,7 +60,7 @@
 .pcard-wa.dark { position: static; width: 38px; height: 38px; opacity: 1; transform: none; background: transparent; border-color: var(--line-2); color: var(--ink); }
 .pcard-wa.dark:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
 
-.combo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; grid-auto-rows: 1fr; }
+.combo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
 .combo-card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease); }
 .combo-card:hover { transform: translateY(-4px); border-color: var(--gold-soft); box-shadow: 0 30px 60px -36px rgba(138,106,47,0.4); }
 .combo-info { padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
@@ -689,9 +689,22 @@
 .combo-visual.is-clickable::before { z-index: 2; }
 .combo-visual.is-clickable:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
-/* Imagen promocional del combo: rellena el visual sin tocar el layout */
-.combo-hero { position: absolute; inset: 0; z-index: 1; }
-.combo-hero-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Imagen promocional del combo: ancho 100%, alto natural de la imagen, sin contenedor negro extra */
+.combo-visual:has(.combo-hero) {
+  min-height: 0 !important;
+  height: auto;
+  padding: 0;
+  border-right: none;
+  background: transparent;
+  overflow: hidden;
+}
+.combo-feat .combo-visual:has(.combo-hero) {
+  min-height: 0 !important;
+  height: auto;
+  border-right: none;
+}
+.combo-hero { position: relative; width: 100%; display: block; }
+.combo-hero-img { width: 100%; height: auto; display: block; }
 .combo-visual:has(.combo-hero) .combo-badge { z-index: 3; }
 /* Alineacion: empujar precio y boton al fondo del card */
 .combo-card .combo-foot { margin-top: auto; }
