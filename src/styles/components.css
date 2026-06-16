@@ -707,8 +707,8 @@
   border-radius: 12px 12px 0 0;
 }
 .combo-promo-frame--modal {
-  height: min(72dvh, 680px);
-  min-height: 560px;
+  height: 100%;
+  min-height: 0;
   border-radius: 12px 0 0 12px;
 }
 .combo-promo-frame .combo-promo-bg {
@@ -778,24 +778,28 @@
 /* ============================================================
    COMBOS - MODAL / DETALLE
    ============================================================ */
-.cmodal {
+.cmodal:has(.combo-promo-frame) {
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(420px, 0.92fr);
-  align-items: start;
-  max-height: calc(100dvh - 32px);
-  overflow-y: auto;
+  grid-template-rows: 1fr;
+  align-items: stretch;
+  height: min(720px, calc(100dvh - 48px));
+  max-height: calc(100dvh - 48px);
+  overflow: hidden;
 }
 .cmodal-media:has(.combo-promo-frame) {
   padding: 0;
   min-height: 0;
-  height: auto;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 12px 0 0 12px;
   background: transparent;
-  overflow: visible;
   border-right: none;
 }
 .cmodal:has(.combo-promo-frame) .pmodal-info {
-  height: auto;
-  overflow: visible;
+  min-height: 0;
+  height: 100%;
+  overflow-y: auto;
 }
 
 /* fallback layout cuando NO hay imagen (collage de botellas, sin promo-frame) */
