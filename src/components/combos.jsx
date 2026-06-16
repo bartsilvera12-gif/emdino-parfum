@@ -7,6 +7,27 @@ const waComboMessage = (n) => window.EMDINO_UTILS.waComboMessage(n);
 const pct = (c) => Math.round((1 - c.precioPromo / c.precioNormal) * 100);
 const cut = (id) => "/assets/perfumes-cut/" + id + ".png";
 
+function ComboPromoImage({ combo, variant = "card", off }) {
+  return (
+    <div className={"combo-promo-frame combo-promo-frame--" + variant}>
+      <img
+        className="combo-promo-bg"
+        src={combo.imagen}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+      />
+      <img
+        className="combo-promo-img"
+        src={combo.imagen}
+        alt={variant === "modal" ? "Combo " + combo.nombre : ""}
+        loading="lazy"
+      />
+      {off ? <span className="combo-badge combo-promo-badge">{off}% OFF</span> : null}
+    </div>
+  );
+}
+
 function ComboVisual({ combo, big, onOpen }) {
   const interactive = !!onOpen;
   const handleKey = (e) => { if (interactive && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); onOpen(combo); } };
@@ -26,24 +47,24 @@ function ComboVisual({ combo, big, onOpen }) {
         </div>
       )}
       {combo.imagen ? (
-        <div className="combo-hero" aria-hidden="true">
-          <img className="combo-card-hero-img" src={combo.imagen} alt="" loading="lazy" />
-        </div>
+        <ComboPromoImage combo={combo} variant="card" off={pct(combo)} />
       ) : (
-        <div className="combo-bottles" aria-hidden="true">
-          {combo.items.map((id, i) => (
-            <img
-              key={id}
-              className={"cb cb-" + i}
-              src={cut(id)}
-              alt=""
-              loading="lazy"
-            />
-          ))}
-          <span className="combo-floor"></span>
-        </div>
+        <>
+          <div className="combo-bottles" aria-hidden="true">
+            {combo.items.map((id, i) => (
+              <img
+                key={id}
+                className={"cb cb-" + i}
+                src={cut(id)}
+                alt=""
+                loading="lazy"
+              />
+            ))}
+            <span className="combo-floor"></span>
+          </div>
+          <span className="combo-badge">{pct(combo)}% OFF</span>
+        </>
       )}
-      <span className="combo-badge">{pct(combo)}% OFF</span>
     </div>
   );
 }
@@ -172,10 +193,7 @@ function ComboModal({ combo, onClose, onAdd }) {
           {!combo.imagen && <span className="cmodal-kicker">Set de decants</span>}
           {!combo.imagen && <p className="cmodal-name display">{combo.nombre}</p>}
           {combo.imagen ? (
-            <div className="cmodal-hero">
-              <img className="cmodal-hero-img" src={combo.imagen} alt={"Combo " + combo.nombre} loading="lazy" />
-              <span className="combo-badge cmodal-badge">{off}% OFF</span>
-            </div>
+            <ComboPromoImage combo={combo} variant="modal" off={off} />
           ) : (
             <>
               <div className="cmodal-bottles" aria-hidden="true">

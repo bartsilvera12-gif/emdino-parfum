@@ -690,105 +690,120 @@
 .combo-visual.is-clickable:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
 /* ============================================================
-   COMBOS - CARDS / LISTADO con imagen hero
+   COMBOS - FRAME DOBLE CAPA (cards + modal)
+   - capa de fondo: misma imagen, cover + blur, oscurecida (relleno)
+   - capa principal: misma imagen, contain (flyer completo)
    ============================================================ */
-.combo-visual:has(.combo-hero) {
+.combo-promo-frame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #050505;
+  isolation: isolate;
+}
+.combo-promo-frame--card {
+  height: 360px;
+  min-height: 360px;
+  border-radius: 12px 12px 0 0;
+}
+.combo-promo-frame--modal {
+  height: min(72dvh, 680px);
+  min-height: 560px;
+  border-radius: 12px 0 0 12px;
+}
+.combo-promo-frame .combo-promo-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  object-fit: cover;
+  object-position: center;
+  filter: blur(18px);
+  transform: scale(1.08);
+  opacity: 0.42;
+  z-index: 0;
+  margin: 0;
+}
+.combo-promo-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.42);
+  z-index: 1;
+  pointer-events: none;
+}
+.combo-promo-frame .combo-promo-img {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+  filter: none;
+  margin: 0 auto;
+}
+.combo-promo-frame .combo-promo-badge {
+  position: absolute;
+  left: 0;
+  bottom: 22px;
+  z-index: 3;
+}
+
+/* Cards/listado: el frame reemplaza el visual gradient antiguo */
+.combo-visual:has(.combo-promo-frame) {
   position: relative;
   width: 100%;
   height: 360px;
   min-height: 360px;
   padding: 0;
   overflow: hidden;
-  background: #000;
+  background: transparent;
+  border: none;
   border-radius: 12px 12px 0 0;
 }
-.combo-feat .combo-visual:has(.combo-hero) {
+.combo-feat .combo-visual:has(.combo-promo-frame) {
   border-right: none;
   border-radius: 12px 12px 0 0;
 }
-.combo-hero {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: #000;
-}
-.combo-card-hero-img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-.combo-visual:has(.combo-hero) .combo-badge {
-  position: absolute;
-  left: 0;
-  bottom: 22px;
-  z-index: 5;
-}
-.combo-visual:has(.combo-hero)::after,
-.combo-visual:has(.combo-hero)::before { display: none; }
+.combo-visual:has(.combo-promo-frame)::after,
+.combo-visual:has(.combo-promo-frame)::before { display: none; }
 .combo-card .combo-foot { margin-top: auto; }
 .combo-feat-info .combo-foot { margin-top: auto; }
 
 /* ============================================================
-   COMBOS - MODAL / DETALLE con imagen hero
+   COMBOS - MODAL / DETALLE
    ============================================================ */
 .cmodal {
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(420px, 0.92fr);
-  grid-template-rows: 640px;
-  align-items: stretch;
+  align-items: start;
   max-height: calc(100dvh - 32px);
-  overflow: hidden;
-}
-.cmodal-media {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  min-height: 640px;
-  padding: 0;
-  overflow: hidden;
-  background: #000;
-  border-radius: 12px 0 0 12px;
-}
-.cmodal-media::after,
-.cmodal-media::before { display: none; }
-.cmodal-hero {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background: #000;
-}
-.cmodal-media .cmodal-hero-img,
-.pmodal-media.cmodal-media .cmodal-hero-img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
-  max-height: none;
-  object-fit: cover;
-  object-position: center;
-  margin: 0;
-  position: relative;
-}
-.cmodal-hero .cmodal-badge {
-  position: absolute;
-  left: 0;
-  bottom: 22px;
-  z-index: 5;
-}
-.pmodal-info {
-  height: 100%;
   overflow-y: auto;
 }
-/* fallback layout cuando NO hay imagen (collage de botellas) */
-.cmodal:not(:has(.cmodal-hero)) .cmodal-kicker {
+.cmodal-media:has(.combo-promo-frame) {
+  padding: 0;
+  min-height: 0;
+  height: auto;
+  background: transparent;
+  overflow: visible;
+  border-right: none;
+}
+.cmodal:has(.combo-promo-frame) .pmodal-info {
+  height: auto;
+  overflow: visible;
+}
+
+/* fallback layout cuando NO hay imagen (collage de botellas, sin promo-frame) */
+.cmodal-media:not(:has(.combo-promo-frame)) .cmodal-kicker {
   position: absolute; top: 9%; left: 0; right: 0; text-align: center; z-index: 3;
   font-family: var(--serif); font-style: normal; font-size: 14px; color: var(--gold-deep);
 }
-.cmodal:not(:has(.cmodal-hero)) .cmodal-name {
+.cmodal-media:not(:has(.combo-promo-frame)) .cmodal-name {
   position: absolute; top: 14%; left: 0; right: 0; text-align: center; z-index: 3;
   font-family: var(--serif); font-size: clamp(22px, 2.6vw, 30px); font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; color: var(--ink); line-height: 1; margin: 0;
 }
@@ -796,11 +811,11 @@
   display: flex; align-items: flex-end; justify-content: center; gap: 4%; padding: 0 8%; z-index: 2; }
 .cmodal-bottles .cb { height: 90%; max-width: 30%; }
 .cmodal-bottles .cb-1 { height: 100%; transform: translateY(-3px); }
-.cmodal:not(:has(.cmodal-hero)) .cmodal-media {
+.cmodal-media:not(:has(.combo-promo-frame)) {
   background: radial-gradient(120% 90% at 50% 5%, var(--ivory), var(--paper-2) 85%);
   min-height: 420px;
 }
-.cmodal:not(:has(.cmodal-hero)) .cmodal-media .combo-floor { bottom: 12%; left: 16%; right: 16%; width: auto; transform: none; }
+.cmodal-media:not(:has(.combo-promo-frame)) .combo-floor { bottom: 12%; left: 16%; right: 16%; width: auto; transform: none; }
 
 .cmodal-list li { display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 9px 2px; border-bottom: 1px solid var(--line); font-size: 13.5px; color: var(--ink); }
@@ -820,12 +835,16 @@
     max-height: 94dvh;
     overflow-y: auto;
   }
-  .cmodal-media {
-    height: 360px;
-    min-height: 360px;
+  .combo-promo-frame--card {
+    height: 300px;
+    min-height: 300px;
+  }
+  .combo-promo-frame--modal {
+    height: 380px;
+    min-height: 380px;
     border-radius: 12px 12px 0 0;
   }
-  .combo-visual:has(.combo-hero) {
+  .combo-visual:has(.combo-promo-frame) {
     height: 300px;
     min-height: 300px;
   }
