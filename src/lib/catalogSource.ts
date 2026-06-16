@@ -210,7 +210,7 @@ export function loadFallbackCatalog(): CatalogBundle {
       precioNormal: c.precioNormal,
       precioPromo: c.precioPromo,
       destacado: !!c.destacado,
-      imagen: null,
+      imagen: c.imagen || null,
       items: c.items,
       incluye: c.incluye,
     })),

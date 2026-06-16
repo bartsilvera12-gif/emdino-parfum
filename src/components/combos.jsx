@@ -23,18 +23,24 @@ function ComboVisual({ combo, big, onOpen }) {
         <span className="combo-kicker">Set de decants</span>
         <p className="combo-name display">{combo.nombre}</p>
       </div>
-      <div className="combo-bottles" aria-hidden="true">
-        {combo.items.map((id, i) => (
-          <img
-            key={id}
-            className={"cb cb-" + i}
-            src={cut(id)}
-            alt=""
-            loading="lazy"
-          />
-        ))}
-        <span className="combo-floor"></span>
-      </div>
+      {combo.imagen ? (
+        <div className="combo-hero" aria-hidden="true">
+          <img className="combo-hero-img" src={combo.imagen} alt="" loading="lazy" />
+        </div>
+      ) : (
+        <div className="combo-bottles" aria-hidden="true">
+          {combo.items.map((id, i) => (
+            <img
+              key={id}
+              className={"cb cb-" + i}
+              src={cut(id)}
+              alt=""
+              loading="lazy"
+            />
+          ))}
+          <span className="combo-floor"></span>
+        </div>
+      )}
       <span className="combo-badge">{pct(combo)}% OFF</span>
     </div>
   );
@@ -163,12 +169,20 @@ function ComboModal({ combo, onClose, onAdd }) {
         <div className="pmodal-media cmodal-media">
           <span className="cmodal-kicker">Set de decants</span>
           <p className="cmodal-name display">{combo.nombre}</p>
-          <div className="cmodal-bottles" aria-hidden="true">
-            {combo.items.map((id, i) => (
-              <img key={id} className={"cb cb-" + i} src={cut(id)} alt="" loading="lazy" />
-            ))}
-          </div>
-          <span className="combo-floor"></span>
+          {combo.imagen ? (
+            <div className="cmodal-hero" aria-hidden="true">
+              <img className="combo-hero-img" src={combo.imagen} alt="" loading="lazy" />
+            </div>
+          ) : (
+            <>
+              <div className="cmodal-bottles" aria-hidden="true">
+                {combo.items.map((id, i) => (
+                  <img key={id} className={"cb cb-" + i} src={cut(id)} alt="" loading="lazy" />
+                ))}
+              </div>
+              <span className="combo-floor"></span>
+            </>
+          )}
           <span className="combo-badge cmodal-badge">{off}% OFF</span>
         </div>
         <div className="pmodal-info">
