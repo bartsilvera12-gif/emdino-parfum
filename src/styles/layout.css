@@ -124,14 +124,14 @@
     border-bottom: none; }
   .hero-photo-overlay { display: block; position: absolute; inset: 0; z-index: 1;
     background:
-      linear-gradient(180deg, rgba(10,8,4,0.2) 0%, rgba(10,8,4,0) 22%, rgba(8,6,3,0.55) 42%, rgba(6,4,2,0.92) 65%, rgba(4,3,1,0.98) 100%); }
+      linear-gradient(180deg, rgba(10,8,4,0.22) 0%, rgba(10,8,4,0.05) 16%, rgba(8,6,3,0.62) 34%, rgba(6,4,2,0.9) 52%, rgba(4,3,1,0.98) 74%); }
   /* especificidad .hero-photo .hero-photo-grid para ganarle a .wrap (components.css) */
   .hero-photo .hero-photo-grid { display: block; position: relative; z-index: 2;
     grid-row: 2; align-self: end;
-    padding: 32px 22px 120px; grid-template-columns: 1fr; }
+    padding: 32px 22px 40px; grid-template-columns: 1fr; }
   .hero-photo-copy { max-width: none; padding: 0; color: #fff; }
   .hero-photo-copy .eyebrow { color: var(--gold-soft); font-size: 10.5px; letter-spacing: 0.22em; }
-  .hero-photo-title { color: #fff; font-size: clamp(30px, 9vw, 40px); margin-top: 12px; line-height: 1.08; }
+  .hero-photo-title { color: #fff; font-size: clamp(30px, 9vw, 40px); margin-top: 12px; line-height: 1.08; text-shadow: 0 2px 16px rgba(0,0,0,0.55); }
   .hero-photo-title .hp-accent { color: var(--gold-soft); }
   .hero-photo-sub { color: rgba(255,255,255,0.88); font-size: 14.5px; margin-top: 14px; line-height: 1.55; max-width: none; }
   .hero-photo-actions { gap: 10px; margin-top: 22px; flex-direction: column; }
