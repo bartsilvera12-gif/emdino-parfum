@@ -690,6 +690,8 @@
 .combo-visual.is-clickable:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
 /* Imagen promocional del combo (cuando el admin carga image_url) */
+.combo-visual:has(.combo-hero) { aspect-ratio: 1 / 1; min-height: 0 !important; height: auto; }
+.combo-feat .combo-visual:has(.combo-hero) { min-height: 0 !important; height: auto; }
 .combo-hero { position: absolute; inset: 0; z-index: 1; }
 .combo-hero-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .combo-visual:has(.combo-hero)::after,
