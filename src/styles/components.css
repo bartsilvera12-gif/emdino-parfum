@@ -549,7 +549,7 @@
   border: 1px solid rgba(255,255,255,0.08);
   transition: border-color .4s var(--ease), box-shadow .4s var(--ease); }
 .pu-card:hover .pu-card-media { border-color: rgba(184,148,79,0.4); box-shadow: 0 40px 70px -40px rgba(0,0,0,0.9); }
-.pu-img { position: absolute; inset: 0; margin: auto; max-width: 88%; max-height: 90%; width: auto; height: auto; object-fit: contain;
+.pu-img { position: absolute; inset: 0; margin: auto; max-width: 70%; max-height: 76%; width: auto; height: auto; object-fit: contain;
   filter: drop-shadow(0 26px 30px rgba(0,0,0,0.6)); transition: transform .7s var(--ease); }
 .pu-card:hover .pu-img { transform: scale(1.08) translateY(-6px); }
 .pu-overlay { position: absolute; inset: 0; pointer-events: none;
