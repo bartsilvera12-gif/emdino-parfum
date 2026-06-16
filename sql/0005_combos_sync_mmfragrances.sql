@@ -18,15 +18,15 @@ begin
   -- ===== UPSERT de los 9 combos vigentes =====
   insert into emdino.combos (store_id, slug, name, tagline, presentation, normal_price, promo_price, featured, active, sort_order, image_url)
   values
-    (v_store_id, 'combo-party',         'Party',        'Para encender la noche',     '3 decants · 5 ml', 160000, 150000, true,  10, '/assets/combos/combo-party.jpg'),
-    (v_store_id, 'combo-citas',         'Citas',        'Para conquistar',            '3 decants · 5 ml', 120000, 110000, false, 20, '/assets/combos/combo-citas.jpg'),
-    (v_store_id, 'combo-mix',           'Mix',          'Versatil, de dia y de noche','3 decants · 5 ml', 165000, 155000, false, 30, '/assets/combos/combo-mix.jpg'),
-    (v_store_id, 'combo-fresh',         'Fresh',        'Frescura para todo el dia',  '3 decants · 5 ml', 108000, 102000, false, 40, '/assets/combos/combo-fresh.jpg'),
-    (v_store_id, 'combo-irresistible',  'Irresistible', 'Los que dejan huella',       '3 decants · 5 ml', 165000, 155000, false, 50, '/assets/combos/combo-irresistible.jpg'),
-    (v_store_id, 'combo-boliche',       'Boliche',      'Estela para la noche',       '3 decants · 5 ml',  78000,  70000, false, 60, '/assets/combos/combo-boliche.jpg'),
-    (v_store_id, 'combo-linea-le-beau', 'Linea Le Beau','Toda la familia Le Beau',    '3 decants · 5 ml', 120000, 110000, false, 70, '/assets/combos/combo-linea-le-beau.jpg'),
-    (v_store_id, 'combo-best-sellers',  'Best Sellers', 'Los que mas se venden',      '3 decants · 5 ml', 185000, 175000, true,  80, '/assets/combos/combo-best-sellers.jpg'),
-    (v_store_id, 'combo-nicho',         'Nicho',        'Perfumeria de autor',        '3 decants · 5 ml', 220000, 205000, false, 90, '/assets/combos/combo-nicho.jpg')
+    (v_store_id, 'combo-party',         'Party',        'Para encender la noche',     '3 decants · 5 ml', 160000, 150000, true,  true, 10, '/assets/combos/combo-party.jpg'),
+    (v_store_id, 'combo-citas',         'Citas',        'Para conquistar',            '3 decants · 5 ml', 120000, 110000, false, true, 20, '/assets/combos/combo-citas.jpg'),
+    (v_store_id, 'combo-mix',           'Mix',          'Versatil, de dia y de noche','3 decants · 5 ml', 165000, 155000, false, true, 30, '/assets/combos/combo-mix.jpg'),
+    (v_store_id, 'combo-fresh',         'Fresh',        'Frescura para todo el dia',  '3 decants · 5 ml', 108000, 102000, false, true, 40, '/assets/combos/combo-fresh.jpg'),
+    (v_store_id, 'combo-irresistible',  'Irresistible', 'Los que dejan huella',       '3 decants · 5 ml', 165000, 155000, false, true, 50, '/assets/combos/combo-irresistible.jpg'),
+    (v_store_id, 'combo-boliche',       'Boliche',      'Estela para la noche',       '3 decants · 5 ml',  78000,  70000, false, true, 60, '/assets/combos/combo-boliche.jpg'),
+    (v_store_id, 'combo-linea-le-beau', 'Linea Le Beau','Toda la familia Le Beau',    '3 decants · 5 ml', 120000, 110000, false, true, 70, '/assets/combos/combo-linea-le-beau.jpg'),
+    (v_store_id, 'combo-best-sellers',  'Best Sellers', 'Los que mas se venden',      '3 decants · 5 ml', 185000, 175000, true,  true, 80, '/assets/combos/combo-best-sellers.jpg'),
+    (v_store_id, 'combo-nicho',         'Nicho',        'Perfumeria de autor',        '3 decants · 5 ml', 220000, 205000, false, true, 90, '/assets/combos/combo-nicho.jpg')
   on conflict (store_id, slug) do update set
     name = excluded.name,
     tagline = excluded.tagline,
