@@ -713,12 +713,15 @@
 .combo-visual:has(.combo-hero)::before { display: none; }
 .combo-visual:has(.combo-hero) .combo-badge { z-index: 3; }
 /* Modal de detalle: imagen full-width con altura natural, sin contenedor negro extra */
+/* Modal de detalle con imagen hero: ver la imagen COMPLETA sin recortes ni alto forzado */
+.pmodal:has(.cmodal-hero) { overflow-y: auto; }
 .cmodal:has(.cmodal-hero) { align-items: start; }
 .cmodal-media:has(.cmodal-hero) {
   position: relative;
+  display: block;
   width: 100%;
-  min-height: 0 !important;
   height: auto;
+  min-height: 0 !important;
   padding: 0;
   background: transparent;
   overflow: hidden;
@@ -726,6 +729,7 @@
   aspect-ratio: auto;
   align-self: start;
 }
+.cmodal-media:has(.cmodal-hero)::after { display: none; }
 .cmodal-hero { position: relative; width: 100%; display: block; }
 .cmodal-hero .combo-hero-img,
 .pmodal-media.cmodal-media .combo-hero-img {
@@ -736,6 +740,7 @@
   object-fit: contain;
   display: block;
   position: relative;
+  margin: 0;
 }
 .cmodal-media:has(.cmodal-hero) .combo-badge,
 .cmodal-media:has(.cmodal-hero) .cmodal-badge { z-index: 3; }
