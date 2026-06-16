@@ -304,11 +304,18 @@
   .how-title { font-size: clamp(34px, 9vw, 46px); }
   .how-note { font-size: 16.5px; }
   .combo-grid { grid-template-columns: 1fr; gap: 18px; }
-  .footer-grid { grid-template-columns: 1fr; gap: 28px; padding: 44px 0; }
+  .footer { padding: clamp(40px, 6vw, 56px) 0 0; }
+  .footer-grid { grid-template-columns: 1fr; gap: 36px; padding: 8px 0 36px; text-align: center; }
+  .footer-brand { display: flex; flex-direction: column; align-items: center; gap: 12px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+  .footer-logo { height: 64px; margin: 0; }
+  .footer-loc { font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted-2); }
+  .footer-col { align-items: center; gap: 14px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+  .footer-col:last-child { border-bottom: none; padding-bottom: 0; }
+  .footer-h { font-size: 12px; letter-spacing: 0.26em; color: var(--gold-deep); margin: 0 0 8px; }
+  .footer-link { font-size: 15px; color: var(--ink); width: auto; }
   .footer-top { padding-bottom: 36px; }
-  .footer-phrase { font-size: clamp(28px, 9vw, 40px); }
-  .footer-link { font-size: 15.5px; }
-  .footer-base { font-size: 11px; flex-direction: column; align-items: flex-start; gap: 8px; padding: 22px 0 26px; }
+  .footer-phrase { font-size: clamp(28px, 9vw, 40px); text-align: center; }
+  .footer-base { font-size: 10.5px; flex-direction: column; align-items: center; gap: 10px; padding: 22px 0 28px; text-align: center; letter-spacing: 0.14em; }
   .wa-float { right: 16px; bottom: 16px; width: 56px; height: 56px; }
   .toast { bottom: 90px; max-width: 86vw; text-align: center; }
   .form-grid { grid-template-columns: 1fr; }
