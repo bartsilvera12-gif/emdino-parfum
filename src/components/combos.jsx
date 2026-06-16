@@ -172,8 +172,9 @@ function ComboModal({ combo, onClose, onAdd }) {
           {!combo.imagen && <span className="cmodal-kicker">Set de decants</span>}
           {!combo.imagen && <p className="cmodal-name display">{combo.nombre}</p>}
           {combo.imagen ? (
-            <div className="cmodal-hero" aria-hidden="true">
-              <img className="combo-hero-img" src={combo.imagen} alt="" loading="lazy" />
+            <div className="cmodal-hero">
+              <img className="combo-hero-img" src={combo.imagen} alt={"Combo " + combo.nombre} loading="lazy" />
+              <span className="combo-badge cmodal-badge">{off}% OFF</span>
             </div>
           ) : (
             <>
@@ -183,9 +184,9 @@ function ComboModal({ combo, onClose, onAdd }) {
                 ))}
               </div>
               <span className="combo-floor"></span>
+              <span className="combo-badge cmodal-badge">{off}% OFF</span>
             </>
           )}
-          <span className="combo-badge cmodal-badge">{off}% OFF</span>
         </div>
         <div className="pmodal-info">
           <span className="pmodal-cat">Combo especial</span>
