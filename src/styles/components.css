@@ -689,11 +689,13 @@
 .combo-visual.is-clickable::before { z-index: 2; }
 .combo-visual.is-clickable:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
-/* Imagen promocional del combo (cuando el admin carga image_url) */
-.combo-visual:has(.combo-hero) { aspect-ratio: 4 / 5; min-height: 0 !important; height: auto; background: #0a0a0a; }
-.combo-feat .combo-visual:has(.combo-hero) { min-height: 0 !important; height: auto; }
-.combo-hero { position: absolute; inset: 0; z-index: 1; }
-.combo-hero-img { width: 100%; height: 100%; object-fit: contain; display: block; }
+/* Imagen promocional del combo: portada full-width que cubre toda la card */
+.combo-visual:has(.combo-hero) { aspect-ratio: 1 / 1; min-height: 0 !important; height: auto; width: 100%; padding: 0; }
+.combo-feat .combo-visual:has(.combo-hero) { min-height: 0 !important; height: auto; width: 100%; padding: 0; border-right: none; }
+.combo-hero { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; }
+.combo-hero-img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+.combo-visual:has(.combo-hero) .combo-badge { z-index: 3; }
+.combo-feat:has(.combo-hero) { grid-template-columns: 1fr; }
 /* Alineacion: empujar precio y boton al fondo del card */
 .combo-card .combo-foot { margin-top: auto; }
 .combo-feat-info .combo-foot { margin-top: auto; }
