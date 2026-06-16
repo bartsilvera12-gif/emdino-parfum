@@ -6,6 +6,7 @@ import { useAdminSession } from "../../lib/adminSession";
 import { formatGs } from "../../utils/helpers";
 
 interface ComboItem { product_id: string; sort_order: number; _new?: boolean; }
+interface ComboVariant { label: string; price: number; compare_at_price: number | null; }
 interface Combo {
   id: string;
   store_id: string;
@@ -20,8 +21,15 @@ interface Combo {
   sort_order: number;
   image_url: string | null;
   items?: ComboItem[];
+  variants?: ComboVariant[];
 }
 interface ProductMini { id: string; name: string; brand: string; main_image_url?: string | null; }
+
+const VARIANT_LABELS = ["3ml", "5ml", "10ml"];
+const emptyVariants = (): ComboVariant[] => VARIANT_LABELS.map((l) => ({ label: l, price: 0, compare_at_price: null }));
+// Devuelve siempre las 3 presentaciones, completando las que falten
+const normalizeVariants = (vs: ComboVariant[]): ComboVariant[] =>
+  VARIANT_LABELS.map((l) => vs.find((v) => v.label === l) || { label: l, price: 0, compare_at_price: null });
 
 const slugify = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const emptyCombo = (): Partial<Combo> => ({ name: "", slug: "", tagline: "", presentation: "", normal_price: 0, promo_price: 0, featured: false, active: true, sort_order: 0, image_url: "" });
@@ -34,26 +42,33 @@ export default function AdminCombos() {
   const [error, setError] = useState<string | null>(null);
   const [editing, setEditing] = useState<Partial<Combo> | null>(null);
   const [editingItems, setEditingItems] = useState<ComboItem[]>([]);
+  const [editingVariants, setEditingVariants] = useState<ComboVariant[]>([]);
   const [saving, setSaving] = useState(false);
 
   const load = async () => {
     if (!profile) return;
     setLoading(true);
     const [{ data: cs }, { data: ps }] = await Promise.all([
-      emdino.from("combos").select(`*, combo_items ( product_id, sort_order )`).eq("store_id", profile.store_id).order("sort_order"),
+      emdino.from("combos").select(`*, combo_items ( product_id, sort_order ), combo_variants ( label, price, compare_at_price, sort_order )`).eq("store_id", profile.store_id).order("sort_order"),
       emdino.from("products").select("id, name, brand, main_image_url").eq("store_id", profile.store_id).order("brand"),
     ]);
-    setItems(((cs as any[]) || []).map((c) => ({ ...c, items: c.combo_items || [] })));
+    setItems(((cs as any[]) || []).map((c) => ({ ...c, items: c.combo_items || [], variants: c.combo_variants || [] })));
     setProducts((ps as ProductMini[]) || []);
     setLoading(false);
   };
 
   useEffect(() => { load(); }, [profile]);
 
-  const openNew = () => { setEditing(emptyCombo()); setEditingItems([]); };
+  const openNew = () => { setEditing(emptyCombo()); setEditingItems([]); setEditingVariants(emptyVariants()); };
   const openEdit = (c: Combo) => {
     setEditing({ ...c });
     setEditingItems((c.items || []).slice().sort((a, b) => a.sort_order - b.sort_order));
+    setEditingVariants(normalizeVariants((c.variants || []).map((v) => ({ label: v.label, price: Number(v.price) || 0, compare_at_price: v.compare_at_price != null ? Number(v.compare_at_price) : null }))));
+  };
+
+  const setVariant = (label: string, field: "price" | "compare_at_price", value: string) => {
+    const num = value === "" ? (field === "compare_at_price" ? null : 0) : Number(value);
+    setEditingVariants((prev) => prev.map((v) => v.label === label ? { ...v, [field]: num } : v));
   };
 
   const onSave = async () => {
@@ -61,14 +76,18 @@ export default function AdminCombos() {
     if (!editing.name?.trim()) { setError("Nombre requerido"); return; }
     if (!editing.slug?.trim()) { setError("Slug requerido"); return; }
     setSaving(true); setError(null);
+    // precio de referencia (badge/orden) = 5ml; fallback al primer tamaño con precio
+    const ref = editingVariants.find((v) => v.label === "5ml" && v.price > 0)
+      || editingVariants.find((v) => v.price > 0)
+      || { price: Number(editing.promo_price) || 0, compare_at_price: null };
     const payload: any = {
       store_id: profile.store_id,
       name: editing.name.trim(),
       slug: editing.slug.trim(),
       tagline: editing.tagline || null,
       presentation: editing.presentation || null,
-      normal_price: Number(editing.normal_price) || 0,
-      promo_price: Number(editing.promo_price) || 0,
+      promo_price: ref.price || 0,
+      normal_price: ref.compare_at_price || ref.price || 0,
       featured: !!editing.featured,
       active: editing.active !== false,
       sort_order: Number(editing.sort_order) || 0,
@@ -89,6 +108,23 @@ export default function AdminCombos() {
       }));
       const { error: itErr } = await emdino.from("combo_items").insert(inserts);
       if (itErr) console.warn("combo_items err:", itErr);
+    }
+    // Reemplazar variantes (precios por tamaño) — solo las que tienen precio > 0
+    await emdino.from("combo_variants").delete().eq("combo_id", comboId);
+    const varInserts = editingVariants
+      .filter((v) => v.price > 0)
+      .map((v, i) => ({
+        store_id: profile.store_id,
+        combo_id: comboId,
+        label: v.label,
+        price: v.price,
+        compare_at_price: v.compare_at_price && v.compare_at_price > 0 ? v.compare_at_price : null,
+        sort_order: (i + 1) * 10,
+        active: true,
+      }));
+    if (varInserts.length > 0) {
+      const { error: vErr } = await emdino.from("combo_variants").insert(varInserts);
+      if (vErr) console.warn("combo_variants err:", vErr);
     }
     setSaving(false);
     setEditing(null);
@@ -121,7 +157,7 @@ export default function AdminCombos() {
       {loading ? <p className="admin-muted">Cargando…</p> : (
         <div className="admin-card">
           <table className="admin-table">
-            <thead><tr><th>Combo</th><th className="num">Items</th><th className="num">Normal</th><th className="num">Promo</th><th>Destacado</th><th>Activo</th><th></th></tr></thead>
+            <thead><tr><th>Combo</th><th className="num">Items</th><th className="num">Precios 3/5/10ml</th><th>Destacado</th><th>Activo</th><th></th></tr></thead>
             <tbody>
               {items.map((c) => {
                 const firstItem = (c.items || []).slice().sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))[0];
@@ -155,8 +191,15 @@ export default function AdminCombos() {
                     </div>
                   </td>
                   <td className="num">{c.items?.length || 0}</td>
-                  <td className="num">{formatGs(c.normal_price)}</td>
-                  <td className="num">{formatGs(c.promo_price)}</td>
+                  <td className="num">
+                    {(() => {
+                      const vs = c.variants || [];
+                      const byLabel = (l: string) => vs.find((v) => v.label === l);
+                      const cells = VARIANT_LABELS.map((l) => byLabel(l)).filter(Boolean) as ComboVariant[];
+                      if (!cells.length) return formatGs(c.promo_price);
+                      return VARIANT_LABELS.map((l) => { const v = byLabel(l); return v ? formatGs(v.price) : "—"; }).join(" / ");
+                    })()}
+                  </td>
                   <td>{c.featured ? "★" : "—"}</td>
                   <td>{c.active ? <span className="admin-pill ok">Sí</span> : <span className="admin-pill">No</span>}</td>
                   <td className="actions">
@@ -166,7 +209,7 @@ export default function AdminCombos() {
                 </tr>
                 );
               })}
-              {items.length === 0 && <tr><td colSpan={7} className="admin-muted">Sin combos.</td></tr>}
+              {items.length === 0 && <tr><td colSpan={6} className="admin-muted">Sin combos.</td></tr>}
             </tbody>
           </table>
         </div>
@@ -191,17 +234,32 @@ export default function AdminCombos() {
                   <input value={editing.tagline || ""} onChange={(e) => setEditing({ ...editing, tagline: e.target.value })} />
                 </label>
                 <label className="admin-field"><span>Presentación</span>
-                  <input value={editing.presentation || ""} placeholder="3 decants · 5 ml" onChange={(e) => setEditing({ ...editing, presentation: e.target.value })} />
-                </label>
-                <label className="admin-field"><span>Precio normal</span>
-                  <input type="number" value={editing.normal_price ?? 0} onChange={(e) => setEditing({ ...editing, normal_price: Number(e.target.value) })} />
-                </label>
-                <label className="admin-field"><span>Precio promo</span>
-                  <input type="number" value={editing.promo_price ?? 0} onChange={(e) => setEditing({ ...editing, promo_price: Number(e.target.value) })} />
+                  <input value={editing.presentation || ""} placeholder="3 fragancias · elegí tu tamaño" onChange={(e) => setEditing({ ...editing, presentation: e.target.value })} />
                 </label>
                 <label className="admin-field"><span>Orden</span>
                   <input type="number" value={editing.sort_order ?? 0} onChange={(e) => setEditing({ ...editing, sort_order: Number(e.target.value) })} />
                 </label>
+              </div>
+
+              <div className="admin-block">
+                <div className="admin-block-head">
+                  <h4>Precios por tamaño</h4>
+                </div>
+                <div className="admin-variant-header" aria-hidden="true">
+                  <span className="vh-label">Tamaño</span>
+                  <span className="vh-col">Precio</span>
+                  <span className="vh-col">Precio tachado <small>(opcional)</small></span>
+                </div>
+                <div className="admin-variants">
+                  {editingVariants.map((v) => (
+                    <div key={v.label} className="admin-variant-row tight">
+                      <span className="vh-label" style={{ flex: "0 0 64px", fontWeight: 600 }}>{v.label}</span>
+                      <input type="number" placeholder="0" value={v.price || ""} onChange={(e) => setVariant(v.label, "price", e.target.value)} />
+                      <input type="number" placeholder="—" value={v.compare_at_price ?? ""} onChange={(e) => setVariant(v.label, "compare_at_price", e.target.value)} />
+                    </div>
+                  ))}
+                </div>
+                <p className="admin-muted small">Dejá un tamaño en 0 para ocultarlo. El “precio tachado” muestra el descuento; dejalo vacío si no hay promo.</p>
               </div>
               <label className="admin-field">
                 <span>URL de imagen (opcional)</span>

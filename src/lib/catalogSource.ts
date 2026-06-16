@@ -37,6 +37,8 @@ export interface CatalogCombo {
   presentacion: string;
   precioNormal: number;
   precioPromo: number;
+  precios: Record<string, number>; // "3ml" => 150000 (precio promo por tamaño)
+  preciosNormal: Record<string, number>; // "3ml" => 160000 (precio tachado por tamaño, si hay)
   destacado: boolean;
   imagen: string | null;
   items: string[]; // slugs de productos
@@ -121,7 +123,8 @@ export async function loadCatalogFromSupabase(): Promise<CatalogBundle | null> {
         emdino.from("combos")
           .select(`
             slug, name, tagline, presentation, normal_price, promo_price, featured, active, sort_order, image_url,
-            combo_items ( sort_order, product:products ( slug, brand, name ) )
+            combo_items ( sort_order, product:products ( slug, brand, name ) ),
+            combo_variants ( label, price, compare_at_price, active, sort_order )
           `)
           .eq("store_id", storeId).eq("active", true)
           .order("sort_order", { ascending: true }),
@@ -171,6 +174,16 @@ export async function loadCatalogFromSupabase(): Promise<CatalogBundle | null> {
       const items = (c.combo_items || [])
         .slice()
         .sort((a: any, b: any) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
+      const precios: Record<string, number> = {};
+      const preciosNormal: Record<string, number> = {};
+      const variants = (c.combo_variants || [])
+        .filter((v: any) => v.active)
+        .slice()
+        .sort((a: any, b: any) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
+      variants.forEach((v: any) => {
+        precios[v.label] = Number(v.price) || 0;
+        if (v.compare_at_price != null) preciosNormal[v.label] = Number(v.compare_at_price) || 0;
+      });
       return {
         id: c.slug,
         slug: c.slug,
@@ -179,6 +192,8 @@ export async function loadCatalogFromSupabase(): Promise<CatalogBundle | null> {
         presentacion: c.presentation || "",
         precioNormal: Number(c.normal_price) || 0,
         precioPromo: Number(c.promo_price) || 0,
+        precios,
+        preciosNormal,
         destacado: !!c.featured,
         imagen: c.image_url || null,
         items: items.map((i: any) => i.product?.slug).filter(Boolean),
@@ -209,6 +224,8 @@ export function loadFallbackCatalog(): CatalogBundle {
       presentacion: c.presentacion,
       precioNormal: c.precioNormal,
       precioPromo: c.precioPromo,
+      precios: c.precios || {},
+      preciosNormal: c.preciosNormal || {},
       destacado: !!c.destacado,
       imagen: c.imagen || null,
       items: c.items,

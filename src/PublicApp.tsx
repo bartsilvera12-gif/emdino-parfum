@@ -112,6 +112,8 @@ function installGlobals(bundle: CatalogBundle) {
     presentacion: c.presentacion,
     precioNormal: c.precioNormal,
     precioPromo: c.precioPromo,
+    precios: c.precios || {},
+    preciosNormal: c.preciosNormal || {},
     destacado: c.destacado,
     imagen: c.imagen,
   }));
@@ -239,19 +241,21 @@ export default function PublicApp() {
     showToast(product.nombre + " (" + size + ") × " + addQty + " agregado al carrito");
   };
 
-  const addCombo = (combo: any) => {
-    const key = "combo::" + combo.id;
+  const addCombo = (combo: any, size?: string) => {
+    const ml = size || (combo.precios && combo.precios["5ml"] ? "5ml" : Object.keys(combo.precios || {})[0]) || "";
+    const unitPrice = (combo.precios && combo.precios[ml]) || combo.precioPromo;
+    const key = "combo::" + combo.id + (ml ? "::" + ml : "");
     setCart((prev) => {
       const found = prev.find((it) => it.key === key);
       if (found) return prev.map((it) => it.key === key ? { ...it, qty: it.qty + 1 } : it);
       return [...prev, {
-        key, type: "combo", id: combo.id, slug: combo.id,
+        key, type: "combo", id: combo.id, slug: combo.id, size: ml,
         name: "Combo " + combo.nombre,
-        detail: combo.presentacion + " · " + (combo.incluye || []).join(", "),
-        unitPrice: combo.precioPromo, qty: 1,
+        detail: (ml ? ml + " · " : "") + (combo.incluye || []).join(", "),
+        unitPrice, qty: 1,
       }];
     });
-    showToast("Combo " + combo.nombre + " agregado al carrito");
+    showToast("Combo " + combo.nombre + (ml ? " (" + ml + ")" : "") + " agregado al carrito");
   };
 
   const setQty = (key: string, qty: number) => {
@@ -276,7 +280,7 @@ export default function PublicApp() {
             delivery_method: form.entrega, notes: form.observacion,
           },
           items: cart.map((it) => it.type === "combo"
-            ? { type: "combo", combo_slug: it.slug, qty: it.qty }
+            ? { type: "combo", combo_slug: it.slug, variant_label: it.size, qty: it.qty }
             : { type: "product", product_slug: it.slug, variant_label: it.size, qty: it.qty }
           ),
         };

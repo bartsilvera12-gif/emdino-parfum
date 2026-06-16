@@ -2,10 +2,42 @@
 import React, { useState as useKState, useEffect as useKEffect } from "react";
 const kFmt = (n) => window.EMDINO_UTILS.formatGs(n);
 const kWa = (t) => window.EMDINO_UTILS.waLink(t);
-const waComboMessage = (n) => window.EMDINO_UTILS.waComboMessage(n);
+const waComboMessage = (n, ml) => window.EMDINO_UTILS.waComboMessage(n, ml);
 
-const pct = (c) => Math.round((1 - c.precioPromo / c.precioNormal) * 100);
 const cut = (id) => "/assets/perfumes-cut/" + id + ".png";
+
+// ----- Precios por tamaño de combos -----
+const SIZES_ORDER = ["3ml", "5ml", "10ml"];
+const comboSizes = (c) => {
+  const keys = Object.keys(c.precios || {});
+  const ordered = SIZES_ORDER.filter((s) => keys.includes(s));
+  return ordered.length ? ordered : keys;
+};
+const comboPrice = (c, size) => (c.precios && c.precios[size]) || c.precioPromo || 0;
+const comboPriceOld = (c, size) => (c.preciosNormal && c.preciosNormal[size]) || 0;
+const comboFrom = (c) => {
+  const sizes = comboSizes(c);
+  if (!sizes.length) return c.precioPromo || 0;
+  return Math.min(...sizes.map((s) => comboPrice(c, s)));
+};
+const defaultSize = (c) => {
+  const sizes = comboSizes(c);
+  return sizes.includes("5ml") ? "5ml" : (sizes[0] || "5ml");
+};
+const pctSize = (c, size) => {
+  const old = comboPriceOld(c, size);
+  const now = comboPrice(c, size);
+  if (!old || old <= now) return 0;
+  return Math.round((1 - now / old) * 100);
+};
+// % para el badge de la card: el del 5ml, o el primer tamaño con descuento
+const comboBadgePct = (c) => {
+  const sizes = comboSizes(c);
+  for (const s of ["5ml", "3ml", "10ml"]) {
+    if (sizes.includes(s)) { const p = pctSize(c, s); if (p > 0) return p; }
+  }
+  return 0;
+};
 
 function ComboPromoImage({ combo, variant = "card", off }) {
   return (
@@ -47,7 +79,7 @@ function ComboVisual({ combo, big, onOpen }) {
         </div>
       )}
       {combo.imagen ? (
-        <ComboPromoImage combo={combo} variant="card" off={pct(combo)} />
+        <ComboPromoImage combo={combo} variant="card" off={comboBadgePct(combo)} />
       ) : (
         <>
           <div className="combo-bottles" aria-hidden="true">
@@ -62,33 +94,46 @@ function ComboVisual({ combo, big, onOpen }) {
             ))}
             <span className="combo-floor"></span>
           </div>
-          <span className="combo-badge">{pct(combo)}% OFF</span>
+          {comboBadgePct(combo) > 0 && <span className="combo-badge">{comboBadgePct(combo)}% OFF</span>}
         </>
       )}
     </div>
   );
 }
 
-function ComboActions({ combo, added, onAdd, big }) {
+function ComboActions({ combo, onAdd, big }) {
+  const sizes = comboSizes(combo);
+  const [size, setSize] = useKState(defaultSize(combo));
+  const [added, setAdded] = useKState(false);
+  const price = comboPrice(combo, size);
+  const priceOld = comboPriceOld(combo, size);
+  const add = (e) => { e.stopPropagation(); onAdd(combo, size); setAdded(true); setTimeout(() => setAdded(false), 1100); };
   return (
-    <div className="combo-foot">
-      <div className="combo-prices">
-        <span className="price-old">{kFmt(combo.precioNormal)}</span>
-        <span className={"price-promo" + (big ? " big" : "")}>{kFmt(combo.precioPromo)}</span>
-      </div>
-      <div className="combo-acts">
-        <button className={"btn sm solid add-btn" + (added ? " added" : "")} onClick={(e) => { e.stopPropagation(); onAdd(); }}>{added ? "Agregado ✓" : "Agregar"}</button>
-        <a className="pcard-wa dark" href={kWa(waComboMessage(combo.nombre))} target="_blank" rel="noopener" aria-label="Consultar combo por WhatsApp" title="WhatsApp" onClick={(e) => e.stopPropagation()}>
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9c-1.6 0-3.1-.42-4.4-1.15L3 21l1.2-4.45A8.96 8.96 0 0 1 3 12a9 9 0 0 1 9-9Z"></path></svg>
-        </a>
+    <div className="combo-foot-wrap">
+      {sizes.length > 0 && (
+        <div className="combo-size-row" role="group" aria-label="Tamaño" onClick={(e) => e.stopPropagation()}>
+          {sizes.map((s) => (
+            <button key={s} className={"size-chip" + (size === s ? " active" : "")} onClick={(e) => { e.stopPropagation(); setSize(s); }}>{s}</button>
+          ))}
+        </div>
+      )}
+      <div className="combo-foot">
+        <div className="combo-prices">
+          {priceOld > price ? <span className="price-old">{kFmt(priceOld)}</span> : null}
+          <span className={"price-promo" + (big ? " big" : "")}>{kFmt(price)}</span>
+        </div>
+        <div className="combo-acts">
+          <button className={"btn sm solid add-btn" + (added ? " added" : "")} onClick={add}>{added ? "Agregado ✓" : "Agregar"}</button>
+          <a className="pcard-wa dark" href={kWa(waComboMessage(combo.nombre, size))} target="_blank" rel="noopener" aria-label="Consultar combo por WhatsApp" title="WhatsApp" onClick={(e) => e.stopPropagation()}>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 3a9 9 0 0 1 9 9 9 9 0 0 1-9 9c-1.6 0-3.1-.42-4.4-1.15L3 21l1.2-4.45A8.96 8.96 0 0 1 3 12a9 9 0 0 1 9-9Z"></path></svg>
+          </a>
+        </div>
       </div>
     </div>
   );
 }
 
 function FeaturedCombo({ combo, onAdd, onOpenCombo }) {
-  const [added, setAdded] = useKState(false);
-  const add = () => { onAdd(combo); setAdded(true); setTimeout(() => setAdded(false), 1100); };
   return (
     <article className="combo-feat reveal">
       <ComboVisual combo={combo} big={true} onOpen={onOpenCombo} />
@@ -98,15 +143,13 @@ function FeaturedCombo({ combo, onAdd, onOpenCombo }) {
         <p className="combo-feat-tag">{combo.tagline}</p>
         <ul className="combo-list">{combo.incluye.map((f) => <li key={f}>{f}</li>)}</ul>
         <p className="combo-pres">{combo.presentacion}</p>
-        <ComboActions combo={combo} added={added} onAdd={add} big={true} />
+        <ComboActions combo={combo} onAdd={onAdd} big={true} />
       </div>
     </article>
   );
 }
 
 function ComboCard({ combo, onAdd, onOpenCombo }) {
-  const [added, setAdded] = useKState(false);
-  const add = () => { onAdd(combo); setAdded(true); setTimeout(() => setAdded(false), 1100); };
   return (
     <article className="combo-card reveal">
       <ComboVisual combo={combo} onOpen={onOpenCombo} />
@@ -117,7 +160,7 @@ function ComboCard({ combo, onAdd, onOpenCombo }) {
         </div>
         <ul className="combo-list">{combo.incluye.map((f) => <li key={f}>{f}</li>)}</ul>
         <p className="combo-pres">{combo.presentacion}</p>
-        <ComboActions combo={combo} added={added} onAdd={add} />
+        <ComboActions combo={combo} onAdd={onAdd} />
       </div>
     </article>
   );
@@ -168,8 +211,10 @@ function ComboPage({ onAdd, onOpenCombo }) {
 
 function ComboModal({ combo, onClose, onAdd }) {
   const [added, setAdded] = useKState(false);
+  const [size, setSize] = useKState(combo ? defaultSize(combo) : "5ml");
   useKEffect(() => {
     if (!combo) return undefined;
+    setSize(defaultSize(combo));
     const onKey = (e) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
@@ -179,10 +224,13 @@ function ComboModal({ combo, onClose, onAdd }) {
   if (!combo) return null;
   const PRODUCTS_BY_ID = window.EMDINO_DATA.PRODUCTS_BY_ID;
   const items = combo.items.map((id) => PRODUCTS_BY_ID[id]).filter(Boolean);
-  const off = pct(combo);
-  const ahorro = combo.precioNormal - combo.precioPromo;
+  const sizes = comboSizes(combo);
+  const price = comboPrice(combo, size);
+  const priceOld = comboPriceOld(combo, size);
+  const off = comboBadgePct(combo);
+  const ahorro = priceOld > price ? priceOld - price : 0;
 
-  const handleAdd = () => { onAdd(combo); setAdded(true); setTimeout(() => setAdded(false), 1100); };
+  const handleAdd = () => { onAdd(combo, size); setAdded(true); setTimeout(() => setAdded(false), 1100); };
 
   return (
     <div className="pmodal-root open" data-screen-label="Detalle de combo">
@@ -224,15 +272,26 @@ function ComboModal({ combo, onClose, onAdd }) {
           </ul>
           <p className="combo-pres cmodal-pres">{combo.presentacion}</p>
 
+          {sizes.length > 0 && (
+            <div className="pmodal-block cmodal-sizes-block">
+              <span className="pmodal-k">Tamaño</span>
+              <div className="pmodal-sizes" role="group" aria-label="Tamaño">
+                {sizes.map((s) => (
+                  <button key={s} className={"size-chip" + (size === s ? " active" : "")} onClick={() => setSize(s)}>{s}</button>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="pmodal-foot">
             <div className="cmodal-prices">
-              <span className="cmodal-price-old">{kFmt(combo.precioNormal)}</span>
-              <span className="cmodal-price-promo">{kFmt(combo.precioPromo)}</span>
-              <span className="cmodal-price-saving">Ahorrás {kFmt(ahorro)}</span>
+              {priceOld > price ? <span className="cmodal-price-old">{kFmt(priceOld)}</span> : null}
+              <span className="cmodal-price-promo">{kFmt(price)}</span>
+              {ahorro > 0 ? <span className="cmodal-price-saving">Ahorrás {kFmt(ahorro)}</span> : null}
             </div>
             <div className="pmodal-acts">
               <button className={"btn yellow add-btn pmodal-add" + (added ? " added" : "")} onClick={handleAdd}>{added ? "Agregado ✓" : "Agregar al carrito"}</button>
-              <a className="pmodal-wa" href={kWa(waComboMessage(combo.nombre))} target="_blank" rel="noopener" aria-label="Consultar combo por WhatsApp" title="Consultar por WhatsApp">
+              <a className="pmodal-wa" href={kWa(waComboMessage(combo.nombre, size))} target="_blank" rel="noopener" aria-label="Consultar combo por WhatsApp" title="Consultar por WhatsApp">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M12 .5a11.5 11.5 0 0 0-9.9 17.3L.5 23.5l5.9-1.5A11.5 11.5 0 1 0 12 .5Zm0 21a9.5 9.5 0 0 1-4.9-1.3l-.4-.2-3.5.9.9-3.4-.2-.4A9.5 9.5 0 1 1 12 21.5Zm5.4-7.1c-.3-.1-1.7-.8-2-.9s-.5-.1-.7.2-.8.9-.9 1.1c-.2.2-.3.2-.6.1a8 8 0 0 1-2.3-1.4 8.7 8.7 0 0 1-1.6-2c-.2-.3 0-.5.1-.6l.4-.4.3-.4c.1-.2 0-.3 0-.5l-.9-2c-.2-.5-.4-.5-.6-.5h-.6c-.2 0-.5.1-.8.4a3.4 3.4 0 0 0-1 2.4 5.7 5.7 0 0 0 1.2 3 12.9 12.9 0 0 0 5 4.4 17 17 0 0 0 1.7.6 4 4 0 0 0 1.8.1 3 3 0 0 0 2-1.4 2.4 2.4 0 0 0 .2-1.4c-.1-.1-.3-.2-.6-.3Z"/>
                 </svg>

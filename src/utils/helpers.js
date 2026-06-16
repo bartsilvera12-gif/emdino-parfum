@@ -29,8 +29,10 @@ export function waProductMessage(nombre, ml) {
   );
 }
 
-export function waComboMessage(nombreCombo) {
-  return "Hola, quiero consultar por el combo " + nombreCombo + ".";
+export function waComboMessage(nombreCombo, ml) {
+  return ml
+    ? "Hola, quiero consultar por el combo " + nombreCombo + " en presentación de " + ml + "."
+    : "Hola, quiero consultar por el combo " + nombreCombo + ".";
 }
 
 export function waOrderMessage(form, items, total) {
