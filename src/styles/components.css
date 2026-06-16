@@ -210,24 +210,26 @@
   .m-item { font-size: 17px; }
   .m-dot { margin: 0 22px; }
 
-  /* Catálogo */
-  .catalog-page-head { margin-bottom: 26px; }
-  .catalog-page-title { font-size: clamp(34px, 11vw, 50px); }
-  .catalog-page-intro { font-size: 14.5px; }
-  .catalog-bar { gap: 16px; }
-  .tabs { gap: 18px; }
-  .tab { font-size: 14.5px; padding: 4px 0; }
-  .pgrid { grid-template-columns: 1fr 1fr; gap: 14px; }
-  .pcard-media { aspect-ratio: 5 / 6; }
-  .pcard-img { padding: 8% 12% 12%; }
-  .pcard-body { padding: 14px 14px 16px; gap: 11px; }
-  .pcard-name { font-size: 17px; min-height: 0; }
-  .pcard-brand { font-size: 9px; }
-  .pcard-cat { font-size: 8.5px; padding: 4px 9px; }
-  .size-chip { font-size: 10.5px; padding: 7px 0; }
-  .pcard-foot { flex-direction: column; align-items: stretch; gap: 10px; }
-  .pcard-price-v { font-size: 19px; }
-  .add-btn { width: 100%; min-height: 42px; }
+  /* Catálogo — mobile premium: cards generosas estilo desktop */
+  .catalog-page-head { margin-bottom: 32px; }
+  .catalog-page-title { font-size: clamp(42px, 12vw, 60px); }
+  .catalog-page-intro { font-size: 15.5px; line-height: 1.5; }
+  .catalog-bar { gap: 18px; }
+  .tabs { gap: 20px; }
+  .tab { font-size: 16px; padding: 6px 0; }
+  .pgrid { grid-template-columns: 1fr 1fr; gap: 18px; }
+  .pcard-media { aspect-ratio: 4 / 5; }
+  .pcard-img { padding: 10% 14% 14%; }
+  .pcard-body { padding: 18px 18px 20px; gap: 13px; }
+  .pcard-name { font-size: 19px; min-height: 0; line-height: 1.15; }
+  .pcard-brand { font-size: 10.5px; letter-spacing: 0.18em; }
+  .pcard-cat { font-size: 9.5px; padding: 5px 11px; letter-spacing: 0.16em; }
+  .pcard-sizes-k { font-size: 10px; }
+  .size-chip { font-size: 12px; padding: 9px 0; }
+  .pcard-foot { flex-direction: column; align-items: stretch; gap: 12px; }
+  .pcard-price-k { font-size: 9.5px; }
+  .pcard-price-v { font-size: 22px; }
+  .add-btn { width: 100%; min-height: 46px; font-size: 12px; letter-spacing: 0.14em; }
 
   /* Productos destacados (oscuro) */
   .pu { padding: 48px 0; }
@@ -235,14 +237,20 @@
   .pu-tabs { width: 100%; justify-content: center; }
   .pu-card-media { aspect-ratio: 3 / 4; }
 
-  /* Combos en mobile - destacado más compacto */
-  .combo-feat .combo-visual { min-height: 240px; }
-  .combo-feat-name { font-size: 22px; }
-  .combo-feat-info { padding: 22px; }
-  .combo-list li { font-size: 13px; }
-  .price-promo.big { font-size: 24px; }
-  .combo-card .combo-visual { min-height: 240px; }
-  .combo-name { font-size: 22px; }
+  /* Combos en mobile — cards generosas */
+  .combo-feat .combo-visual { min-height: 300px; }
+  .combo-feat-name { font-size: 26px; }
+  .combo-feat-info { padding: 26px; gap: 14px; }
+  .combo-list li { font-size: 14px; }
+  .price-promo.big { font-size: 28px; }
+  .combo-card .combo-visual { min-height: 320px; }
+  .combo-name { font-size: 28px; }
+  .combo-name-sm { font-size: 24px; }
+  .combo-info { padding: 22px 22px 24px; gap: 12px; }
+  .combo-tagline { font-size: 13px; }
+  .combo-pres { font-size: 11px; }
+  .price-promo { font-size: 24px; }
+  .price-old { font-size: 13px; }
 
   /* Modal de producto en mobile */
   .pmodal { grid-template-columns: 1fr; max-height: 94vh; }
@@ -281,21 +289,41 @@
   .checkout-form .field input, .checkout-form .field textarea { padding: 12px 13px; }
 
   /* Envíos / How / Footer / WhatsApp */
-  .shipping-cards { grid-template-columns: 1fr; }
-  .ship-card { padding: 22px 18px; }
-  .trust-band { grid-template-columns: 1fr; }
-  .how-step { padding: 22px 0; }
-  .how-step-t { font-size: 24px; }
-  .combo-grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr; gap: 26px; padding: 36px 0; }
-  .footer-top { padding-bottom: 30px; }
-  .footer-base { font-size: 10.5px; flex-direction: column; align-items: flex-start; gap: 8px; padding: 18px 0 22px; }
-  .wa-float { right: 16px; bottom: 16px; width: 52px; height: 52px; }
-  .toast { bottom: 86px; max-width: 86vw; text-align: center; }
+  .shipping-cards { grid-template-columns: 1fr; gap: 14px; }
+  .ship-card { padding: 28px 24px; }
+  .ship-card-n { font-size: 28px; }
+  .ship-card-t { font-size: 14px; }
+  .ship-card-d { font-size: 14.5px; line-height: 1.55; }
+  .shipping-lead h2 { font-size: clamp(36px, 9vw, 48px); }
+  .trust-band { grid-template-columns: 1fr; gap: 12px; }
+  .trust-t { font-size: 18px; }
+  .trust-d { font-size: 14px; }
+  .how-step { padding: 26px 0; }
+  .how-step-t { font-size: 26px; }
+  .how-step-d { font-size: 15px; line-height: 1.55; }
+  .how-title { font-size: clamp(34px, 9vw, 46px); }
+  .how-note { font-size: 16.5px; }
+  .combo-grid { grid-template-columns: 1fr; gap: 18px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; padding: 44px 0; }
+  .footer-top { padding-bottom: 36px; }
+  .footer-phrase { font-size: clamp(28px, 9vw, 40px); }
+  .footer-link { font-size: 15.5px; }
+  .footer-base { font-size: 11px; flex-direction: column; align-items: flex-start; gap: 8px; padding: 22px 0 26px; }
+  .wa-float { right: 16px; bottom: 16px; width: 56px; height: 56px; }
+  .toast { bottom: 90px; max-width: 86vw; text-align: center; }
   .form-grid { grid-template-columns: 1fr; }
 
-  /* Secciones generales: padding más chico */
-  .section { padding: clamp(28px, 6vw, 44px) 0; }
+  /* Section headers más grandes en mobile (cercano a desktop) */
+  .section-head h2 { font-size: clamp(36px, 10vw, 52px); }
+  .section-head p { font-size: 16px; line-height: 1.6; }
+  .eyebrow { font-size: 12px; letter-spacing: 0.22em; }
+
+  /* Section divider más visible */
+  .sd-line { max-width: 80px; }
+  .sd-ornament { width: 220px; height: 24px; }
+
+  /* Secciones generales: padding más generoso (era 28-44) */
+  .section { padding: clamp(48px, 8vw, 72px) 0; }
 }
 
 /* === extra extra small (360px) === */
@@ -546,12 +574,13 @@
   .pu-gallery { grid-template-columns: repeat(2, 1fr); gap: 16px; }
 }
 @media (max-width: 560px) {
-  .pu-gallery { grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 74%;
-    overflow-x: auto; scroll-snap-type: x mandatory; gap: 14px;
-    margin: 0 -18px; padding: 0 18px 12px; scrollbar-width: none; }
-  .pu-gallery::-webkit-scrollbar { display: none; }
-  .pu-card { scroll-snap-align: start; }
-  .pu-tab { padding: 12px 12px; font-size: 11px; letter-spacing: 0.1em; }
+  /* Grid 2x2 fijo en mobile (igual que desktop reducido). Sin scroll horizontal. */
+  .pu-gallery { grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 0; padding: 0; }
+  .pu-tab { padding: 12px 14px; font-size: 12px; letter-spacing: 0.12em; }
+  .pu-card-media { aspect-ratio: 3 / 4; }
+  .pu-name { font-size: 17px; }
+  .pu-brand { font-size: 10px; }
+  .pu-title { font-size: clamp(36px, 11vw, 52px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .pu-card { opacity: 1; transform: none; }
