@@ -701,7 +701,8 @@
 .combo-visual:has(.combo-hero)::before { display: none; }
 .combo-visual:has(.combo-hero) .combo-badge { z-index: 3; }
 .cmodal-hero { position: absolute; inset: 0; z-index: 1; overflow: hidden; }
-.cmodal-hero .combo-hero-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cmodal-hero .combo-hero-img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.cmodal-media:has(.cmodal-hero) { background: #0a0a0a; min-height: 0; aspect-ratio: 4 / 5; }
 .cmodal-media:has(.cmodal-hero) .combo-badge,
 .cmodal-media:has(.cmodal-hero) .cmodal-badge { z-index: 3; }
 
