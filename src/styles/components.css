@@ -703,47 +703,57 @@
   height: auto;
   border-right: none;
 }
+/* === CARDS / LISTADO: clase propia combo-card-hero-img === */
 .combo-hero { position: relative; width: 100%; display: block; }
-.combo-hero-img { width: 100%; height: auto; display: block; }
+.combo-card-hero-img { width: 100%; height: auto; display: block; }
 .combo-visual:has(.combo-hero) .combo-badge { z-index: 3; }
-/* Alineacion: empujar precio y boton al fondo del card */
-.combo-card .combo-foot { margin-top: auto; }
-.combo-feat-info .combo-foot { margin-top: auto; }
 .combo-visual:has(.combo-hero)::after,
 .combo-visual:has(.combo-hero)::before { display: none; }
-.combo-visual:has(.combo-hero) .combo-badge { z-index: 3; }
-/* Modal de detalle: imagen full-width con altura natural, sin contenedor negro extra */
-/* Modal de detalle con imagen hero: ver la imagen COMPLETA sin recortes ni alto forzado */
-.pmodal:has(.cmodal-hero) { overflow-y: auto; }
-.cmodal:has(.cmodal-hero) { align-items: start; }
-.cmodal-media:has(.cmodal-hero) {
+.combo-card .combo-foot { margin-top: auto; }
+.combo-feat-info .combo-foot { margin-top: auto; }
+
+/* === MODAL / DETALLE: clase propia cmodal-hero-img === */
+.cmodal {
+  align-items: start;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+}
+.cmodal .cmodal-media {
+  min-height: 0;
+  height: auto;
+  align-self: start;
+  display: block;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+}
+.cmodal .cmodal-media::after { display: none; }
+.cmodal-hero {
   position: relative;
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #000;
+  line-height: 0;
+}
+.cmodal .cmodal-media .cmodal-hero-img,
+.pmodal-media.cmodal-media .cmodal-hero-img {
   display: block;
   width: 100%;
   height: auto;
-  min-height: 0 !important;
-  padding: 0;
-  background: transparent;
-  overflow: hidden;
-  border-radius: 12px;
-  aspect-ratio: auto;
-  align-self: start;
-}
-.cmodal-media:has(.cmodal-hero)::after { display: none; }
-.cmodal-hero { position: relative; width: 100%; display: block; }
-.cmodal-hero .combo-hero-img,
-.pmodal-media.cmodal-media .combo-hero-img {
-  width: 100% !important;
-  height: auto !important;
-  max-width: none !important;
-  max-height: none !important;
+  max-width: 100%;
+  max-height: none;
   object-fit: contain;
-  display: block;
-  position: relative;
   margin: 0;
+  position: relative;
 }
-.cmodal-media:has(.cmodal-hero) .combo-badge,
-.cmodal-media:has(.cmodal-hero) .cmodal-badge { z-index: 3; }
+.cmodal-hero .cmodal-badge {
+  position: absolute;
+  left: 0;
+  bottom: 22px;
+  z-index: 3;
+}
 
 .cmodal { grid-template-columns: 1.1fr 1fr; }
 .cmodal-media { position: relative; display: block; padding: 0; min-height: 420px;

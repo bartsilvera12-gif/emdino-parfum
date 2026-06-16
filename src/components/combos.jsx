@@ -27,7 +27,7 @@ function ComboVisual({ combo, big, onOpen }) {
       )}
       {combo.imagen ? (
         <div className="combo-hero" aria-hidden="true">
-          <img className="combo-hero-img" src={combo.imagen} alt="" loading="lazy" />
+          <img className="combo-card-hero-img" src={combo.imagen} alt="" loading="lazy" />
         </div>
       ) : (
         <div className="combo-bottles" aria-hidden="true">
@@ -173,7 +173,7 @@ function ComboModal({ combo, onClose, onAdd }) {
           {!combo.imagen && <p className="cmodal-name display">{combo.nombre}</p>}
           {combo.imagen ? (
             <div className="cmodal-hero">
-              <img className="combo-hero-img" src={combo.imagen} alt={"Combo " + combo.nombre} loading="lazy" />
+              <img className="cmodal-hero-img" src={combo.imagen} alt={"Combo " + combo.nombre} loading="lazy" />
               <span className="combo-badge cmodal-badge">{off}% OFF</span>
             </div>
           ) : (
