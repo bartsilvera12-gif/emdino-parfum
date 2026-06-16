@@ -219,9 +219,9 @@ export function loadFallbackCatalog(): CatalogBundle {
   };
 }
 
-// ---- Cache en localStorage (10 min) -----------------------------------------
+// ---- Cache en localStorage (60s — corto para que cambios del admin se reflejen rapido) ----
 const CACHE_KEY = "emdino_catalog_cache_v1";
-const CACHE_TTL_MS = 10 * 60 * 1000;
+const CACHE_TTL_MS = 60 * 1000;
 
 interface CachedBundle { ts: number; bundle: CatalogBundle; }
 
