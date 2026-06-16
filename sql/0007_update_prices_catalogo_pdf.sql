@@ -86,7 +86,7 @@ begin
     raise exception 'Store emdino no encontrado';
   end if;
 
-  for r in select * from jsonb_array_elements(prices) as elem
+  for r in select elem from jsonb_array_elements(prices) as t(elem)
   loop
     for i in 1..4 loop
       update emdino.product_variants pv
