@@ -844,9 +844,14 @@
 .cmodal-price-saving { font-size: 11.5px; color: var(--gold-deep); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
 
 @media (max-width: 720px) {
-  .cmodal {
+  /* el :has() gana en especificidad: hay que repetirlo para que la columna
+     de info no fuerce 420px y desborde la pantalla */
+  .cmodal,
+  .cmodal:has(.combo-promo-frame) {
     grid-template-columns: 1fr;
-    max-height: 94dvh;
+    grid-template-rows: auto auto;
+    height: auto;
+    max-height: 92dvh;
     overflow-y: auto;
   }
   .combo-promo-frame--card {
@@ -854,9 +859,18 @@
     min-height: 300px;
   }
   .combo-promo-frame--modal {
-    height: 380px;
-    min-height: 380px;
+    height: auto;
+    min-height: 0;
     border-radius: 12px 12px 0 0;
+  }
+  .cmodal-media:has(.combo-promo-frame) {
+    height: auto;
+    border-radius: 12px 12px 0 0;
+  }
+  .cmodal:has(.combo-promo-frame) .pmodal-info {
+    height: auto;
+    max-height: none;
+    overflow-y: visible;
   }
   .combo-visual:has(.combo-promo-frame) {
     height: 300px;
