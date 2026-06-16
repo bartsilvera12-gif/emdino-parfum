@@ -337,16 +337,26 @@ export default function AdminProducts() {
                   </button>
                 </div>
                 <div className="admin-variants">
+                  <div className="admin-variant-row admin-variant-header" aria-hidden="true">
+                    <span>Tamaño</span>
+                    <span>ML</span>
+                    <span>SKU</span>
+                    <span>Precio</span>
+                    <span>Stock</span>
+                    <span title="Stock mínimo para alerta de reposición">Stock mín.</span>
+                    <span></span>
+                    <span></span>
+                  </div>
                   {editingVariants.filter((v) => !v._delete).map((v, idx) => {
                     const idxReal = editingVariants.indexOf(v);
                     return (
                       <div key={idxReal} className="admin-variant-row">
-                        <input placeholder="Label" value={v.label} onChange={(e) => updateRow(idxReal, "label", e.target.value)} />
-                        <input type="number" placeholder="ml" value={v.volume_ml} onChange={(e) => updateRow(idxReal, "volume_ml", Number(e.target.value))} />
-                        <input placeholder="SKU" value={v.sku} onChange={(e) => updateRow(idxReal, "sku", e.target.value)} />
-                        <input type="number" placeholder="Precio" value={v.price} onChange={(e) => updateRow(idxReal, "price", Number(e.target.value))} />
-                        <input type="number" placeholder="Stock" value={v.stock} onChange={(e) => updateRow(idxReal, "stock", Number(e.target.value))} />
-                        <input type="number" placeholder="Mín." value={v.stock_minimum} onChange={(e) => updateRow(idxReal, "stock_minimum", Number(e.target.value))} />
+                        <input placeholder="3ml" title="Tamaño visible (ej. 3ml, 5ml)" value={v.label} onChange={(e) => updateRow(idxReal, "label", e.target.value)} />
+                        <input type="number" placeholder="3" title="Volumen en mililitros" value={v.volume_ml} onChange={(e) => updateRow(idxReal, "volume_ml", Number(e.target.value))} />
+                        <input placeholder="SKU" title="Código interno del producto" value={v.sku} onChange={(e) => updateRow(idxReal, "sku", e.target.value)} />
+                        <input type="number" placeholder="0" title="Precio en guaraníes" value={v.price} onChange={(e) => updateRow(idxReal, "price", Number(e.target.value))} />
+                        <input type="number" placeholder="0" title="Stock disponible actual" value={v.stock} onChange={(e) => updateRow(idxReal, "stock", Number(e.target.value))} />
+                        <input type="number" placeholder="0" title="Stock mínimo: cuando el stock baja a este número aparece alerta en el dashboard" value={v.stock_minimum} onChange={(e) => updateRow(idxReal, "stock_minimum", Number(e.target.value))} />
                         <label className="admin-checkfield small">
                           <input type="checkbox" checked={v.active !== false} onChange={(e) => updateRow(idxReal, "active", e.target.checked)} /><span>Activa</span>
                         </label>
