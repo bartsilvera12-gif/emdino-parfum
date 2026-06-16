@@ -21,7 +21,7 @@ interface Combo {
   image_url: string | null;
   items?: ComboItem[];
 }
-interface ProductMini { id: string; name: string; brand: string; }
+interface ProductMini { id: string; name: string; brand: string; main_image_url?: string | null; }
 
 const slugify = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const emptyCombo = (): Partial<Combo> => ({ name: "", slug: "", tagline: "", presentation: "", normal_price: 0, promo_price: 0, featured: false, active: true, sort_order: 0, image_url: "" });
@@ -41,7 +41,7 @@ export default function AdminCombos() {
     setLoading(true);
     const [{ data: cs }, { data: ps }] = await Promise.all([
       emdino.from("combos").select(`*, combo_items ( product_id, sort_order )`).eq("store_id", profile.store_id).order("sort_order"),
-      emdino.from("products").select("id, name, brand").eq("store_id", profile.store_id).order("brand"),
+      emdino.from("products").select("id, name, brand, main_image_url").eq("store_id", profile.store_id).order("brand"),
     ]);
     setItems(((cs as any[]) || []).map((c) => ({ ...c, items: c.combo_items || [] })));
     setProducts((ps as ProductMini[]) || []);
@@ -123,9 +123,37 @@ export default function AdminCombos() {
           <table className="admin-table">
             <thead><tr><th>Combo</th><th className="num">Items</th><th className="num">Normal</th><th className="num">Promo</th><th>Destacado</th><th>Activo</th><th></th></tr></thead>
             <tbody>
-              {items.map((c) => (
+              {items.map((c) => {
+                const firstItem = (c.items || []).slice().sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))[0];
+                const firstProduct = firstItem ? products.find((p) => p.id === firstItem.product_id) : null;
+                const thumbUrl = c.image_url || firstProduct?.main_image_url || null;
+                const initials = c.name.slice(0, 2).toUpperCase();
+                return (
                 <tr key={c.id}>
-                  <td><strong>{c.name}</strong><div className="admin-muted xsmall">{c.tagline}</div></td>
+                  <td>
+                    <div className="admin-product-cell">
+                      <div className="admin-product-thumb" aria-hidden="true">
+                        {thumbUrl ? (
+                          <img
+                            src={thumbUrl}
+                            alt=""
+                            loading="lazy"
+                            onError={(e) => {
+                              const img = e.currentTarget;
+                              img.style.display = "none";
+                              const ph = img.nextElementSibling as HTMLElement | null;
+                              if (ph) ph.style.display = "flex";
+                            }}
+                          />
+                        ) : null}
+                        <span className="admin-product-thumb-ph" style={{ display: thumbUrl ? "none" : "flex" }}>{initials}</span>
+                      </div>
+                      <div>
+                        <strong>{c.name}</strong>
+                        <div className="admin-muted xsmall">{c.tagline}</div>
+                      </div>
+                    </div>
+                  </td>
                   <td className="num">{c.items?.length || 0}</td>
                   <td className="num">{formatGs(c.normal_price)}</td>
                   <td className="num">{formatGs(c.promo_price)}</td>
@@ -136,7 +164,8 @@ export default function AdminCombos() {
                     <button className="admin-icon-btn danger" onClick={() => onDelete(c)}><Trash2 size={15} /></button>
                   </td>
                 </tr>
-              ))}
+                );
+              })}
               {items.length === 0 && <tr><td colSpan={7} className="admin-muted">Sin combos.</td></tr>}
             </tbody>
           </table>
