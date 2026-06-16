@@ -692,20 +692,13 @@
 /* Imagen promocional del combo (cuando el admin carga image_url) */
 .combo-hero { position: absolute; inset: 0; z-index: 1; }
 .combo-hero-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.combo-visual .combo-visual-top { z-index: 4; text-shadow: 0 1px 12px rgba(0,0,0,0.45); color: #fff; }
-.combo-visual:has(.combo-hero) .combo-visual-top .combo-kicker,
-.combo-visual:has(.combo-hero) .combo-visual-top .combo-name { color: #fff; }
-.combo-visual:has(.combo-hero)::after {
-  background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.05) 35%, rgba(0,0,0,0.15) 70%, rgba(0,0,0,0.55) 100%);
-}
+.combo-visual:has(.combo-hero)::after,
+.combo-visual:has(.combo-hero)::before { display: none; }
+.combo-visual:has(.combo-hero) .combo-badge { z-index: 3; }
 .cmodal-hero { position: absolute; inset: 0; z-index: 1; overflow: hidden; }
 .cmodal-hero .combo-hero-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.cmodal-media:has(.cmodal-hero) .cmodal-kicker,
-.cmodal-media:has(.cmodal-hero) .cmodal-name { color: #fff; text-shadow: 0 1px 12px rgba(0,0,0,0.5); z-index: 3; }
-.cmodal-media:has(.cmodal-hero)::before {
-  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
-  background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.55) 100%);
-}
+.cmodal-media:has(.cmodal-hero) .combo-badge,
+.cmodal-media:has(.cmodal-hero) .cmodal-badge { z-index: 3; }
 
 .cmodal { grid-template-columns: 1.1fr 1fr; }
 .cmodal-media { position: relative; display: block; padding: 0; min-height: 420px;

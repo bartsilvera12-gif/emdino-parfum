@@ -19,10 +19,12 @@ function ComboVisual({ combo, big, onOpen }) {
       onClick={interactive ? () => onOpen(combo) : undefined}
       onKeyDown={interactive ? handleKey : undefined}
     >
-      <div className="combo-visual-top">
-        <span className="combo-kicker">Set de decants</span>
-        <p className="combo-name display">{combo.nombre}</p>
-      </div>
+      {!combo.imagen && (
+        <div className="combo-visual-top">
+          <span className="combo-kicker">Set de decants</span>
+          <p className="combo-name display">{combo.nombre}</p>
+        </div>
+      )}
       {combo.imagen ? (
         <div className="combo-hero" aria-hidden="true">
           <img className="combo-hero-img" src={combo.imagen} alt="" loading="lazy" />
@@ -167,8 +169,8 @@ function ComboModal({ combo, onClose, onAdd }) {
       <div className="pmodal cmodal" role="dialog" aria-modal="true" aria-label={"Combo " + combo.nombre}>
         <button className="x-btn pmodal-x" onClick={onClose} aria-label="Cerrar">&#10005;</button>
         <div className="pmodal-media cmodal-media">
-          <span className="cmodal-kicker">Set de decants</span>
-          <p className="cmodal-name display">{combo.nombre}</p>
+          {!combo.imagen && <span className="cmodal-kicker">Set de decants</span>}
+          {!combo.imagen && <p className="cmodal-name display">{combo.nombre}</p>}
           {combo.imagen ? (
             <div className="cmodal-hero" aria-hidden="true">
               <img className="combo-hero-img" src={combo.imagen} alt="" loading="lazy" />
