@@ -17,7 +17,7 @@ export const EMDINO_COMBOS_FALLBACK = [
     precioNormal: 350000,
     precioPromo: 350000,
     destacado: true,
-    imagen: "/assets/combos/combo-dia-padre-exclusivo.jpg",
+    imagen: "/assets/combos/combo-dia-padre-exclusivo.png",
   },
   {
     id: "combo-dia-padre-premium",
@@ -30,7 +30,7 @@ export const EMDINO_COMBOS_FALLBACK = [
     preciosNormal: {},
     precioNormal: 290000,
     precioPromo: 290000,
-    imagen: "/assets/combos/combo-dia-padre-premium.jpg",
+    imagen: "/assets/combos/combo-dia-padre-premium.png",
   },
   {
     id: "combo-dia-padre-economico",
@@ -43,7 +43,7 @@ export const EMDINO_COMBOS_FALLBACK = [
     preciosNormal: {},
     precioNormal: 180000,
     precioPromo: 180000,
-    imagen: "/assets/combos/combo-dia-padre-economico.jpg",
+    imagen: "/assets/combos/combo-dia-padre-economico.png",
   },
 
   // ---------- Combos permanentes (precios mmfragrances por tamaño) ----------
