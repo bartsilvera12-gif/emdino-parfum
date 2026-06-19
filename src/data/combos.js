@@ -7,7 +7,7 @@ export const EMDINO_COMBOS_FALLBACK = [
   // ---------- Día del Padre (nuevos, precio único sin descuento) ----------
   {
     id: "combo-dia-padre-exclusivo",
-    nombre: "Día del Padre Exclusivo",
+    nombre: "Nicho",
     tagline: "Regalá lo que realmente lo representa",
     items: ["xerjoff-naxos", "pdm-layton", "nishane-hacivat"],
     incluye: ["Xerjoff Naxos", "Parfums de Marly Layton", "Nishane Hacivat"],
@@ -21,8 +21,8 @@ export const EMDINO_COMBOS_FALLBACK = [
   },
   {
     id: "combo-dia-padre-premium",
-    nombre: "Día del Padre Premium",
-    tagline: "Para cada momento de papá",
+    nombre: "Gentleman",
+    tagline: "Elegancia para cada ocasión",
     items: ["prada-lhomme-intense", "chanel-allure-sport-extreme", "tf-ombre-leather"],
     incluye: ["Prada L'Homme Intense", "Chanel Allure Homme Sport Eau Extrême", "Tom Ford Ombre Leather"],
     presentacion: "3 fragancias · elegí tu tamaño",
@@ -34,7 +34,7 @@ export const EMDINO_COMBOS_FALLBACK = [
   },
   {
     id: "combo-dia-padre-economico",
-    nombre: "Día del Padre Económico",
+    nombre: "Formal",
     tagline: "Regalá lo que realmente lo representa",
     items: ["rasasi-hawas-ice", "dior-homme-intense", "vr-spicebomb-extreme"],
     incluye: ["Hawas Ice", "Dior Homme Intense", "Spicebomb Extreme"],
@@ -49,7 +49,7 @@ export const EMDINO_COMBOS_FALLBACK = [
   // ---------- Combos permanentes (precios mmfragrances por tamaño) ----------
   {
     id: "combo-party",
-    nombre: "Signature",
+    nombre: "Party",
     tagline: "Para encender la noche",
     items: ["versace-eros-flame", "xerjoff-erba-pura", "jpg-le-male-elixir"],
     incluye: ["Versace Eros Flame", "Xerjoff Erba Pura", "JPG Le Male Elixir"],
@@ -63,7 +63,7 @@ export const EMDINO_COMBOS_FALLBACK = [
   },
   {
     id: "combo-citas",
-    nombre: "Rendezvous",
+    nombre: "Citas",
     tagline: "Para conquistar",
     items: ["armani-swy-edt", "fa-liquid-brun", "azzaro-most-wanted-parfum"],
     incluye: ["SWY EDT", "Liquid Brun", "Azzaro Most Wanted Parfum"],
@@ -76,7 +76,7 @@ export const EMDINO_COMBOS_FALLBACK = [
   },
   {
     id: "combo-mix",
-    nombre: "Prestige Noir",
+    nombre: "Atractivo",
     tagline: "Versátil, de día y de noche",
     items: ["valentino-bir-intense", "ysl-y-edp", "jpg-le-male-le-parfum"],
     incluye: ["Valentino BIR Intense", "YSL Y EDP", "JPG Le Male Le Parfum"],
@@ -89,7 +89,7 @@ export const EMDINO_COMBOS_FALLBACK = [
   },
   {
     id: "combo-fresh",
-    nombre: "Azure Privé",
+    nombre: "Fresco",
     tagline: "Frescura que impacta, elegancia que perdura",
     items: ["ysl-y-edp", "lattafa-asad-zanzibar", "rasasi-hawas-ice"],
     incluye: ["YSL Y EDP", "Asad Zanzibar", "Hawas Ice"],
@@ -102,7 +102,7 @@ export const EMDINO_COMBOS_FALLBACK = [
   },
   {
     id: "combo-irresistible",
-    nombre: "Noir Allure",
+    nombre: "Irresistible",
     tagline: "Seducción, elegancia y exclusividad en cada esencia",
     items: ["armani-swy-intensely", "valentino-bir-intense", "jpg-le-beau-le-parfum"],
     incluye: ["SWY Intensely", "Valentino BIR Intense", "JPG Le Beau Le Parfum"],
@@ -115,7 +115,7 @@ export const EMDINO_COMBOS_FALLBACK = [
   },
   {
     id: "combo-boliche",
-    nombre: "After Dark",
+    nombre: "Boliche",
     tagline: "Estela para la noche",
     items: ["alharamain-amber-oud-gold", "armaf-mandarin-sky", "afnan-9pm-rebel"],
     incluye: ["Amber Oud Gold", "Mandarin Sky", "9PM Rebel"],
@@ -128,7 +128,7 @@ export const EMDINO_COMBOS_FALLBACK = [
   },
   {
     id: "combo-linea-le-beau",
-    nombre: "Paradise Noir",
+    nombre: "Le Beau",
     tagline: "Frescura tropical, elegancia irresistible",
     items: ["jpg-le-beau-edt", "jpg-le-beau-le-parfum", "jpg-le-beau-paradise-garden"],
     incluye: ["Le Beau EDT", "Le Beau Le Parfum", "Le Beau Paradise Garden"],
@@ -141,7 +141,7 @@ export const EMDINO_COMBOS_FALLBACK = [
   },
   {
     id: "combo-best-sellers",
-    nombre: "Best Seller",
+    nombre: "Mix",
     tagline: "Los que más se venden",
     items: ["armani-adg-profondo", "xerjoff-erba-pura", "valentino-bir-intense"],
     incluye: ["Acqua di Giò Profondo", "Xerjoff Erba Pura", "Valentino BIR Intense"],
@@ -155,7 +155,7 @@ export const EMDINO_COMBOS_FALLBACK = [
   },
   {
     id: "combo-nicho",
-    nombre: "Collection Privée",
+    nombre: "Premium",
     tagline: "Exclusividad en tres fragancias que dejan huella",
     items: ["xerjoff-erba-pura", "pdm-layton", "xerjoff-naxos"],
     incluye: ["Erba Pura", "Layton", "Naxos"],
