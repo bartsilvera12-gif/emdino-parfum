@@ -35,6 +35,7 @@ const catalogs = {
         P("armani-adg-profondo", "Acqua Di Giò Profondo", "Giorgio Armani", "disenador", [45000, 65000, 125000, 295000]),
         P("armani-swy-intensely", "Stronger With You Intensely", "Emporio Armani", "disenador", [43000, 65000, 110000, 300000]),
         P("armani-swy-edt", "Stronger With You EDT", "Emporio Armani", "disenador", [43000, 65000, 110000, 300000]),
+        P("armani-swy-powerfully", "Stronger With You Powerfully", "Emporio Armani", "disenador", [43000, 65000, 110000, 300000]),
         P("azzaro-most-wanted-parfum", "The Most Wanted Parfum", "Azzaro", "disenador", [44000, 66000, 110000, 295000]),
         P("azzaro-most-wanted-intense", "The Most Wanted Intense", "Azzaro", "disenador", [45000, 65000, 110000, 300000]),
         P("bvlgari-man-in-black", "Man In Black", "Bvlgari", "disenador", [50000, 70000, 120000, 355000]),
