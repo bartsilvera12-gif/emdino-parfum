@@ -46,6 +46,7 @@ const catalogs = {
         P("versace-dylan-blue", "Pour Homme Dylan Blue", "Versace", "disenador", [35000, 55000, 85000, 220000]),
         P("pr-invictus-victory-elixir", "Invictus Victory Elixir", "Paco Rabanne", "disenador", [45000, 57000, 100000, 300000]),
         P("dior-homme-intense", "Dior Homme Intense", "Dior", "disenador", [46000, 70000, 120000, 330000]),
+        P("dior-sauvage-edp", "Sauvage Eau de Parfum", "Dior", "disenador", [45000, 65000, 110000, 295000]),
         P("ysl-myslf", "MYSLF EDP", "Yves Saint Laurent", "disenador", [50000, 70000, 120000, 350000]),
         P("ysl-y-edp", "Y Eau de Parfum", "Yves Saint Laurent", "disenador", [48000, 70000, 120000, 340000]),
         P("vr-spicebomb-extreme", "Spicebomb Extreme", "Viktor & Rolf", "disenador", [45000, 65000, 120000, 350000]),
