@@ -177,7 +177,7 @@ with prices(slug, p3, p5, p10, p30) as (values
   ('im-leau-dissey',             30000, 40000, 60000, 180000),
   ('givenchy-reserve-privee',    46000, 66000, 110000, 330000),
   ('dg-light-blue',              38000, 60000, 90000, 280000),
-  ('ch-212-men',                 30000, 50000, 90000, 290000),
+  ('ch-212-men',                 30000, 50000, 90000, 225000),
   ('ch-212-vip-black',           45000, 60000, 100000, 280000),
   ('chanel-allure-sport-extreme',60000,100000,180000, 556000),
   ('prada-lhomme-intense',       50000, 75000, 135000, 330000),

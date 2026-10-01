@@ -55,7 +55,7 @@ const catalogs = {
         P("im-leau-dissey", "L'Eau d'Issey Pour Homme", "Issey Miyake", "disenador", [30000, 40000, 60000, 180000]),
         P("givenchy-reserve-privee", "Gentleman Réserve Privée", "Givenchy", "disenador", [46000, 66000, 110000, 330000]),
         P("dg-light-blue", "Light Blue Pour Homme", "Dolce & Gabbana", "disenador", [38000, 60000, 90000, 280000]),
-        P("ch-212-men", "212 Men", "Carolina Herrera", "disenador", [30000, 50000, 90000, 290000]),
+        P("ch-212-men", "212 Men", "Carolina Herrera", "disenador", [30000, 50000, 90000, 225000]),
         P("ch-212-vip-black", "212 VIP Black", "Carolina Herrera", "disenador", [45000, 60000, 100000, 280000]),
         P("chanel-allure-sport-extreme", "Allure Homme Sport Eau Extrême", "Chanel", "disenador", [60000, 100000, 180000, 556000]),
         P("prada-lhomme-intense", "L'Homme Intense", "Prada", "disenador", [50000, 75000, 135000, 330000]),
