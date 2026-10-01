@@ -176,7 +176,7 @@ with prices(slug, p3, p5, p10, p30) as (values
   ('mb-legend-spirit',           35000, 45000, 65000, 155000),
   ('im-leau-dissey',             30000, 40000, 60000, 180000),
   ('givenchy-reserve-privee',    46000, 66000, 110000, 330000),
-  ('dg-light-blue',              38000, 60000, 90000, 280000),
+  ('dg-light-blue',              38000, 60000, 90000, 185000),
   ('ch-212-men',                 30000, 50000, 90000, 225000),
   ('ch-212-vip-black',           45000, 60000, 100000, 280000),
   ('chanel-allure-sport-extreme',60000,100000,180000, 556000),
