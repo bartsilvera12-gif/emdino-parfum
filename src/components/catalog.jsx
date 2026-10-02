@@ -40,7 +40,7 @@ function ProductCard({ product, onAdd, onOpen }) {
         {product.imagen
           ? <img
               className="pcard-img"
-              src={"/assets/perfumes-cut/" + product.id + ".png"}
+              src={"/assets/perfumes-cut/" + product.id + ".png?v=2"}
               alt={product.marca + " " + product.nombre}
               loading="lazy"
               data-fallback={product.imagen}
@@ -112,7 +112,7 @@ function ProductModal({ product, onClose, onAdd }) {
         <div className="pmodal-media">
           {product.imagen
             ? <img
-                src={"/assets/perfumes-cut/" + product.id + ".png"}
+                src={"/assets/perfumes-cut/" + product.id + ".png?v=2"}
                 alt={full}
                 data-fallback={product.imagen}
                 onError={(e) => { if (!e.target.dataset.didFallback) { e.target.dataset.didFallback = "1"; e.target.classList.add("is-jpg"); e.target.src = e.target.dataset.fallback; } }}

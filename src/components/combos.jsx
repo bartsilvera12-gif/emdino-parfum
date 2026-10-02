@@ -4,7 +4,7 @@ const kFmt = (n) => window.EMDINO_UTILS.formatGs(n);
 const kWa = (t) => window.EMDINO_UTILS.waLink(t);
 const waComboMessage = (n, ml) => window.EMDINO_UTILS.waComboMessage(n, ml);
 
-const cut = (id) => "/assets/perfumes-cut/" + id + ".png";
+const cut = (id) => "/assets/perfumes-cut/" + id + ".png?v=2";
 
 // ----- Precios por tamaño de combos -----
 const SIZES_ORDER = ["3ml", "5ml", "10ml"];

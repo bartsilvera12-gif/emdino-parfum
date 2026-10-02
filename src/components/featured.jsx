@@ -13,7 +13,7 @@ const FEATURED_IDS = [
 ];
 
 const ROTATE_MS = 6800;
-const cutPath = (id) => "/assets/perfumes-cut/" + id + ".png";
+const cutPath = (id) => "/assets/perfumes-cut/" + id + ".png?v=2";
 function pad2(n) { return String(n).padStart(2, "0"); }
 
 function FeaturedFragrances({ onAdd }) {

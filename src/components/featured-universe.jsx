@@ -3,7 +3,7 @@
 // género · hover con zoom/overlay · entrada al hacer scroll (IntersectionObserver).
 import React, { useState as usePuState, useEffect as usePuEffect, useRef as usePuRef } from "react";
 
-const puCut = (id) => "/assets/perfumes-cut/" + id + ".png";
+const puCut = (id) => "/assets/perfumes-cut/" + id + ".png?v=2";
 
 // Selección masculina: IDs reales del catálogo (imagen recortada sobre negro).
 const PU_MASCULINO = [

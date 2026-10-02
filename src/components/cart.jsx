@@ -7,7 +7,7 @@ function cartItemImage(it) {
   if (it.type === "combo") {
     const combo = (window.EMDINO_COMBOS || []).find((c) => c.id === it.id);
     if (combo && combo.imagen) return combo.imagen; // flyer del combo
-    if (combo && combo.items && combo.items[0]) return "/assets/perfumes-cut/" + combo.items[0] + ".png";
+    if (combo && combo.items && combo.items[0]) return "/assets/perfumes-cut/" + combo.items[0] + ".png?v=2";
     return null;
   }
   const p = window.EMDINO_DATA && window.EMDINO_DATA.PRODUCTS_BY_ID[it.id];
